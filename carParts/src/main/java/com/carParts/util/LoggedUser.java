@@ -1,4 +1,4 @@
-package com.paintingscollectors.util;
+package com.carParts.util;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;

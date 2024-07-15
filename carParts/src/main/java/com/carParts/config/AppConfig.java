@@ -1,4 +1,4 @@
-package com.plannerapp.config;
+package com.carParts.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
