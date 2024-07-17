@@ -8,7 +8,7 @@ import org.springframework.web.context.annotation.SessionScope;
 public class LoggedUser {
 
     private Long id;
-    private String username;
+    private String email;
 
     public Long getId() {
         return id;
@@ -18,15 +18,15 @@ public class LoggedUser {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String username) {
+        this.email = email;
     }
 
     public boolean isLogged() {
-        return this.username != null && this.id != null;
+        return this.email != null && this.id != null;
     }
 }

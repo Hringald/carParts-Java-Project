@@ -28,18 +28,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO findUserByUsername(String username) {
-        User user = this.getUserByUsername(username);
-        if (user == null) {
-            return null;
-        }
-
-        return this.mapUserDTO(user);
-    }
-
-    @Override
     public UserDTO findUserByEmail(String email) {
-        User user = userRepo.findByEmail(email).orElse(null);
+        User user = this.getUserByEmail(email);
         if (user == null) {
             return null;
         }
@@ -48,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkCredentials(String username, String password) {
-        User user = this.getUserByUsername(username);
+    public boolean checkCredentials(String email, String password) {
+        User user = this.getUserByEmail(email);
 
         if (user == null) {
             return false;
@@ -59,32 +49,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void login(String username) {
-        User user = this.getUserByUsername(username);
+    public void login(String email) {
+        User user = this.getUserByEmail(email);
         this.loggedUser.setId(user.getId());
-        this.loggedUser.setUsername(user.getUsername());
+        this.loggedUser.setEmail(user.getUsername());
     }
 
     @Override
     public void register(RegisterDTO registerDTO) {
         this.userRepo.save(this.mapUser(registerDTO));
-        this.login(registerDTO.getUsername());
+        this.login(registerDTO.getEmail());
     }
 
     @Override
     public void logout() {
         this.session.invalidate();
         this.loggedUser.setId(null);
-        this.loggedUser.setUsername(null);
+        this.loggedUser.setEmail(null);
     }
 
-    private User getUserByUsername(String username) {
-        return this.userRepo.findByUsername(username).orElse(null);
+    private User getUserByEmail(String email) {
+        return this.userRepo.findByEmail(email).orElse(null);
     }
 
     private User mapUser(RegisterDTO registerDTO) {
         User user = new User();
-        user.setUsername(registerDTO.getUsername());
         user.setEmail(registerDTO.getEmail());
         user.setPassword(encoder.encode(registerDTO.getPassword()));
 

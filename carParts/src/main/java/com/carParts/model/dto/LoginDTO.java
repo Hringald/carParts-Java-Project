@@ -13,7 +13,7 @@ public class LoginDTO {
     private String username;
 
     @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
-    @org.jetbrains.annotations.NotNull
+    @NotNull
     private String password;
 
     public LoginDTO() {

@@ -9,8 +9,6 @@ import java.util.Optional;
 
 public interface UserService {
 
-    UserDTO findUserByUsername(String username);
-
     UserDTO findUserByEmail(String email);
 
     boolean checkCredentials(String username, String password);

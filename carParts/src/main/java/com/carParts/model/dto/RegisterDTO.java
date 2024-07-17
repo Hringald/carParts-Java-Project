@@ -1,21 +1,14 @@
 package com.carParts.model.dto;
 
 import com.carParts.validation.annotation.UniqueEmail;
-import com.carParts.validation.annotation.UniqueUsername;
-import org.jetbrains.annotations.NotNull;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class RegisterDTO {
 
     private Long id;
-
-    @UniqueUsername
-    @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
-    @NotNull
-    private String username;
 
     @UniqueEmail
     @Email(message = "Enter valid email!")
@@ -27,7 +20,7 @@ public class RegisterDTO {
     private String password;
 
     @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
-    @NotNull
+    @NotNull(message = "Confirm Password must not be empty!")
     private String confirmPassword;
 
     public RegisterDTO() {
@@ -39,14 +32,6 @@ public class RegisterDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {
