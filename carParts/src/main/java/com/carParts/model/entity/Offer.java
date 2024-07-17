@@ -1,7 +1,8 @@
 package com.carParts.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
+
+import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "offers")

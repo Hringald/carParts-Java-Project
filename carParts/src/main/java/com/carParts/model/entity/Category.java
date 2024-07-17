@@ -1,6 +1,5 @@
 package com.carParts.model.entity;
 
-import ch.qos.logback.core.model.Model;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -10,7 +9,7 @@ import java.util.Set;
 public class Category extends BaseEntity {
 
     @Column(nullable = false, length = DataConstants.Category.NameMaxLength)
-    private String userName;
+    private String name;
 
     @Column(nullable = false)
     private String imageUrl;
@@ -21,12 +20,12 @@ public class Category extends BaseEntity {
     public Category() {
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImageUrl() {
