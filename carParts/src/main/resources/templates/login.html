@@ -6,36 +6,22 @@
 <header th:replace="fragments/header::header"></header>
 <div class="container">
     <main role="main" class="pb-3">
-
-
         <h1>Log in</h1>
         <div class="row">
             <div class="col-md-4">
                 <section>
-                    <form id="account" method="post" novalidate="novalidate">
+                    <form method="post" action="/identity/account/login" th:object="${loginDTO}">
                         <h4>Use a local account to log in.</h4>
                         <hr>
-                        <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
-                            <ul>
-                                <li style="display:none"></li>
-                            </ul>
+                        <div th:each="error: ${#fields.errors()}" th:text="${error}" class="text-danger">Error messages</div>
+                        <div th:if="${validCredentials == false}" class="text-danger">Incorrect email or password!</div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input th:field="*{email}" th:errorclass="bg-danger" type="text" class="form-control" id="email" name="email"/>
                         </div>
                         <div class="form-group">
-                            <label for="Input_Email">Email</label>
-                            <input class="form-control valid" type="email" data-val="true"
-                                   data-val-email="The Email field is not a valid e-mail address."
-                                   data-val-required="The Email field is required." id="Input_Email" name="Input.Email"
-                                   value="" aria-describedby="Input_Email-error" aria-invalid="false">
-                            <span class="text-danger field-validation-valid" data-valmsg-for="Input.Email"
-                                  data-valmsg-replace="true"></span>
-                        </div>
-                        <div class="form-group">
-                            <label for="Input_Password">Password</label>
-                            <input class="form-control valid" type="password" data-val="true"
-                                   data-val-required="The Password field is required." id="Input_Password"
-                                   name="Input.Password" aria-describedby="Input_Password-error" aria-invalid="false">
-                            <span class="text-danger field-validation-valid" data-valmsg-for="Input.Password"
-                                  data-valmsg-replace="true"></span>
+                            <label >Password</label>
+                            <input th:errorclass="bg-danger" type="password" class="form-control" id="password" name="password"/>
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary">Log in</button>

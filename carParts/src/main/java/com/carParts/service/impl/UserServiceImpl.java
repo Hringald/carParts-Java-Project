@@ -1,7 +1,6 @@
 package com.carParts.service.impl;
 
-import com.carParts.model.dto.RegisterDTO;
-import com.carParts.model.dto.UserDTO;
+import com.carParts.model.dto.*;
 import com.carParts.model.entity.User;
 import com.carParts.repository.UserRepo;
 import com.carParts.service.UserService;
@@ -52,7 +51,7 @@ public class UserServiceImpl implements UserService {
     public void login(String email) {
         User user = this.getUserByEmail(email);
         this.loggedUser.setId(user.getId());
-        this.loggedUser.setEmail(user.getUsername());
+        this.loggedUser.setEmail(user.getEmail());
     }
 
     @Override
@@ -109,6 +108,27 @@ public class UserServiceImpl implements UserService {
         test.setEmail("test@abv.bg");
 
         userRepo.save(test);
+    }
+
+    @Override
+    public void changePhone(Long UserId, PhoneChangeDTO phoneChangeDTO){
+     User currentUser = this.findUserById(UserId).orElse(null);
+        currentUser.setPhone(phoneChangeDTO.getPhone());
+        userRepo.save(currentUser);
+    }
+
+    @Override
+    public void changeEmail(Long UserId, EmailChangeDTO emailChangeDTO){
+        User currentUser = this.findUserById(UserId).orElse(null);
+        currentUser.setEmail(emailChangeDTO.getEmailChange());
+        userRepo.save(currentUser);
+    }
+
+    @Override
+    public void changePassword(Long UserId, PasswordChangeDTO passwordChangeDTO){
+        User currentUser = this.findUserById(UserId).orElse(null);
+        currentUser.setPassword(encoder.encode(passwordChangeDTO.getNewPassword()));
+        userRepo.save(currentUser);
     }
 
 }

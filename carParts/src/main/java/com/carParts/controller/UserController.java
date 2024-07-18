@@ -1,7 +1,6 @@
 package com.carParts.controller;
 
-import com.carParts.model.dto.LoginDTO;
-import com.carParts.model.dto.RegisterDTO;
+import com.carParts.model.dto.*;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,4 +28,25 @@ public interface UserController {
 
     @GetMapping("/logout")
     String logout();
+
+    @GetMapping("/manage")
+    String changePhone(Model model);
+
+    @PostMapping("/manage")
+    String changePhone(@Valid PhoneChangeDTO phoneChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
+
+    @GetMapping("/manage/email")
+    String emailChange(Model model);
+
+    @PostMapping("/manage/email")
+    String changeEmail(@Valid EmailChangeDTO emailChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
+
+    @GetMapping("/manage/password")
+    String passwordChange(Model model);
+
+    @GetMapping("/manage/personalData")
+    String personalData(Model model);
+
+    @PostMapping("/manage/password")
+    String passwordChange(@Valid PasswordChangeDTO passwordChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
 }

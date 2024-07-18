@@ -22,7 +22,7 @@ public class LoggedUser {
         return email;
     }
 
-    public void setEmail(String username) {
+    public void setEmail(String email) {
         this.email = email;
     }
 

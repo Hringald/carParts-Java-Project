@@ -16,7 +16,7 @@ public class RegisterDTO {
     private String email;
 
     @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
-    @NotNull
+    @NotNull(message = "Password must not be empty!")
     private String password;
 
     @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")

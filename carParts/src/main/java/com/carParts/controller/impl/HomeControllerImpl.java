@@ -21,9 +21,6 @@ public class HomeControllerImpl implements HomeController {
 
     @Override
     public String index() {
-        if (loggedUser.isLogged()) {
-            return "redirect:/home";
-        }
 
         return "index.html";
     }

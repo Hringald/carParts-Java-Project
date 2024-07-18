@@ -17,6 +17,9 @@ public class User extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column
+    private String phone;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Admin admin;
     @OneToMany(mappedBy = "seller")
@@ -66,6 +69,14 @@ public class User extends BaseEntity {
 
     public void setOffers(Set<Offer> offers) {
         this.offers = offers;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Admin getAdmin() {
