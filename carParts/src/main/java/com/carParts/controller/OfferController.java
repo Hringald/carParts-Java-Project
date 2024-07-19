@@ -2,14 +2,13 @@ package com.carParts.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @RequestMapping(name = "/")
-public interface HomeController {
+public interface OfferController {
 
-    @GetMapping
-    String index(Model model);
+    @GetMapping("/offers/myOffers")
+    String myOffers(Model model);
 /*
     @GetMapping("/home")
     String home(Model model);

@@ -29,4 +29,5 @@ public class LoggedUser {
     public boolean isLogged() {
         return this.email != null && this.id != null;
     }
+
 }

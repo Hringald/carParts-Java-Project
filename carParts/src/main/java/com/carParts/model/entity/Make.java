@@ -10,7 +10,7 @@ public class Make extends BaseEntity {
     @Column(nullable = false, length = DataConstants.Make.NameMaxLength)
     private String name;
     @Column(nullable = false)
-    private String ImageUrl;
+    private String imageUrl;
     @ManyToOne(fetch = FetchType.EAGER)
     private Admin admin;
     @OneToOne(cascade = CascadeType.ALL)
@@ -30,11 +30,11 @@ public class Make extends BaseEntity {
     }
 
     public String getImageUrl() {
-        return ImageUrl;
+        return imageUrl;
     }
 
     public void setImageUrl(String imageUrl) {
-        ImageUrl = imageUrl;
+        this.imageUrl = imageUrl;
     }
 
     public Admin getAdmin() {

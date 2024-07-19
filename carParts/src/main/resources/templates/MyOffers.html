@@ -1,0 +1,36 @@
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <main role="main" class="pb-3">
+        <h1 th:if="${myOffers.size() <= 0}">You don't have available offers.</h1>
+        <table th:if="${myOffers.size() > 0}" class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Part name</th>
+                <th scope="col">Buyer name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Info</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="offer : ${myOffers}">
+                <tr>
+                    <td th:text="${offer.part.name}"></td>
+                    <td th:text="${offer.name}"></td>
+                    <td th:text="${offer.price}"></td>
+                    <td th:text="${offer.quantity}"></td>
+                    <td>
+                        <a type="button" class="btn btn-primary"
+                           h:href="@{/offers/myOffers/edit/{id}(id = ${offer.id})}">Info</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
