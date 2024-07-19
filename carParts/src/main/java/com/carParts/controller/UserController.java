@@ -26,27 +26,6 @@ public interface UserController {
     @PostMapping("/register")
     String registerConfirm(@Valid RegisterDTO registerDTO, BindingResult result, RedirectAttributes redirectAttributes);
 
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     String logout();
-
-    @GetMapping("/manage")
-    String changePhone(Model model);
-
-    @PostMapping("/manage")
-    String changePhone(@Valid PhoneChangeDTO phoneChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
-
-    @GetMapping("/manage/email")
-    String emailChange(Model model);
-
-    @PostMapping("/manage/email")
-    String changeEmail(@Valid EmailChangeDTO emailChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
-
-    @GetMapping("/manage/password")
-    String passwordChange(Model model);
-
-    @GetMapping("/manage/personalData")
-    String personalData(Model model);
-
-    @PostMapping("/manage/password")
-    String passwordChange(@Valid PasswordChangeDTO passwordChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
 }

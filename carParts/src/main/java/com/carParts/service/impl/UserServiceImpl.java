@@ -131,4 +131,9 @@ public class UserServiceImpl implements UserService {
         userRepo.save(currentUser);
     }
 
+    @Override
+    public void deleteUser(Long UserId){
+        User currentUser = this.findUserById(UserId).orElse(null);
+        this.userRepo.delete(currentUser);
+    }
 }

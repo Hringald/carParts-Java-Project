@@ -7,18 +7,22 @@
         <link rel="stylesheet" href="/css/slideShow.css">
         <div th:replace="fragments/slideShow::div"></div>
         <link rel="stylesheet" href="/css/carMenu.css">
-        <h1 style="text-align:center">Choose car make: </h1>
+        <h1 th:if="${allMakes.size() > 0}" style="text-align:center">Choose car make: </h1>
         <div class="row mt-2 mb-4">
-            <div class="col-6 col-xl-1 mb-5  mt-5 ml-4 mr-4">
-                <a href="/Shop/Models?Make=BMW">
-                    <img style="width:90px;max-width:90px;height:90px;max-height:90px"
-                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/BMW.svg/800px-BMW.svg.png"
-                         class="card-img-top img-fluid card-image rounded" data-toggle="tooltip" data-placement="bottom"
-                         title="car.Year car.Model">
-                    <p style="text-align:right">BMW</p></a>
-                <p><a href="/Shop/Models?Make=BMW">
-                </a>
-                </p></div>
+            <th:block th:each="make : ${allMakes}">
+                <div class="col-6 col-xl-1 mb-5  mt-5 ml-4 mr-4">
+                    <a th:href="@{/shop/models/{makeName}(makeName = ${make.name})}">
+                        <img style="width:90px;max-width:90px;height:90px;max-height:90px"
+                             th:src="${make.imageUrl}"
+                             class="card-img-top img-fluid card-image rounded" data-toggle="tooltip"
+                             data-placement="bottom"
+                             th:title="${make.name}">
+                        <p style="text-align:right" th:text="${make.name}"></p></a>
+                    <p><a th:href="@{/shop/models/{makeName}(makeName = ${make.name})}">
+                    </a>
+                    </p>
+                </div>
+            </th:block>
         </div>
     </main>
 </div>

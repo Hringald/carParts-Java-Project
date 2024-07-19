@@ -29,4 +29,6 @@ public interface UserService {
     void changeEmail(Long UserId, EmailChangeDTO emailChangeDTO);
 
     void changePassword(Long UserId, PasswordChangeDTO passwordChangeDTO);
+
+    void deleteUser(Long UserId);
 }
