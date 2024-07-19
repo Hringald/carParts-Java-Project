@@ -12,4 +12,8 @@ public interface MakeService {
 
     List<Make> getAllMakes();
 
+    Make findMakeByName(String makeName);
+
+    void initMakes();
+
 }

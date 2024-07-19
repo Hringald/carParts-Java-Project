@@ -1,0 +1,64 @@
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <div class="row">
+        <div class="offset-md-2 col-md-8 com-sm-12 mb-5">
+            <h2 class="heading-margin" text-center="">Add Part</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input class="form-control" placeholder="Add part name..." type="text" data-val="true" data-val-length="The field Name must be a string with a minimum length of 2 and a maximum length of 500." data-val-length-max="500" data-val-length-min="2" data-val-required="The Name field is required." id="Name" maxlength="500" name="Name" value="">
+                    <span class="small text-danger field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label for="ImageUrl">Image Url</label>
+                    <input class="form-control" placeholder="Add image Url..." type="url" data-val="true" data-val-required="The Image URL field is required." data-val-url="The Image URL field is not a valid fully-qualified http, https, or ftp URL." id="ImageUrl" name="ImageUrl" value="">
+                    <span class="small text-danger field-validation-valid" data-valmsg-for="ImageUrl" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label for="MakeName">Make</label>
+                    <input class="form-control" value="BMW" readonly="" type="text" id="MakeName" name="MakeName">
+                    <span class="small text-danger field-validation-valid" data-valmsg-for="MakeName" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label for="ModelId">Model</label>
+                    <select class="form-control" id="ModelId" name="ModelId">
+                        <option value="70fd556a-c264-481e-81d9-1851d886984b">MA</option>
+                        <option value="d6749e26-a0d0-4356-b64d-f2330e64df0c">TEST123</option>
+                    </select>
+                    <span class="small text-danger field-validation-valid" data-valmsg-for="ModelId" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label for="CategoryId">Category</label>
+                    <select class="form-control" id="CategoryId" name="CategoryId">
+                        <option value="2b278392-bb6d-49a5-8598-1ebeec511562">Main Parts</option>
+                        <option value="360bf8f5-e91f-4d5a-871f-47c6380e73ab">Miscellaneous</option>
+                        <option value="45ae0f29-569f-4f9b-8a55-a231cbaef131">Electronics</option>
+                        <option value="96f8f8e0-5545-46cb-a41c-900bc40eb8b5">Interior</option>
+                        <option value="fd5e82b7-adf4-4ed9-a97e-8d92dee8ecad">Power-train and chassis</option>
+                    </select>
+                    <span class="small text-danger field-validation-valid" data-valmsg-for="CategoryId" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Price">Price</label>
+                    <input class="form-control" placeholder="Add part price..." type="text" data-val="true" data-val-number="The field Price must be a number." data-val-range="Price must be a positive number." data-val-range-max="79228162514264337593543950335" data-val-range-min="0.01" data-val-required="The Price field is required." id="Price" name="Price" value="0,00">
+                    <span class="small text-danger field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Quantity">Quantity</label>
+                    <input value="1" min="1" max="100" class="form-control" placeholder="Add part quantity..." type="number" data-val="true" data-val-range="The field Quantity must be between 1 and 100." data-val-range-max="100" data-val-range-min="1" data-val-required="The Quantity field is required." id="Quantity" name="Quantity">
+                    <span class="small text-danger field-validation-valid" data-valmsg-for="Quantity" data-valmsg-replace="true"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Description">Description</label>
+                    <textarea class="form-control" rows="3" placeholder="Add description..." data-val="true" data-val-length="The field Description must be a string with a minimum length of 20 and a maximum length of 5000." data-val-length-max="5000" data-val-length-min="20" data-val-required="The Description field is required." id="Description" maxlength="5000" name="Description"></textarea>
+                    <span class="small text-danger field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                </div>
+                <button type="submit" class="btn btn-primary" value="Add">Add</button>
+                <input name="__RequestVerificationToken" type="hidden" value="CfDJ8G3AkpehyLJAp9hcnCwACejC-K3-E-dIuUrJkX1a2dhcvE_Ep56f3TzISxyyxDlWrEUeKc37ypn8BDJ_lB0BEsXxKq2SBts-GhvoMnt1SwTDCpwtbUOtWNYzu0kyGW4vxbWJrfjoL9g0A4ZWWjDZST-et3WffbkpRxJVzZsyfA9d2jmxftDH0UPfXOuTE9MWFg"></form>
+        </div>
+    </div>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>

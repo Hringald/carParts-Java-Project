@@ -1,6 +1,7 @@
 package com.carParts.controller.impl;
 
 import com.carParts.controller.PartController;
+import com.carParts.model.entity.Make;
 import com.carParts.model.entity.Part;
 import com.carParts.model.entity.User;
 import com.carParts.service.impl.MakeServiceImpl;
@@ -9,6 +10,7 @@ import com.carParts.service.impl.UserServiceImpl;
 import com.carParts.util.LoggedUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -41,4 +43,23 @@ public class PartControllerImpl implements PartController {
 
         return "MyParts";
     }
+
+    @Override
+    public String chooseMake(Model model) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
+
+        List<Make> allMakes = this.makeService.getAllMakes();
+        model.addAttribute("allMakes", allMakes);
+
+        return "ChooseMake";
+    }
+
+    @Override
+    public String addPart(@PathVariable("makeName") String makeName){
+
+        return "AddPart";
+    }
+
 }
