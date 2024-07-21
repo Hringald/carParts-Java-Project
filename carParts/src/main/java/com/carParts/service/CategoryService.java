@@ -4,10 +4,14 @@ package com.carParts.service;
 import com.carParts.model.entity.Category;
 import com.carParts.model.entity.CategoryEnum;
 
+import java.util.List;
+
 public interface CategoryService {
 
     void initCategories();
 
-    Category findCategory(CategoryEnum category);
+    Category findCategory(String categoryName);
+
+    List<Category> getAllCategories();
 
 }

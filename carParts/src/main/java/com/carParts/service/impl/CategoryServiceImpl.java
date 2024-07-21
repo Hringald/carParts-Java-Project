@@ -7,6 +7,7 @@ import com.carParts.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -26,7 +27,7 @@ public class CategoryServiceImpl implements CategoryService {
         Arrays.stream(CategoryEnum.values())
                 .forEach(s -> {
                     Category category = new Category();
-                    category.setName(String.valueOf(s));
+                    category.setName(s.getValue());
                     switch (s.getValue()) {
                         case "Main Parts":
                             category.setImageUrl("MainCarParts.jpg");
@@ -51,8 +52,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category findCategory(CategoryEnum categoryEnum) {
-        return this.categoryRepo.findByName(categoryEnum).orElseThrow();
+    public Category findCategory(String  categoryName) {
+        return this.categoryRepo.findByName(categoryName).orElseThrow();
     }
 
+    @Override
+    public List<Category> getAllCategories() {
+        return this.categoryRepo.findAll();
+    }
 }

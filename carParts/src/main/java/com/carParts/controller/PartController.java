@@ -1,9 +1,13 @@
 package com.carParts.controller;
 
+import com.carParts.model.dto.AddPartDTO;
+import com.carParts.model.entity.Part;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import javax.validation.Valid;
 
 @RequestMapping(name = "/")
 public interface PartController {
@@ -15,19 +19,17 @@ public interface PartController {
     String chooseMake(Model model);
 
     @GetMapping("/parts/addPart/{makeName}")
-    String addPart(@PathVariable("makeName") String makeName);
+    String addPart(@PathVariable("makeName") String makeName, Model model);
 
-/*
-    @GetMapping("/home/remove-painting/{id}")
-    String removeById(@PathVariable("id") Long id);
+    @PostMapping("/parts/addPart")
+    String addPart(@Valid AddPartDTO addPartDTO, BindingResult result, RedirectAttributes redirectAttributes);
 
-    @GetMapping("/home/add-favourite/{id}")
-    String addFavPainting(@PathVariable("id") Long id);
+    @GetMapping("/parts/deletePart/{id}")
+    String removePartById(@PathVariable("id") Long id);
 
-    @GetMapping("/home/vote/{id}")
-    String voteById(@PathVariable("id") Long id);
+    @GetMapping("/parts/editPart/{id}")
+    String editPartById(@PathVariable("id") Long id, Model model);
 
-    @GetMapping("/home/remove-favourite/{id}")
-    String removeFavourite(@PathVariable("id") Long id);
-    */
+    @PostMapping("/parts/editPart")
+    String editPartById(Model model, @Valid AddPartDTO addPartDTO, BindingResult result, RedirectAttributes redirectAttributes);
 }

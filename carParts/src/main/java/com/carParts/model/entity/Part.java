@@ -15,7 +15,7 @@ public class Part extends BaseEntity {
     private String imageUrl;
     @ManyToOne(fetch = FetchType.EAGER)
     private Category category;
-    @OneToOne(mappedBy = "part")
+    @ManyToOne(fetch = FetchType.EAGER)
     private Make make;
     @ManyToOne(fetch = FetchType.EAGER)
     private Model model;

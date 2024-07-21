@@ -22,10 +22,10 @@ public class User extends BaseEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Admin admin;
-    @OneToMany(mappedBy = "seller")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seller")
     private Set<Part> parts;
 
-    @OneToMany(mappedBy = "seller")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seller")
     private Set<Offer> offers;
 
     public User() {
