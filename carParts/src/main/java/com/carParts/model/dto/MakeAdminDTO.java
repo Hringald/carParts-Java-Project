@@ -1,5 +1,6 @@
 package com.carParts.model.dto;
 
+import com.carParts.validation.annotation.UniqueUsername;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
@@ -9,6 +10,7 @@ public class MakeAdminDTO {
 
     @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
     @NotBlank(message = "Username cannot be empty!")
+    @UniqueUsername
     private String username;
 
     public MakeAdminDTO() {
