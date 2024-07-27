@@ -1,0 +1,30 @@
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <main role="main" class="pb-3">
+
+        <div class="text-center">
+            <h1 class="display-4">Categories</h1>
+        </div>
+
+        <section id="CarCatalogue">
+            <div class="row mt-5 mb-5">
+                <th:block th:each="category: ${allCategories}">
+                    <div class="col-6 col-lg-2 mr-4">
+                        <a th:href="${'/shop/shopPage/' + {makeName} + '/' + {modelName} + '/' + {category.name}}">
+                            <img style="width: 150px; max-width: 150px; height: 150px; max-height: 150px "
+                                 th:src="@{'/images/' + ${category.imageUrl}}" alt="Image" data-toggle="tooltip"
+                                 data-placement="bottom" th:title="*{category.name}">
+                            <p style="text-align:center" th:text="*{category.name}"></p></a>
+                        <p>
+                            <a th:href="${'/shop/shopPage/' + {makeName} + '/' + {modelName} + '/' + {category.name}}"></a>
+                        </p>
+                    </div>
+                </th:block>
+            </div>
+        </section>
+    </main>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>

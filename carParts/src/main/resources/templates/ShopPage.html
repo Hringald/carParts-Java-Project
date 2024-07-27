@@ -1,0 +1,75 @@
+<html lang="en">
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="text-center">
+            <h1 class="display-4">Parts</h1>
+        </div>
+        <div class="container">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet"
+                  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="/css/shopPage.css">
+        </div>
+        <form class="example" method="get" th:action="@{'/shop/shopPage' + '/' + ${makeName} + '/' + ${modelName} + '/' + ${categoryName}}" th:object="${searchFormDTO}">
+            <input th:field="*{searchTerm}" type="text" placeholder="Search...">
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+
+
+        <div class="row col-12 mt-5 mn-4">
+            <h3 th:if="${totalParts <= 0}">There are no parts for the given model and category.</h3>
+
+            <th:block th:each="part : ${partList}">
+                <div class="card col-9 col-lg-3 ml-5 mr-4 mb-2">
+                    <img th:src="${part.ImageUrl}"
+                         class="card-img-top img-fluid card-image rounded" data-toggle="tooltip"
+                         data-placement="bottom" title="@part.Name">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item text-center" th:text="${part.name}|"></li>
+                        </ul>
+                        <p style="margin:auto;margin-top:15px" th:text="|Quantity: ${part.quantity}|"></p>
+                        <p style="margin:auto;margin-bottom:15px" th:text="|Price: ${part.price}$|"></p>
+                        <a th:href="@{/parts/editPart/{id}(id = ${part.id})}"
+                           class="btn btn-success">Edit</a>
+                        <a th:href="@{/parts/info/{id}(id = ${part.id})}"
+                           class="btn btn-block btn-primary">Part Info</a>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+
+        <div th:if="${totalPages > 1}">
+            <div class="row col-sm-10">
+                <div class="col-sm-2">
+                    Total Rows: [[${totalParts}]]
+                </div>
+                <div class="col-sm-1">
+					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+						<a th:if="${currentPage != i}"
+                           th:href="@{'/shop/shopPage' + '/' + ${makeName} + '/' + ${modelName} + '/' + ${categoryName}  + '/page/' + ${i}  + '?searchTerm=' + ${searchTerm}}">[[${i}]]</a>
+						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
+					</span>
+                </div>
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}"
+                       th:href="@{'/shop/shopPage' + '/' + ${makeName} + '/' + ${modelName} + '/' + ${categoryName}  + '/page/' + ${currentPage + 1}  + '?searchTerm=' + ${searchTerm}}">Next</a>
+                    <span th:unless="${currentPage < totalPages}">Next</span>
+                </div>
+
+                <div class="col-sm-1">
+                    <a th:if="${currentPage < totalPages}"
+                       th:href="@{'/shop/shopPage' + '/' + ${makeName} + '/' + ${modelName} + '/' + ${categoryName}  + '/page/' + ${totalPages}  + '?searchTerm=' + ${searchTerm}}">Last</a>
+                    <span th:unless="${currentPage < totalPages}">Last</span>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>

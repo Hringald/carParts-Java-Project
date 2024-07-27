@@ -4,6 +4,9 @@ import com.carParts.model.dto.AddPartDTO;
 import com.carParts.model.entity.*;
 import com.carParts.repository.*;
 import com.carParts.service.PartService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,6 +34,11 @@ public class PartServiceImpl implements PartService {
     @Override
     public List<Part> findOwnedParts(User user) {
         return this.partRepo.findBySeller(user);
+    }
+
+    @Override
+    public List<Part> findAllParts() {
+        return this.partRepo.findAll();
     }
 
     @Override
@@ -88,5 +96,69 @@ public class PartServiceImpl implements PartService {
         currentPart.setDescription(addPartDTO.getDescription());
 
         this.partRepo.save(currentPart);
+    }
+
+    @Override
+    public void initParts() {
+        Make make = this.makeRepo.findByName("BMW").orElse(null);
+        Model model = this.modelRepo.findByName("3 Series").orElse(null);
+        Category category = this.categoryRepo.findByName("Main Parts").orElse(null);
+        User user = this.userRepo.findByEmail("test@abv.bg").orElse(null);
+
+        for (int i = 0; i < 7; i++) {
+
+            Part part = new Part();
+            part.setName("Engine");
+            part.setImageUrl("https://www.realoem.com/images/eng.jpg");
+            part.setMake(make);
+            part.setModel(model);
+            part.setCategory(category);
+            part.setPrice(200);
+            part.setQuantity(2);
+            part.setDescription("1234567890123412312321321");
+            part.setSeller(user);
+
+            Set<Part> userParts = user.getParts();
+            userParts.add(part);
+            user.setParts(userParts);
+
+            this.partRepo.save(part);
+            this.userRepo.save(user);
+        }
+
+        for (int i = 0; i < 7; i++) {
+
+            Part part = new Part();
+            part.setName("test");
+            part.setImageUrl("https://www.realoem.com/images/eng.jpg");
+            part.setMake(make);
+            part.setModel(model);
+            part.setCategory(category);
+            part.setPrice(200);
+            part.setQuantity(2);
+            part.setDescription("1234567890123412312321321");
+            part.setSeller(user);
+
+            Set<Part> userParts = user.getParts();
+            userParts.add(part);
+            user.setParts(userParts);
+
+            this.partRepo.save(part);
+            this.userRepo.save(user);
+        }
+    }
+
+    @Override
+    public Page<Part> findPaginated(int pageNo, int pageSize, String makeName, String modelName, String categoryName, String searchTerm) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+
+        Make make = this.makeRepo.findByName(makeName).orElse(null);
+        Model model = this.modelRepo.findByName(modelName).orElse(null);
+        Category category = this.categoryRepo.findByName(categoryName).orElse(null);
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            searchTerm = "%";
+        }
+        return this.partRepo.findByMakeAndModelAndCategoryAndNameLike(make, model, category, searchTerm, pageable);
+        //return this.partRepo.findAll(pageable);
     }
 }

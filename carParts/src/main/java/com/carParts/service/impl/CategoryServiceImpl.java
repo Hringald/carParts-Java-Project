@@ -39,7 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
                             category.setImageUrl("CarInterior.jpg");
                             break;
                         case "Power-train and chassis":
-                            category.setImageUrl("powerTrainAndChassis.jpg");
+                            category.setImageUrl("PowerTrainAndChassis.jpg");
                             break;
                         default:
                             category.setImageUrl("Miscellaneous.jpg");
