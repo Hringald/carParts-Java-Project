@@ -1,5 +1,6 @@
 package com.carParts.validation;
 
+import com.carParts.service.impl.AdminServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
 import com.carParts.validation.annotation.UniqueUsername;
 import jakarta.validation.ConstraintValidator;
@@ -7,14 +8,14 @@ import jakarta.validation.ConstraintValidatorContext;
 
 public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
 
-    private final UserServiceImpl userService;
+    private final AdminServiceImpl adminService;
 
-    public UniqueUsernameValidator(UserServiceImpl userService) {
-        this.userService = userService;
+    public UniqueUsernameValidator(AdminServiceImpl adminService) {
+        this.adminService = adminService;
     }
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return this.userService.findUserByEmail(value) == null;
+        return this.adminService.findAdminByUsername(value) == null;
     }
 }

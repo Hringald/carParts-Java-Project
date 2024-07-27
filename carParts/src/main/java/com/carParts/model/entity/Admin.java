@@ -9,7 +9,7 @@ import java.util.Set;
 public class Admin extends BaseEntity {
 
     @Column(nullable = false, length = DataConstants.Admin.NameMaxLength)
-    private String name;
+    private String username;
 
     @OneToOne(mappedBy = "admin")
     private User user;
@@ -21,12 +21,12 @@ public class Admin extends BaseEntity {
     public Admin() {
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public User getUser() {

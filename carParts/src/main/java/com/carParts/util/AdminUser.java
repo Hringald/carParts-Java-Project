@@ -1,8 +1,6 @@
 package com.carParts.util;
 
-import com.carParts.model.entity.Admin;
 import com.carParts.model.entity.User;
-import com.carParts.repository.AdminRepo;
 import com.carParts.repository.UserRepo;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;

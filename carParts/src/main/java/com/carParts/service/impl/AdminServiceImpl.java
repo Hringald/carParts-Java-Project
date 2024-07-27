@@ -20,18 +20,24 @@ public class AdminServiceImpl implements AdminService {
         this.adminRepo = adminRepo;
         this.adminUser = adminUser;
     }
+
     @Override
-    public void makeAdmin(User user){
-     Admin admin = new Admin();
+    public void makeAdmin(User user) {
+        Admin admin = new Admin();
 
 
-     admin.setUser(user);
-     admin.setName(user.getUsername());
+        admin.setUser(user);
+        admin.setUsername(user.getUsername());
 
-     this.adminUser.setId(user.getId());
-     this.adminUser.setUsername(user.getUsername());
+        this.adminUser.setId(user.getId());
+        this.adminUser.setUsername(user.getUsername());
 
-     this.adminRepo.save(admin);
-     this.userRepo.save(user);
+        this.adminRepo.save(admin);
+        this.userRepo.save(user);
+    }
+
+    @Override
+    public Admin findAdminByUsername(String username) {
+        return this.adminRepo.findByUsername(username).orElse(null);
     }
 }
