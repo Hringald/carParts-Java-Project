@@ -9,7 +9,7 @@
                 <div class="form-group">
                     <label>Name</label>
                     <input placeholder="Add part name..." th:field="*{name}" th:errorclass="'is-invalid bg-danger'"
-                           type="text" class="form-control" id="name" name="name"></input>
+                           type="text" class="form-control" id="name" name="name">
                     <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Name error
                         message</small>
                 </div>

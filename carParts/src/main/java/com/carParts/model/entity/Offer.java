@@ -22,7 +22,7 @@ public class Offer extends BaseEntity {
     @Column(nullable = false)
     private String city;
     @Column(nullable = false)
-    private int zipCode;
+    private String zipCode;
     @ManyToOne(fetch = FetchType.EAGER)
     private User seller;
 
@@ -77,11 +77,11 @@ public class Offer extends BaseEntity {
         this.city = city;
     }
 
-    public int getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(int zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

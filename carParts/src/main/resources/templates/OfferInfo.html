@@ -1,0 +1,86 @@
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <main role="main" class="pb-3">
+
+
+        <div class="text-center">
+            <h1 class="display-4">Info for part:</h1>
+        </div>
+
+
+        <div class="row">
+
+            <div class="card" style="width: 18rem; margin-bottom: 100px">
+                <img class="card-img-top" th:src="${partUrl}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${partName}"></h5>
+                    <p class="card-text" th:text="${partDescription}"></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:text="|Quantity: ${partQuantity}|"></li>
+                    <li class="list-group-item" th:text="|Price: ${partPrice}$|"></li>
+                </ul>
+            </div>
+
+            <div style="width: 50rem; margin-bottom: 100px;margin-left:50px">
+                <form method="post">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="BuyerName">Name</label>
+                            <input class="form-control" placeholder="Enter your name..." readonly="" type="text"
+                                   id="BuyerName" name="BuyerName" th:value="${offerName}">
+                            <span class="small text-danger field-validation-valid" data-valmsg-for="BuyerName"
+                                  data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Email">Email</label>
+                            <input class="form-control" placeholder="Enter your Email..." readonly="" type="text"
+                                   id="Email" name="Email" th:value="${offerEmail}">
+                            <span class="small text-danger field-validation-valid" data-valmsg-for="Email"
+                                  data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="Phone">Phone</label>
+                            <input class="form-control" placeholder="Enter your phone number..." readonly="" type="text"
+                                   id="Phone" name="Phone" th:value="${offerPhone}">
+                            <span class="small text-danger field-validation-valid" data-valmsg-for="Phone"
+                                  data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="Address">Address</label>
+                        <input class="form-control" placeholder="Enter your address..." readonly="" type="text"
+                               id="Address" name="Address" th:value="${offerAddress}">
+                        <span class="small text-danger field-validation-valid" data-valmsg-for="Address"
+                              data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="City">City</label>
+                            <input class="form-control" placeholder="Enter your city..." readonly="" type="text"
+                                   id="City" name="City" th:value="${offerCity}">
+                            <span class="small text-danger field-validation-valid" data-valmsg-for="City"
+                                  data-valmsg-replace="true"></span>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="Zip">Zip</label>
+                            <input class="form-control" placeholder="Enter your zip code..." readonly="" type="text"
+                                   id="zip" name="zip" th:value="${offerZip}">
+                            <span class="small text-danger field-validation-valid" data-valmsg-for="Zip"
+                                  data-valmsg-replace="true"></span>
+                        </div>
+                    </div>
+                    <a type="button" class="btn btn-success" a=""
+                       th:href="@{/offers/sell/{id}(id = ${offerId})}">Sell</a>
+                    <a type="button" class="btn btn-danger float-right" a=""
+                       th:href="@{/offers/decline/{id}(id = ${offerId})}">Decline</a>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+<footer th:replace="fragments/footer::footer"></footer>
+</body>

@@ -1,7 +1,6 @@
 package com.carParts.validation;
 
 import com.carParts.service.impl.AdminServiceImpl;
-import com.carParts.service.impl.UserServiceImpl;
 import com.carParts.validation.annotation.UniqueUsername;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;

@@ -1,13 +1,13 @@
 package com.carParts.model.dto;
 
-import com.carParts.validation.annotation.LegitPhone;
+import com.carParts.validation.annotation.PhoneValidator;
 import jakarta.validation.constraints.NotNull;
 
 public class PhoneChangeDTO {
 
     private Long id;
 
-    @LegitPhone(message = "Phone number is invalid")
+    @PhoneValidator(message = "Phone number is invalid")
     @NotNull(message = "Please enter a phone number!")
     private String phone;
 

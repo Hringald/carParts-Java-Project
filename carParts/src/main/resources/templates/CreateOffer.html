@@ -1,0 +1,95 @@
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <main role="main" class="pb-3">
+
+
+        <div class="text-center">
+            <h1 class="display-4">Info for part:</h1>
+        </div>
+
+
+        <div class="row">
+
+            <div class="card" style="width: 18rem; margin-bottom: 100px">
+                <img class="card-img-top" th:src="${partUrl}">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${partName}"></h5>
+                    <p class="card-text" th:text="${partDescription}"></p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" th:text="|Quantity: ${partQuantity}|"></li>
+                    <li class="list-group-item" th:text="|Price: ${partPrice}$|"></li>
+                </ul>
+            </div>
+
+            <div style="width: 50rem; margin-bottom: 100px;margin-left:50px">
+                <form method="post" action="/offers/create" th:object="${addOfferDTO}">
+                    <input th:value="${partId}" id="id" name="id" hidden readonly>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>Name</label>
+                            <input placeholder="Enter your name..." th:field="*{name}"
+                                   th:errorclass="'is-invalid bg-danger'"
+                                   type="text" class="form-control" id="name" name="name">
+                            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Name
+                                error
+                                message</small>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Email</label>
+                            <input placeholder="Enter your email..." th:field="*{email}"
+                                   th:errorclass="'is-invalid bg-danger'"
+                                   type="text" class="form-control" id="email" name="email">
+                            <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">Email
+                                error
+                                message</small>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Phone</label>
+                            <input placeholder="Enter your phone number..." th:field="*{phone}"
+                                   th:errorclass="'is-invalid bg-danger'"
+                                   type="text" class="form-control" id="phone" name="phone">
+                            <small th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger">Phone
+                                error
+                                message</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input placeholder="Enter your address..." th:field="*{address}"
+                               th:errorclass="'is-invalid bg-danger'"
+                               type="text" class="form-control" id="address" name="address">
+                        <small th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger">Address
+                            error
+                            message</small>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label>City</label>
+                            <input placeholder="Enter your city..." th:field="*{city}"
+                                   th:errorclass="'is-invalid bg-danger'"
+                                   type="text" class="form-control" id="city" name="city">
+                            <small th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="text-danger">City
+                                error
+                                message</small>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Zip</label>
+                            <input placeholder="Add your zip..." th:field="*{zipCode}"
+                                   th:errorclass="'is-invalid bg-danger'"
+                                   type="text" class="form-control" id="zipCode" name="zipCode">
+                            <small th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}" class="text-danger">Zip
+                                error
+                                message</small>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Order</button>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>

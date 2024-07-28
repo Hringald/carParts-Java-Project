@@ -19,11 +19,11 @@
                 <tr>
                     <td th:text="${offer.part.name}"></td>
                     <td th:text="${offer.name}"></td>
-                    <td th:text="${offer.price}"></td>
-                    <td th:text="${offer.quantity}"></td>
+                    <td th:text="${offer.part.price}"></td>
+                    <td th:text="${offer.part.quantity}"></td>
                     <td>
                         <a type="button" class="btn btn-primary"
-                           h:href="@{/offers/myOffers/edit/{id}(id = ${offer.id})}">Info</a>
+                           th:href="@{/offers/info/{id}(id = ${offer.id})}">Info</a>
                     </td>
                 </tr>
             </th:block>

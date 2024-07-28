@@ -13,7 +13,9 @@
                   href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <link rel="stylesheet" href="/css/shopPage.css">
         </div>
-        <form class="example" method="get" th:action="@{'/shop/shopPage' + '/' + ${makeName} + '/' + ${modelName} + '/' + ${categoryName}}" th:object="${searchFormDTO}">
+        <form class="example" method="get"
+              th:action="@{'/shop/shopPage' + '/' + ${makeName} + '/' + ${modelName} + '/' + ${categoryName}}"
+              th:object="${searchFormDTO}">
             <input th:field="*{searchTerm}" type="text" placeholder="Search...">
             <button type="submit"><i class="fa fa-search"></i></button>
         </form>
@@ -33,9 +35,11 @@
                         </ul>
                         <p style="margin:auto;margin-top:15px" th:text="|Quantity: ${part.quantity}|"></p>
                         <p style="margin:auto;margin-bottom:15px" th:text="|Price: ${part.price}$|"></p>
-                        <a th:href="@{/parts/editPart/{id}(id = ${part.id})}"
+                        <a th:if="${@adminUser.isAdmin()}"
+                           th:href="@{/parts/editPart/{id}(id = ${part.id})}"
                            class="btn btn-success">Edit</a>
-                        <a th:href="@{/parts/info/{id}(id = ${part.id})}"
+                        <a th:unless="${@adminUser.isAdmin()}"
+                           th:href="@{/offers/createOffer/{id}(id = ${part.id})}"
                            class="btn btn-block btn-primary">Part Info</a>
                     </div>
                 </div>

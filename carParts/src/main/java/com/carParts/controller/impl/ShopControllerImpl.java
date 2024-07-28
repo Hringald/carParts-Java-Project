@@ -48,6 +48,9 @@ public class ShopControllerImpl implements ShopController {
 
     @Override
     public String shopModels(@PathVariable("makeName") String makeName, Model model) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
 
         Make make = this.makeService.findMakeByName(makeName);
         Set<com.carParts.model.entity.Model> modelsByMake = this.modelService.findModelByMake(make);
@@ -60,6 +63,9 @@ public class ShopControllerImpl implements ShopController {
 
     @Override
     public String shopCategories(@PathVariable("makeName") String makeName, @PathVariable("modelName") String modelName, Model model) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
 
         List<Category> allCategories = this.categoryService.getAllCategories();
         model.addAttribute("allCategories", allCategories);
@@ -70,20 +76,11 @@ public class ShopControllerImpl implements ShopController {
         return "ShopCategories.html";
     }
 
-    /*
-    @Override
-    public String shopPage(@PathVariable("makeName") String makeName, @PathVariable("modelName") String modelName, @PathVariable("categoryName") String categoryName, Model model) {
-
-        model.addAttribute("makeName", makeName);
-        model.addAttribute("modelName", modelName);
-        model.addAttribute("categoryName", categoryName);
-        model.addAttribute("searchTerm", "%");
-
-        return findPaginated(makeName, modelName, categoryName, 1, "%", model);
-    }
-*/
     @Override
     public String shopPage(@PathVariable("makeName") String makeName, @PathVariable("modelName") String modelName, @PathVariable("categoryName") String categoryName, @RequestParam(value = "searchTerm", required = false) String searchTerm, Model model) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
 
         model.addAttribute("makeName", makeName);
         model.addAttribute("modelName", modelName);
@@ -98,6 +95,10 @@ public class ShopControllerImpl implements ShopController {
 
     @Override
     public String searchShopPage(@Valid SearchFormDTO searchFormDTO, BindingResult result, RedirectAttributes redirectAttributes, @PathVariable("makeName") String makeName, @PathVariable("modelName") String modelName, @PathVariable("categoryName") String categoryName, Model model) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
+
         model.addAttribute("makeName", makeName);
         model.addAttribute("modelName", modelName);
         model.addAttribute("categoryName", categoryName);
@@ -113,6 +114,12 @@ public class ShopControllerImpl implements ShopController {
     }
     @Override
     public String findPaginated(@PathVariable(value = "makeName") String makeName, @PathVariable(value = "modelName") String modelName, @PathVariable(value = "categoryName") String categoryName, @PathVariable(value = "pageNo") int pageNo, @RequestParam(value = "searchTerm", required = false) String searchTerm, Model model) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
+
+
+
         int pageSize = 6;
 
         if (searchTerm == null) {
