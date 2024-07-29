@@ -1,0 +1,30 @@
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <main role="main" class="pb-3">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Username</th>
+                <th scope="col">Parts count</th>
+                <th scope="col">Edit parts</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="user : ${users}">
+                <tr>
+                    <td th:text="*{user.email}"></td>
+                    <td th:text="*{user.getParts().size()}"></td>
+                    <td>
+                        <a type="button" class="btn btn-success" a=""
+                           th:href="@{/admin/editUserParts/{id}(id = ${user.id})}">Edit parts</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </main>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>

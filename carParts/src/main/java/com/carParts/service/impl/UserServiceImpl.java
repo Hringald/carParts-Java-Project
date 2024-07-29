@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -135,5 +136,10 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(Long UserId){
         User currentUser = this.findUserById(UserId).orElse(null);
         this.userRepo.delete(currentUser);
+    }
+
+    @Override
+    public List<User> findAllUsers(){
+        return this.userRepo.findAll();
     }
 }

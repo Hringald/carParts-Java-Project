@@ -63,8 +63,7 @@ public class PartServiceImpl implements PartService {
     }
 
     @Override
-    public void removePartById(Long id, User currentUser) {
-        Part partToDelete = this.partRepo.findById(id).orElse(null);
+    public void removePart(Part partToDelete, User currentUser) {
         if (partToDelete != null) {
             Set<Part> ownedParts = currentUser.getParts();
             ownedParts.remove(partToDelete);

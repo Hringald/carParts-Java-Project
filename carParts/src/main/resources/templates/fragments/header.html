@@ -25,26 +25,29 @@
                 <link rel="stylesheet" href="/css/adminPanel.css">
 
                 <ul class="navbar-nav">
-                    <li  th:if="${@loggedUser.isLogged() and @adminUser.isAdmin()}" class="nav-item">
+                    <li th:if="${@loggedUser.isLogged() and @adminUser.isAdmin()}" class="nav-item">
                         <div class="dropdown nav-link text-dark">
                             <a class="dropbtn">Admin Panel</a>
                             <div class="dropdown-content">
-                                <a href="/Admins/AddMake">Add Make</a>
-                                <a href="/Admins/EditMakes">Edit Makes</a>
-                                <a href="/Admins/AddModel">Add Model</a>
-                                <a href="/Admins/EditModels">Edit Models</a>
-                                <a href="/Admins/UsersParts">Edit Parts</a>
+                                <a href="/admins/addMake">Add Make</a>
+                                <a href="/admins/editMakes">Edit Makes</a>
+                                <a href="/admins/addModel">Add Model</a>
+                                <a href="/admin/editModels">Edit Models</a>
+                                <a href="/admin/usersParts">Edit Parts</a>
                             </div>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a th:if="${@loggedUser.isLogged()}" class="nav-link text-dark" title="Manage" href="/identity/account/manage">Account</a>
+                        <a th:if="${@loggedUser.isLogged()}" class="nav-link text-dark" title="Manage"
+                           href="/identity/account/manage">Account</a>
                     </li>
                     <li class="nav-item">
-                        <a th:if="${@loggedUser.isLogged()}" class="nav-link text-dark" title="Manage" href="/parts/myParts">My Parts</a>
+                        <a th:if="${@loggedUser.isLogged()}" class="nav-link text-dark" title="Manage"
+                           href="/parts/myParts">My Parts</a>
                     </li>
                     <li class="nav-item">
-                        <a th:if="${@loggedUser.isLogged()}" class="nav-link text-dark" title="Manage" href="/offers/myOffers">My Offers</a>
+                        <a th:if="${@loggedUser.isLogged()}" class="nav-link text-dark" title="Manage"
+                           href="/offers/myOffers">My Offers</a>
                     </li>
                     <li th:if="${@loggedUser.isLogged()}" class="nav-item">
                         <form class="form-inline" action="/identity/account/logout" method="post">
@@ -54,7 +57,7 @@
                 </ul>
                 <ul th:if="${!@loggedUser.isLogged()}" class="navbar-nav">
                     <li class="nav-item">
-                        <a  class="nav-link text-dark" href="/identity/account/register">Register</a>
+                        <a class="nav-link text-dark" href="/identity/account/register">Register</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="/identity/account/login">Login</a>

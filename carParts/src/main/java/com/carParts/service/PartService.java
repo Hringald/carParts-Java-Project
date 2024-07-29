@@ -14,9 +14,10 @@ public interface PartService {
     List<Part> findAllParts();
 
     void addPart(AddPartDTO addPartDTO, User currentUser);
+
     void editPart(Part currentPart, AddPartDTO addPartDTO);
 
-    void removePartById(Long id, User currentUser);
+    void removePart(Part partToDelete, User currentUser);
 
     Part findPartById(Long id);
 

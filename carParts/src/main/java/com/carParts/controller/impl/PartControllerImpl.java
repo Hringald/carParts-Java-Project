@@ -4,6 +4,7 @@ import com.carParts.controller.PartController;
 import com.carParts.model.dto.AddPartDTO;
 import com.carParts.model.entity.*;
 import com.carParts.service.impl.*;
+import com.carParts.util.AdminUser;
 import com.carParts.util.LoggedUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +17,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Controller
 public class PartControllerImpl implements PartController {
 
     private final LoggedUser loggedUser;
+    private final AdminUser adminUser;
     private final UserServiceImpl userService;
     private final MakeServiceImpl makeService;
     private final ModelServiceImpl modelService;
@@ -29,13 +32,14 @@ public class PartControllerImpl implements PartController {
     private final CategoryServiceImpl categoryService;
 
     public PartControllerImpl(LoggedUser loggedUser,
-                              UserServiceImpl userService, PartServiceImpl partService, MakeServiceImpl makeService, CategoryServiceImpl categoryService, ModelServiceImpl modelService) {
+                              UserServiceImpl userService, PartServiceImpl partService, MakeServiceImpl makeService, CategoryServiceImpl categoryService, ModelServiceImpl modelService, AdminUser adminUser) {
         this.loggedUser = loggedUser;
         this.userService = userService;
         this.partService = partService;
         this.makeService = makeService;
         this.modelService = modelService;
         this.categoryService = categoryService;
+        this.adminUser = adminUser;
     }
 
     @Override
@@ -140,8 +144,18 @@ public class PartControllerImpl implements PartController {
 
     @Override
     public String removePartById(@PathVariable("id") Long id) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
+
+        Part part = this.partService.findPartById(id);
+
+        if (!(Objects.equals(this.loggedUser.getId(), part.getSeller().getId())) || !(this.adminUser.isAdmin())) {
+            return "redirect:/";
+        }
+
         User currentUser = this.userService.findUserById(this.loggedUser.getId()).orElse(null);
-        this.partService.removePartById(id, currentUser);
+        this.partService.removePart(part, currentUser);
         return "redirect:/parts/myParts";
     }
 
@@ -152,6 +166,11 @@ public class PartControllerImpl implements PartController {
         }
 
         Part partToEdit = this.partService.findPartById(id);
+
+        if (!(Objects.equals(this.loggedUser.getId(), partToEdit.getSeller().getId())) || !(this.adminUser.isAdmin())) {
+            return "redirect:/";
+        }
+
         Make partMake = partToEdit.getMake();
         String makeName = partMake.getName();
         model.addAttribute("makeName", makeName);
@@ -183,7 +202,12 @@ public class PartControllerImpl implements PartController {
         if (!this.loggedUser.isLogged()) {
             return "redirect:/";
         }
-        String makeName = addPartDTO.getMakeName();
+
+        Long id = addPartDTO.getId();
+        Part currentPart = this.partService.findPartById(id);
+        if (!(Objects.equals(this.loggedUser.getId(), currentPart.getSeller().getId())) || !(this.adminUser.isAdmin())) {
+            return "redirect:/";
+        }
 
         if (addPartDTO.getPrice() < Double.parseDouble(DataConstants.Part.DecimalMinValue)) {
             result.addError(
@@ -217,7 +241,6 @@ public class PartControllerImpl implements PartController {
                             "Quantity must be less than 100"));
         }
 
-        Long id = addPartDTO.getId();
 
         if (result.hasErrors()) {
             redirectAttributes
@@ -229,7 +252,7 @@ public class PartControllerImpl implements PartController {
             return resultString;
         }
 
-        Part currentPart = this.partService.findPartById(id);
+
         this.partService.editPart(currentPart, addPartDTO);
 
         return "redirect:/parts/myParts";

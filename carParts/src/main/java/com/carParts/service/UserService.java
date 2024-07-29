@@ -4,6 +4,7 @@ package com.carParts.service;
 import com.carParts.model.dto.*;
 import com.carParts.model.entity.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
@@ -31,4 +32,6 @@ public interface UserService {
     void changePassword(Long UserId, PasswordChangeDTO passwordChangeDTO);
 
     void deleteUser(Long UserId);
+
+    List<User> findAllUsers();
 }
