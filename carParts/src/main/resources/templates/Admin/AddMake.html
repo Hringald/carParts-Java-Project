@@ -1,0 +1,37 @@
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="container">
+            <div class="row">
+                <div class="offset-md-2 col-md-8 com-sm-12">
+                    <h2 class="heading-margin" text-center="">Edit Make</h2>
+                    <form method="post" action="/admin/addMake" th:object="${addMakeDTO}">
+                        <div class="form-group">
+                            <label for="Name">Name</label>
+                            <input placeholder="Add make name..."
+                                   th:errorclass="'is-invalid bg-danger'"
+                                   type="text" class="form-control" id="name" name="name"></input>
+                            <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Name
+                                error
+                                message</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="ImageUrl">ImageUrl</label>
+                            <input placeholder="Add image Url..."
+                                   th:errorclass="'is-invalid bg-danger'"
+                                   type="text" class="form-control" id="imageUrl" name="imageUrl"></input>
+                            <small th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" class="text-danger">Image
+                                Url error
+                                message</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary" value="Add">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<footer th:replace="fragments/footer::footer"></footer>
+</body>

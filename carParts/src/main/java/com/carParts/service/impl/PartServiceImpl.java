@@ -158,6 +158,14 @@ public class PartServiceImpl implements PartService {
             searchTerm = "%";
         }
         return this.partRepo.findByMakeAndModelAndCategoryAndNameLike(make, model, category, searchTerm, pageable);
-        //return this.partRepo.findAll(pageable);
+    }
+
+    @Override
+    public void deleteAllPartsByMake(Make make) {
+        List<Part> parts = this.partRepo.findByMake(make);
+
+        for (Part part : parts) {
+            this.partRepo.delete(part);
+        }
     }
 }

@@ -13,9 +13,9 @@ public class Make extends BaseEntity {
     private String imageUrl;
     @ManyToOne(fetch = FetchType.EAGER)
     private Admin admin;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "make")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "make", cascade = CascadeType.ALL)
     private Set<Model> parts;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "make")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "make", cascade = CascadeType.ALL)
     private Set<Model> models;
 
     public Make() {

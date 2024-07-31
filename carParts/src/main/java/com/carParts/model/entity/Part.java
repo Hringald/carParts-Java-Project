@@ -17,7 +17,7 @@ public class Part extends BaseEntity {
     private Category category;
     @ManyToOne(fetch = FetchType.EAGER)
     private Make make;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Model model;
 
     @OneToOne

@@ -1,0 +1,55 @@
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <div class="row">
+
+        <div class="card col-6 col-lg-3 game-card">
+            <img th:src="${modelUrl}"
+                 class="card-img-top img-fluid card-image rounded mt-5" data-toggle="tooltip" data-placement="bottom"
+                 th:title="${modelName}">
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-center" th:text="${modelName}"></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class=" col-md-8 com-sm-12">
+            <h2 class="heading-margin" text-center="">Edit Model</h2>
+            <form method="get" action="/admin/editModel" th:object="${addModelDTO}">
+                <input th:value="${modelId}" id="id" name="id" hidden readonly>
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input placeholder="Add model name..." th:value="${modelName}"
+                           th:errorclass="'is-invalid bg-danger'"
+                           type="text" class="form-control" id="name" name="name"></input>
+                    <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Name error
+                        message</small>
+                </div>
+                <div class="form-group">
+                    <label>Make</label>
+                    <select th:field="*{makeName}" th:errorclass="'is-invalid bg-danger'" class="form-control"
+                            id="makeName" name="makeName">
+                        <th:block th:each="make : ${allMakes}">
+                            <option th:value="${make.name}" th:text="${make.name}"></option>
+                        </th:block>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Image Url</label>
+                    <input placeholder="Add image Url..." th:value="${modelUrl}"
+                           th:errorclass="'is-invalid bg-danger'"
+                           type="text" class="form-control" id="imageUrl" name="imageUrl"></input>
+                    <small th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" class="text-danger">Image
+                        Url error
+                        message</small>
+                </div>
+                <button type="submit" class="btn btn-success" value="Add">Edit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="fragments/footer::footer"></footer>
+</body>

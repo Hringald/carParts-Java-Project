@@ -1,0 +1,36 @@
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <main role="main" class="pb-3">
+
+        <h1 th:if="${makes.size() <= 0}">There aren't any available makes!</h1>
+        <table th:if="${makes.size() > 0}" class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Make Name</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="make : ${makes}">
+                <tr>
+                    <td th:text="${make.name}"></td>
+                    <td>
+                        <a type="button" class="btn btn-success" a=""
+                           th:href="@{/admin/editMake/{id}(id = ${make.id})}">Edit</a>
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-danger" a=""
+                           th:href="@{/admin/deleteMake/{id}(id = ${make.id})}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+    </main>
+</div>
+
+<footer th:replace="fragments/footer::footer"></footer>
+</body>

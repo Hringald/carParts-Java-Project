@@ -14,5 +14,6 @@ import java.util.Optional;
 public interface PartRepo extends JpaRepository<Part, Long> {
     List<Part> findBySeller(User user);
 
+    List<Part> findByMake(Make make);
     Page<Part> findByMakeAndModelAndCategoryAndNameLike(Make make, Model model, Category category, String searchTerm, Pageable pageable);
 }

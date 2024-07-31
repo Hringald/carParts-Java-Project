@@ -15,7 +15,7 @@ public class Model extends BaseEntity {
     private Make make;
     @ManyToOne(fetch = FetchType.EAGER)
     private Admin admin;
-    @OneToMany(mappedBy = "model")
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
     private Set<Part> parts;
 
     public Model() {
