@@ -1,6 +1,8 @@
 package com.carParts.model.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -13,11 +15,14 @@ public class Part extends BaseEntity {
     private String name;
     @Column(nullable = false)
     private String imageUrl;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
+    @Fetch(FetchMode.JOIN)
     private Category category;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
+    @Fetch(FetchMode.JOIN)
     private Make make;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @Fetch(FetchMode.JOIN)
     private Model model;
 
     @OneToOne
@@ -35,7 +40,8 @@ public class Part extends BaseEntity {
     @DecimalMax(DataConstants.Part.DecimalMaxValue)
     private double price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne()
+    @Fetch(FetchMode.JOIN)
     private User seller;
 
 

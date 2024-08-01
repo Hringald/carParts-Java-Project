@@ -1,6 +1,8 @@
 package com.carParts.model.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.Set;
 
@@ -15,6 +17,7 @@ public class Category extends BaseEntity {
     private String imageUrl;
 
     @OneToMany(mappedBy = "category")
+    @Fetch(FetchMode.JOIN)
     private Set<Part> parts;
 
     public Category() {

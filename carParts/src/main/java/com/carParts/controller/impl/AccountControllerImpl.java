@@ -54,6 +54,10 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     public String changePhone(@Valid PhoneChangeDTO phoneChangeDTO, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
+
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("phoneChangeDTO", phoneChangeDTO).addFlashAttribute("org.springframework.validation.BindingResult.phoneChangeDTO", result);
             return "redirect:/identity/account/manage";
@@ -81,6 +85,10 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     public String changeEmail(@Valid EmailChangeDTO emailChangeDTO, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
+
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("emailChangeDTO", emailChangeDTO).addFlashAttribute("org.springframework.validation.BindingResult.emailChangeDTO", result);
             return "redirect:/identity/account/manage/email";
@@ -103,6 +111,9 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     public String passwordChange(@Valid PasswordChangeDTO passwordChangeDTO, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
 
         if (!passwordChangeDTO.getNewPassword().equals(passwordChangeDTO.getConfirmNewPassword())) {
             result.addError(new FieldError("differentConfirmPassword", "confirmNewPassword", "Passwords must be the same."));
@@ -151,6 +162,10 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     public String becomeAdmin(@Valid MakeAdminDTO makeAdminDTO, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (!this.loggedUser.isLogged()) {
+            return "redirect:/";
+        }
+
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("makeAdminDTO", makeAdminDTO).addFlashAttribute("org.springframework.validation.BindingResult.makeAdminDTO", result);
             return "redirect:/identity/account/manage/becomeAdmin";

@@ -1,6 +1,8 @@
 package com.carParts.model.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import java.util.Set;
 
@@ -13,7 +15,8 @@ public class Make extends BaseEntity {
     private String imageUrl;
     @ManyToOne(fetch = FetchType.EAGER)
     private Admin admin;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "make", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "make", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
     private Set<Model> parts;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "make", cascade = CascadeType.ALL)
     private Set<Model> models;

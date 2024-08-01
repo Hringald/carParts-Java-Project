@@ -2,10 +2,7 @@ package com.carParts.controller.impl;
 
 import com.carParts.controller.OfferController;
 import com.carParts.model.dto.AddOfferDTO;
-import com.carParts.model.dto.AddPartDTO;
 import com.carParts.model.entity.*;
-import com.carParts.repository.UserRepo;
-import com.carParts.service.impl.MakeServiceImpl;
 import com.carParts.service.impl.OfferServiceImpl;
 import com.carParts.service.impl.PartServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
@@ -13,7 +10,6 @@ import com.carParts.util.LoggedUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,24 +17,21 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Controller
 public class OfferControllerImpl implements OfferController {
 
     private final LoggedUser loggedUser;
     private final UserServiceImpl userService;
-    private final MakeServiceImpl makeService;
     private final OfferServiceImpl offerService;
 
     private final PartServiceImpl partService;
 
     public OfferControllerImpl(LoggedUser loggedUser,
-                               UserServiceImpl userService, OfferServiceImpl offerService, MakeServiceImpl makeService, PartServiceImpl partService) {
+                               UserServiceImpl userService, OfferServiceImpl offerService, PartServiceImpl partService) {
         this.loggedUser = loggedUser;
         this.userService = userService;
         this.offerService = offerService;
-        this.makeService = makeService;
         this.partService = partService;
     }
 
