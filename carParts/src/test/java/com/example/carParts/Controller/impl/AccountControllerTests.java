@@ -1,14 +1,8 @@
 package com.example.carParts.Controller.impl;
 
 import com.carParts.controller.impl.AccountControllerImpl;
-import com.carParts.controller.impl.AdminControllerImpl;
-import com.carParts.model.entity.Make;
-import com.carParts.model.entity.Model;
-import com.carParts.model.entity.Part;
 import com.carParts.model.entity.User;
-import com.carParts.service.MakeService;
 import com.carParts.service.impl.AdminServiceImpl;
-import com.carParts.service.impl.ModelServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
 import com.carParts.util.AdminUser;
 import com.carParts.util.LoggedUser;
@@ -22,8 +16,6 @@ import java.util.*;
 import static org.mockito.Mockito.when;
 
 public class AccountControllerTests {
-    private final String TEST_EMAIL = "test@abv.bg";
-    private final String TEST_PASSWORD = "1234";
 
     private AccountControllerImpl toTest;
     private LoggedUser mockLoggedUser;

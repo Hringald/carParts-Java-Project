@@ -1,9 +1,6 @@
 package com.example.carParts.Controller.impl;
 
-import com.carParts.controller.impl.AccountControllerImpl;
 import com.carParts.controller.impl.HomeControllerImpl;
-import com.carParts.model.entity.User;
-import com.carParts.service.impl.AdminServiceImpl;
 import com.carParts.service.impl.MakeServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
 import com.carParts.util.AdminUser;
@@ -13,13 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
 public class HomeControllerTests {
-    private final String TEST_EMAIL = "test@abv.bg";
-    private final String TEST_PASSWORD = "1234";
 
     private HomeControllerImpl toTest;
     private LoggedUser mockLoggedUser;
