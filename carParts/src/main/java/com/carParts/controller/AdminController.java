@@ -12,49 +12,49 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 
-@RequestMapping("/")
+@RequestMapping("/admin")
 public interface AdminController {
 
-    @GetMapping("/admin/usersParts")
+    @GetMapping("/usersParts")
     String usersParts(Model model);
 
-    @GetMapping("/admin/editUserParts/{id}")
+    @GetMapping("/editUserParts/{id}")
     String editUserParts(@PathVariable("id") Long id, Model model);
 
-    @GetMapping("/admin/editModels")
+    @GetMapping("/editModels")
     String editModels(Model model);
 
-    @GetMapping("/admin/editModel/{id}")
+    @GetMapping("/editModel/{id}")
     String editModel(@PathVariable("id") Long id, Model model);
 
-    @GetMapping("/admin/editModel")
+    @GetMapping("/editModel")
     String editModel(Model model, @Valid AddModelDTO addModelDTO, BindingResult result, RedirectAttributes redirectAttributes);
 
-    @GetMapping("/admin/deleteModel/{id}")
+    @GetMapping("/deleteModel/{id}")
     String deleteModel(@PathVariable("id") Long id, Model model);
 
 
-    @GetMapping("/admin/addModel")
+    @GetMapping("/addModel")
     String addModel(Model model);
 
-    @PostMapping("/admin/addModel")
+    @PostMapping("/addModel")
     String addModel(@Valid AddModelDTO addModelDTO, BindingResult result, RedirectAttributes redirectAttributes);
 
-    @GetMapping("/admin/editMakes")
+    @GetMapping("/editMakes")
     String editMakes(Model model);
 
-    @GetMapping("/admin/editMake/{id}")
+    @GetMapping("/editMake/{id}")
     String editMake(@PathVariable("id") Long id, Model model);
 
-    @GetMapping("/admin/editMake")
+    @GetMapping("/editMake")
     String editMake(Model model, @Valid AddMakeDTO addMakeDTO, BindingResult result, RedirectAttributes redirectAttributes);
 
-    @GetMapping("/admin/deleteMake/{id}")
+    @GetMapping("/deleteMake/{id}")
     String deleteMake(@PathVariable("id") Long id, Model model);
 
-    @GetMapping("/admin/addMake")
+    @GetMapping("/addMake")
     public String addMake();
 
-    @PostMapping("/admin/addMake")
+    @PostMapping("/addMake")
     public String addMake(@Valid AddMakeDTO addMakeDTO, BindingResult result, RedirectAttributes redirectAttributes);
 }

@@ -13,9 +13,7 @@ public class Model extends BaseEntity {
     private String imageUrl;
     @ManyToOne(fetch = FetchType.EAGER)
     private Make make;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Admin admin;
-    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Part> parts;
 
     public Model() {
@@ -45,13 +43,6 @@ public class Model extends BaseEntity {
         this.make = make;
     }
 
-    public Admin getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-    }
 
     public Set<Part> getParts() {
         return parts;

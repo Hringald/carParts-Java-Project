@@ -13,11 +13,9 @@ public class Make extends BaseEntity {
     private String name;
     @Column(nullable = false)
     private String imageUrl;
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Admin admin;
     @OneToMany(mappedBy = "make", cascade = CascadeType.ALL)
     @Fetch(FetchMode.JOIN)
-    private Set<Model> parts;
+    private Set<Part> parts;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "make", cascade = CascadeType.ALL)
     private Set<Model> models;
 
@@ -40,19 +38,12 @@ public class Make extends BaseEntity {
         this.imageUrl = imageUrl;
     }
 
-    public Admin getAdmin() {
-        return admin;
-    }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
-    }
-
-    public Set<Model> getParts() {
+    public Set<Part> getParts() {
         return parts;
     }
 
-    public void setParts(Set<Model> parts) {
+    public void setParts(Set<Part> parts) {
         this.parts = parts;
     }
 

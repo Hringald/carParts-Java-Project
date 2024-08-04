@@ -1,12 +1,10 @@
 package com.carParts.model.dto;
 
 
-import com.carParts.validation.annotation.UniqueEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 public class LoginDTO {
 
@@ -16,7 +14,7 @@ public class LoginDTO {
     @NotBlank(message = "Email cannot be empty!")
     private String email;
     @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
-    @NotNull
+    @NotBlank(message = "Password cannot be empty!")
     private String password;
 
     public LoginDTO() {

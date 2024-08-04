@@ -2,12 +2,10 @@
     <ul class="nav nav-pills flex-column">
         <li class="nav-item"><a class="nav-link" id="profile" href="/identity/account/manage">Profile</a></li>
         <li class="nav-item"><a class="nav-link" id="email" href="/identity/account/manage/email">Email</a></li>
-        <li class="nav-item"><a class="nav-link" id="change-password"
-                                href="/identity/account/manage/password">Password</a></li>
-        <li class="nav-item"><a class="nav-link" id="personal-data" href="/identity/account/manage/personalData">Personal
-            data</a></li>
+        <li class="nav-item"><a class="nav-link" id="change-password" href="/identity/account/manage/password">Password</a></li>
+        <li class="nav-item"><a class="nav-link" id="personal-data" href="/identity/account/manage/personalData">Personal data</a></li>
     </ul>
-    <a th:if="${!@adminUser.isAdmin()}" type="button" class="btn btn-success"
+    <a sec:authorize='!hasRole("ADMIN")' type="button" class="btn btn-success"
        href="/identity/account/manage/becomeAdmin">Become Admin</a>
 
 </div>

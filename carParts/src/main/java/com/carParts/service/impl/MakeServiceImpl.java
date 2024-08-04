@@ -1,20 +1,13 @@
 package com.carParts.service.impl;
 
 import com.carParts.model.dto.AddMakeDTO;
-import com.carParts.model.dto.AddModelDTO;
-import com.carParts.model.entity.Admin;
 import com.carParts.model.entity.Make;
-import com.carParts.model.entity.Model;
-import com.carParts.model.entity.User;
 import com.carParts.repository.MakeRepo;
-import com.carParts.repository.PartRepo;
 import com.carParts.service.AdminService;
 import com.carParts.service.MakeService;
-import com.carParts.util.AdminUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class MakeServiceImpl implements MakeService {
@@ -27,13 +20,11 @@ public class MakeServiceImpl implements MakeService {
 
     private final AdminService adminService;
 
-    private final AdminUser adminUser;
 
-    public MakeServiceImpl(MakeRepo makeRepo, AdminService adminService, AdminUser adminUser, PartServiceImpl partService, ModelServiceImpl modelService) {
+    public MakeServiceImpl(MakeRepo makeRepo, AdminService adminService, PartServiceImpl partService, ModelServiceImpl modelService) {
 
         this.makeRepo = makeRepo;
         this.adminService = adminService;
-        this.adminUser = adminUser;
         this.partService = partService;
         this.modelService = modelService;
     }
@@ -82,9 +73,9 @@ public class MakeServiceImpl implements MakeService {
 
         make.setImageUrl(addMakeDTO.getImageUrl());
 
-        Admin admin = adminService.findAdminByUsername(adminUser.getUsername());
+        //Admin admin = adminService.findAdminByUsername(adminUser.getUsername());
 
-        make.setAdmin(admin);
+        //make.setAdmin(admin);
 
         this.makeRepo.save(make);
     }

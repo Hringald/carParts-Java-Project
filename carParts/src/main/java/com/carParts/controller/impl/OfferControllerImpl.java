@@ -6,7 +6,8 @@ import com.carParts.model.entity.*;
 import com.carParts.service.impl.OfferServiceImpl;
 import com.carParts.service.impl.PartServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
-import com.carParts.util.LoggedUser;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,39 +22,30 @@ import java.util.Objects;
 @Controller
 public class OfferControllerImpl implements OfferController {
 
-    private final LoggedUser loggedUser;
     private final UserServiceImpl userService;
     private final OfferServiceImpl offerService;
 
     private final PartServiceImpl partService;
 
-    public OfferControllerImpl(LoggedUser loggedUser,
-                               UserServiceImpl userService, OfferServiceImpl offerService, PartServiceImpl partService) {
-        this.loggedUser = loggedUser;
+    public OfferControllerImpl(UserServiceImpl userService, OfferServiceImpl offerService, PartServiceImpl partService) {
         this.userService = userService;
         this.offerService = offerService;
         this.partService = partService;
     }
 
     @Override
-    public String myOffers(Model model) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
+    public String myOffers(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        User currentUser = this.userService.findUserById(this.loggedUser.getId()).orElse(null);
+        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
         List<Offer> myOffers = this.offerService.findOwnedOffers(currentUser);
 
         model.addAttribute("myOffers", myOffers);
 
-        return "MyOffers";
+        return "Offer/MyOffers";
     }
 
     @Override
     public String createOffer(@PathVariable("id") Long id, Model model) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
 
         Part partToBuy = this.partService.findPartById(id);
 
@@ -64,14 +56,11 @@ public class OfferControllerImpl implements OfferController {
         model.addAttribute("partQuantity", partToBuy.getQuantity());
         model.addAttribute("partPrice", partToBuy.getPrice());
 
-        return "CreateOffer";
+        return "Offer/CreateOffer";
     }
 
     @Override
     public String createOffer(Model model, @Valid AddOfferDTO addOfferDTO, BindingResult result, RedirectAttributes redirectAttributes) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
 
         Long id = addOfferDTO.getId();
 
@@ -80,7 +69,7 @@ public class OfferControllerImpl implements OfferController {
                     .addFlashAttribute("addOfferDTO", addOfferDTO)
                     .addFlashAttribute("org.springframework.validation.BindingResult.addOfferDTO", result);
 
-            String resultString = "redirect:/offers/viewOffer/";
+            String resultString = "redirect:/offers/createOffer/";
             resultString += id;
             return resultString;
         }
@@ -95,16 +84,15 @@ public class OfferControllerImpl implements OfferController {
     }
 
     @Override
-    public String viewOffer(@PathVariable("id") Long id, Model model) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
+    public String viewOffer(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id") Long id, Model model) {
 
         Offer currentOffer = this.offerService.findById(id);
         Part currentPart = currentOffer.getPart();
         User partSeller = currentPart.getSeller();
 
-        if (!Objects.equals(this.loggedUser.getId(), partSeller.getId())) {
+        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
+
+        if (!Objects.equals(currentUser.getId(), partSeller.getId())) {
             return "redirect:/";
         }
 
@@ -122,14 +110,13 @@ public class OfferControllerImpl implements OfferController {
         model.addAttribute("offerCity", currentOffer.getCity());
         model.addAttribute("offerZip", currentOffer.getZipCode());
 
-        return "OfferInfo";
+        return "Offer/OfferInfo";
     }
 
     @Override
     public String declineOffer(@PathVariable("id") Long id, Model model) {
 
         Offer currentOffer = this.offerService.findById(id);
-        Part currentPart = currentOffer.getPart();
 
         this.offerService.declineOffer(currentOffer);
 

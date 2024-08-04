@@ -6,7 +6,6 @@ import com.carParts.service.impl.AdminServiceImpl;
 import com.carParts.service.impl.MakeServiceImpl;
 import com.carParts.service.impl.ModelServiceImpl;
 import com.carParts.service.impl.PartServiceImpl;
-import com.carParts.util.AdminUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,7 +28,6 @@ class MakeServiceImplTest {
 
     private AdminServiceImpl mockAdminService;
 
-    private AdminUser mockAdminUser;
 
     private PartServiceImpl mockPartService;
 
@@ -39,12 +37,11 @@ class MakeServiceImplTest {
     void setUp() {
         mockMakeRepo = Mockito.mock();
         mockAdminService = Mockito.mock();
-        mockAdminUser = Mockito.mock();
         mockPartService = Mockito.mock();
         mockModelService = Mockito.mock();
 
 
-        toTest = new MakeServiceImpl(mockMakeRepo, mockAdminService, mockAdminUser, mockPartService, mockModelService);
+        toTest = new MakeServiceImpl(mockMakeRepo, mockAdminService, mockPartService, mockModelService);
     }
 
     @Test

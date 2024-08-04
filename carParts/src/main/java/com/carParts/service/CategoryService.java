@@ -2,7 +2,6 @@ package com.carParts.service;
 
 
 import com.carParts.model.entity.Category;
-import com.carParts.model.entity.CategoryEnum;
 
 import java.util.List;
 

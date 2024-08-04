@@ -1,6 +1,8 @@
 package com.carParts.controller;
 
 import com.carParts.model.dto.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,33 +16,46 @@ import javax.validation.Valid;
 @RequestMapping("/identity/account")
 public interface AccountController {
 
+    @GetMapping("/login")
+    String login(Model model);
+
+    @GetMapping("/login/error")
+    String loginError(@Valid LoginDTO loginDTO, BindingResult result, RedirectAttributes redirectAttributes);
+
+    @GetMapping("/register")
+    String register();
+
+    @PostMapping("/register")
+    String registerConfirm(@Valid RegisterDTO registerDTO, BindingResult result, RedirectAttributes redirectAttributes);
+
     @GetMapping("/manage")
-    String changePhone(Model model);
+    String changePhone(@AuthenticationPrincipal UserDetails userDetails, Model model);
 
     @PostMapping("/manage")
-    String changePhone(@Valid PhoneChangeDTO phoneChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
+    String changePhone(@AuthenticationPrincipal UserDetails userDetails, @Valid PhoneChangeDTO phoneChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
 
     @GetMapping("/manage/email")
-    String emailChange(Model model);
+    String emailChange(@AuthenticationPrincipal UserDetails userDetails, Model model);
 
     @PostMapping("/manage/email")
-    String changeEmail(@Valid EmailChangeDTO emailChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
+    String changeEmail(@AuthenticationPrincipal UserDetails userDetails, @Valid EmailChangeDTO emailChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
 
     @GetMapping("/manage/password")
     String passwordChange(Model model);
 
-    @GetMapping("/manage/personalData")
-    String personalData(Model model);
-
     @PostMapping("/manage/password")
-    String passwordChange(@Valid PasswordChangeDTO passwordChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
-
-    @GetMapping("/manage/deletePersonalData")
-    String deleteUser(Model model);
+    String passwordChange(@AuthenticationPrincipal UserDetails userDetails, @Valid PasswordChangeDTO passwordChangeDTO, BindingResult result, RedirectAttributes redirectAttributes);
 
     @GetMapping("/manage/becomeAdmin")
     String becomeAdmin(Model model);
 
     @PostMapping("/manage/becomeAdmin")
-    String becomeAdmin(@Valid MakeAdminDTO makeAdminDTO, BindingResult result, RedirectAttributes redirectAttributes);
+    String becomeAdmin(@AuthenticationPrincipal UserDetails userDetails, @Valid MakeAdminDTO makeAdminDTO, BindingResult result, RedirectAttributes redirectAttributes);
+
+    @GetMapping("/manage/personalData")
+    String personalData(Model model);
+
+    @GetMapping("/manage/deletePersonalData")
+    String deleteUser(@AuthenticationPrincipal UserDetails userDetails, Model model);
+
 }

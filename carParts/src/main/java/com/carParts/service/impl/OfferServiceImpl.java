@@ -23,10 +23,13 @@ public class OfferServiceImpl implements OfferService {
 
     private final PartRepo partRepo;
 
-    public OfferServiceImpl(UserRepo userRepo, OfferRepo offerRepo, PartRepo partRepo) {
+    private final PartServiceImpl partService;
+
+    public OfferServiceImpl(UserRepo userRepo, OfferRepo offerRepo, PartRepo partRepo, PartServiceImpl partService) {
         this.userRepo = userRepo;
         this.offerRepo = offerRepo;
         this.partRepo = partRepo;
+        this.partService = partService;
     }
 
     @Override
@@ -80,8 +83,7 @@ public class OfferServiceImpl implements OfferService {
     @Override
     public void sellOffer(Offer currentOffer, Part currentPart) {
         if (currentPart.getQuantity() - 1 <= 0) {
-            declineOffer(currentOffer);
-            this.partRepo.delete(currentPart);
+            this.partService.removePart(currentPart.getId());
         } else {
             currentPart.setQuantity(currentPart.getQuantity() - 1);
             declineOffer(currentOffer);

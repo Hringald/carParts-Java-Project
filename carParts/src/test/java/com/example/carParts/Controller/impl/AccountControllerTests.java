@@ -1,172 +1,132 @@
 package com.example.carParts.Controller.impl;
 
 import com.carParts.controller.impl.AccountControllerImpl;
+import com.carParts.model.CarPartsUserDetails;
 import com.carParts.model.entity.User;
+import com.carParts.repository.UserRepo;
 import com.carParts.service.impl.AdminServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
-import com.carParts.util.AdminUser;
-import com.carParts.util.LoggedUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.*;
 
 import static org.mockito.Mockito.when;
 
 public class AccountControllerTests {
-
+    private final String TEST_EMAIL = "test@abv.bg";
+    private final String TEST_PHONE = "1234784512";
+    private final String TEST_PASSWORD = "testPassword";
     private AccountControllerImpl toTest;
-    private LoggedUser mockLoggedUser;
-    private AdminUser mockAdminUser;
     private UserServiceImpl mockUserService;
 
     private AdminServiceImpl mockAdminService;
 
+    private UserDetails mockUserDetails;
+
+    private UserRepo mockUserRepo;
+
     @BeforeEach
     void setUp() {
-        mockLoggedUser = Mockito.mock();
         mockUserService = Mockito.mock();
         mockAdminService = Mockito.mock();
-        mockAdminUser = Mockito.mock();
+        mockUserDetails = Mockito.mock();
+        mockUserRepo = Mockito.mock();
 
-        toTest = new AccountControllerImpl(mockLoggedUser, mockUserService, mockAdminService, mockAdminUser);
+        toTest = new AccountControllerImpl(mockUserService, mockAdminService);
     }
 
     @Test
-    void changePhoneReturnsCorrectViewWithModelIfUserIsLogged() {
-
-        when(mockLoggedUser.isLogged()).thenReturn(true);
-
-        String result = toTest.changePhone(Mockito.mock());
-
-        Assertions.assertEquals(result, "manage");
-    }
-
-    @Test
-    void changePhoneReturnsCorrectViewWithModelIfUserIsNotLogged() {
-
-        when(mockLoggedUser.isLogged()).thenReturn(false);
-
-        String result = toTest.changePhone(Mockito.mock());
-
-        Assertions.assertEquals(result, "redirect:/");
-    }
-
-    @Test
-    void emailChangeReturnsCorrectViewWithModelIfUserIsLogged() {
+    void changePhoneReturnsCorrectViewWithModel() {
 
         User user = new User();
-        user.setEmail("TEST@ABV.BG");
+        user.setEmail(TEST_EMAIL);
+        user.setPhone(TEST_PHONE);
 
-        when(mockLoggedUser.isLogged()).thenReturn(true);
-        when(mockLoggedUser.getId()).thenReturn(user.getId());
-        when(mockUserService.findUserById(null)).thenReturn(Optional.of(user));
+        when(mockUserRepo.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(user));
+        when(mockUserDetails.getUsername()).thenReturn(TEST_EMAIL);
+        when(mockUserService.findUserByEmail(TEST_EMAIL)).thenReturn(user);
 
-        String result = toTest.emailChange(Mockito.mock());
+        String result = toTest.changePhone(mockUserDetails, Mockito.mock());
 
-        Assertions.assertEquals(result, "email");
+        Assertions.assertEquals(result, "Account/Manage");
+    }
+
+
+    @Test
+    void emailChangeReturnsCorrectViewWithModel() {
+
+        User user = new User();
+        user.setEmail(TEST_EMAIL);
+
+        when(mockUserDetails.getUsername()).thenReturn(TEST_EMAIL);
+        when(mockUserService.findUserByEmail(TEST_EMAIL)).thenReturn(user);
+
+        String result = toTest.emailChange(mockUserDetails, Mockito.mock());
+
+        Assertions.assertEquals(result, "Account/Email");
     }
 
     @Test
-    void emailChangeReturnsCorrectViewWithModelIfUserIsNotLogged() {
+    void passwordChangeReturnsCorrectViewWithModel() {
+        User user = new User();
+        user.setEmail(TEST_EMAIL);
+        user.setPassword(TEST_PASSWORD);
 
-        when(mockLoggedUser.isLogged()).thenReturn(false);
-
-        String result = toTest.emailChange(Mockito.mock());
-
-        Assertions.assertEquals(result, "redirect:/");
-    }
-
-    @Test
-    void passwordChangeReturnsCorrectViewWithModelIfUserIsLogged() {
-
-        when(mockLoggedUser.isLogged()).thenReturn(true);
+        when(mockUserDetails.getUsername()).thenReturn(TEST_EMAIL);
+        when(mockUserService.findUserByEmail(TEST_EMAIL)).thenReturn(user);
 
         String result = toTest.passwordChange(Mockito.mock());
 
-        Assertions.assertEquals(result, "Password");
+        Assertions.assertEquals(result, "Account/Password");
     }
 
     @Test
-    void passwordChangeReturnsCorrectViewWithModelIfUserIsNotLogged() {
-
-        when(mockLoggedUser.isLogged()).thenReturn(false);
-
-        String result = toTest.passwordChange(Mockito.mock());
-
-        Assertions.assertEquals(result, "redirect:/");
-    }
-
-    @Test
-    void personalDataReturnsCorrectViewWithModelIfUserIsLogged() {
-
-        when(mockLoggedUser.isLogged()).thenReturn(true);
-
-        String result = toTest.personalData(Mockito.mock());
-
-        Assertions.assertEquals(result, "PersonalData");
-    }
-
-    @Test
-    void personalDataReturnsCorrectViewWithModelIfUserIsNotLogged() {
-
-        when(mockLoggedUser.isLogged()).thenReturn(false);
-
-        String result = toTest.personalData(Mockito.mock());
-
-        Assertions.assertEquals(result, "redirect:/");
-    }
-
-    @Test
-    void deleteUserReturnsCorrectViewWithModelIfUserIsLogged() {
+    void personalDataReturnsCorrectViewWithModel() {
 
         User user = new User();
-        user.setEmail("TEST@ABV.BG");
+        user.setEmail(TEST_EMAIL);
+        user.setPassword(TEST_PASSWORD);
 
-        when(mockLoggedUser.isLogged()).thenReturn(true);
-        when(mockLoggedUser.getId()).thenReturn(user.getId());
+        when(mockUserDetails.getUsername()).thenReturn(TEST_EMAIL);
+        when(mockUserService.findUserByEmail(TEST_EMAIL)).thenReturn(user);
+
+        String result = toTest.personalData(Mockito.mock());
+
+        Assertions.assertEquals(result, "Account/PersonalData");
+    }
+    @Test
+    void deleteUserReturnsCorrectViewWithModel() {
+
+        User user = new User();
+        user.setEmail(TEST_EMAIL);
+
         when(mockUserService.findUserById(null)).thenReturn(Optional.of(user));
+        when(mockUserDetails.getUsername()).thenReturn(TEST_EMAIL);
+        when(mockUserService.findUserByEmail(TEST_EMAIL)).thenReturn(user);
 
-        String result = toTest.deleteUser(Mockito.mock());
+        String result = toTest.deleteUser(mockUserDetails, Mockito.mock());
 
-        Assertions.assertEquals(result, "redirect:/");
+        Assertions.assertEquals(result, "redirect:/identity/account/logout");
     }
 
     @Test
-    void deleteUserReturnsCorrectViewWithModelIfUserIsNotLogged() {
-
-        when(mockLoggedUser.isLogged()).thenReturn(false);
-
-        String result = toTest.deleteUser(Mockito.mock());
-
-        Assertions.assertEquals(result, "redirect:/");
-    }
-
-    @Test
-    void becomeAdminReturnsCorrectViewWithModelIfUserIsLogged() {
+    void becomeAdminReturnsCorrectViewWithModel() {
 
         User user = new User();
-        user.setEmail("TEST@ABV.BG");
+        user.setEmail(TEST_EMAIL);
 
-        when(mockLoggedUser.isLogged()).thenReturn(true);
-        when(mockLoggedUser.getId()).thenReturn(user.getId());
+        when(mockUserService.findUserById(null)).thenReturn(Optional.of(user));
+        when(mockUserDetails.getUsername()).thenReturn(TEST_EMAIL);
+        when(mockUserService.findUserByEmail(TEST_EMAIL)).thenReturn(user);
         when(mockUserService.findUserById(null)).thenReturn(Optional.of(user));
 
         String result = toTest.becomeAdmin(Mockito.mock());
 
-        Assertions.assertEquals(result, "BecomeAdmin");
-    }
-
-    @Test
-    void becomeAdminReturnsCorrectViewWithModelIfUserIsNotLogged() {
-
-        when(mockLoggedUser.isLogged()).thenReturn(false);
-
-        String result = toTest.becomeAdmin(Mockito.mock());
-
-        Assertions.assertEquals(result, "redirect:/");
+        Assertions.assertEquals(result, "Account/BecomeAdmin");
     }
 
 }

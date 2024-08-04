@@ -1,15 +1,12 @@
 package com.carParts.service.impl;
 
 import com.carParts.model.dto.AddModelDTO;
-import com.carParts.model.entity.Admin;
 import com.carParts.model.entity.Make;
 import com.carParts.model.entity.Model;
-import com.carParts.model.entity.Part;
 import com.carParts.repository.MakeRepo;
 import com.carParts.repository.ModelRepo;
 import com.carParts.service.AdminService;
 import com.carParts.service.ModelService;
-import com.carParts.util.AdminUser;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,13 +20,11 @@ public class ModelServiceImpl implements ModelService {
 
     private final AdminService adminService;
 
-    private final AdminUser adminUser;
 
-    public ModelServiceImpl(ModelRepo modelRepo, MakeRepo makeRepo, AdminService adminService, AdminUser adminUser) {
+    public ModelServiceImpl(ModelRepo modelRepo, MakeRepo makeRepo, AdminService adminService) {
         this.modelRepo = modelRepo;
         this.makeRepo = makeRepo;
         this.adminService = adminService;
-        this.adminUser = adminUser;
     }
 
     @Override
@@ -97,9 +92,9 @@ public class ModelServiceImpl implements ModelService {
 
         model.setImageUrl(addModelDTO.getImageUrl());
 
-        Admin admin = adminService.findAdminByUsername(adminUser.getUsername());
+        //Admin admin = adminService.findAdminByUsername(adminUser.getUsername());
 
-        model.setAdmin(admin);
+        //model.setAdmin(admin);
 
         this.modelRepo.save(model);
     }

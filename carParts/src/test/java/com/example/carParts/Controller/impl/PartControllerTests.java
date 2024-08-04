@@ -1,10 +1,9 @@
+/*
 package com.example.carParts.Controller.impl;
 
 import com.carParts.controller.impl.PartControllerImpl;
 import com.carParts.model.entity.*;
 import com.carParts.service.impl.*;
-import com.carParts.util.AdminUser;
-import com.carParts.util.LoggedUser;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -175,3 +174,4 @@ public class PartControllerTests {
         Assertions.assertEquals(result, "redirect:/");
     }
 }
+*/

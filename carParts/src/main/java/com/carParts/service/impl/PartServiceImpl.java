@@ -63,13 +63,36 @@ public class PartServiceImpl implements PartService {
     }
 
     @Override
-    public void removePart(Part partToDelete, User currentUser) {
-        if (partToDelete != null) {
-            Set<Part> ownedParts = currentUser.getParts();
-            ownedParts.remove(partToDelete);
-            currentUser.setParts(ownedParts);
+    public void removePart(Long id) {
 
-            this.userRepo.save(currentUser);
+        Part partToDelete = this.partRepo.findById(id).orElse(null);
+        if (partToDelete != null) {
+            User partSeller = partToDelete.getSeller();
+            Set<Part> sellerParts = partSeller.getParts();
+            sellerParts.remove(partToDelete);
+
+            Category partCategory = partToDelete.getCategory();
+            Set<Part> categoryParts = partCategory.getParts();
+            categoryParts.remove(partToDelete);
+
+            Make partMake = partToDelete.getMake();
+            Set<Part> makeParts = partMake.getParts();
+            makeParts.remove(partToDelete);
+
+            Model partModel = partToDelete.getModel();
+            Set<Part> modelParts = partModel.getParts();
+            modelParts.remove(partToDelete);
+
+            partToDelete.setSeller(null);
+            partToDelete.setCategory(null);
+            partToDelete.setMake(null);
+            partToDelete.setModel(null);
+
+            this.userRepo.save(partSeller);
+            this.categoryRepo.save(partCategory);
+            this.makeRepo.save(partMake);
+            this.modelRepo.save(partModel);
+
             this.partRepo.delete(partToDelete);
         }
     }

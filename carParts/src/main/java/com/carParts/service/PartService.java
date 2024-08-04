@@ -18,7 +18,7 @@ public interface PartService {
 
     void editPart(Part currentPart, AddPartDTO addPartDTO);
 
-    void removePart(Part partToDelete, User currentUser);
+    void removePart(Long id);
 
     Part findPartById(Long id);
 

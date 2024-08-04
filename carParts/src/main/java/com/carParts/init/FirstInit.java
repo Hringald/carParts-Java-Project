@@ -25,6 +25,7 @@ public class FirstInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        this.userService.initRoles();
         this.userService.initAdmin();
         this.userService.initTest();
         this.categoryService.initCategories();

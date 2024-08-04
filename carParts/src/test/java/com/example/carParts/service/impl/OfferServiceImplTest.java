@@ -1,16 +1,12 @@
 package com.example.carParts.service.impl;
 
-import com.carParts.model.entity.Admin;
-import com.carParts.model.entity.Make;
 import com.carParts.model.entity.Offer;
 import com.carParts.model.entity.User;
-import com.carParts.repository.AdminRepo;
 import com.carParts.repository.OfferRepo;
 import com.carParts.repository.PartRepo;
 import com.carParts.repository.UserRepo;
-import com.carParts.service.impl.AdminServiceImpl;
 import com.carParts.service.impl.OfferServiceImpl;
-import com.carParts.util.AdminUser;
+import com.carParts.service.impl.PartServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,22 +18,22 @@ import static org.mockito.Mockito.when;
 
 class OfferServiceImplTest {
 
-    private final String TEST_USERNAME = "test";
-    private final String TEST_INVALID_USERNAME = "1234";
-
     private OfferServiceImpl toTest;
     private UserRepo mockUserRepo;
     private OfferRepo mockOfferRepo;
 
     private PartRepo mockPartRepo;
 
+    private PartServiceImpl mockPartService;
+
     @BeforeEach
     void setUp() {
         mockUserRepo = Mockito.mock(UserRepo.class);
         mockOfferRepo = Mockito.mock();
         mockPartRepo = Mockito.mock();
+        mockPartService = Mockito.mock();
 
-        toTest = new OfferServiceImpl(mockUserRepo, mockOfferRepo, mockPartRepo);
+        toTest = new OfferServiceImpl(mockUserRepo, mockOfferRepo, mockPartRepo, mockPartService);
     }
 
     @Test

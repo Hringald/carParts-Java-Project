@@ -3,16 +3,16 @@ package com.carParts.controller.impl;
 import com.carParts.controller.PartController;
 import com.carParts.model.dto.AddPartDTO;
 import com.carParts.model.entity.*;
+import com.carParts.model.enums.UserRoleEnum;
 import com.carParts.service.impl.*;
-import com.carParts.util.AdminUser;
-import com.carParts.util.LoggedUser;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -23,57 +23,42 @@ import java.util.Set;
 @Controller
 public class PartControllerImpl implements PartController {
 
-    private final LoggedUser loggedUser;
-    private final AdminUser adminUser;
     private final UserServiceImpl userService;
     private final MakeServiceImpl makeService;
     private final ModelServiceImpl modelService;
     private final PartServiceImpl partService;
     private final CategoryServiceImpl categoryService;
 
-    public PartControllerImpl(LoggedUser loggedUser,
-                              UserServiceImpl userService, PartServiceImpl partService, MakeServiceImpl makeService, CategoryServiceImpl categoryService, ModelServiceImpl modelService, AdminUser adminUser) {
-        this.loggedUser = loggedUser;
+    public PartControllerImpl(UserServiceImpl userService, PartServiceImpl partService, MakeServiceImpl makeService, CategoryServiceImpl categoryService, ModelServiceImpl modelService) {
         this.userService = userService;
         this.partService = partService;
         this.makeService = makeService;
         this.modelService = modelService;
         this.categoryService = categoryService;
-        this.adminUser = adminUser;
     }
 
     @Override
-    public String myParts(Model model) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
+    public String myParts(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        User currentUser = this.userService.findUserById(this.loggedUser.getId()).orElse(null);
+        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
         List<Part> myParts = this.partService.findOwnedParts(currentUser);
 
         model.addAttribute("myParts", myParts);
 
-        return "MyParts";
+        return "Part/MyParts";
     }
 
     @Override
     public String chooseMake(Model model) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
 
         List<Make> allMakes = this.makeService.getAllMakes();
         model.addAttribute("allMakes", allMakes);
 
-        return "ChooseMake";
+        return "Part/ChooseMake";
     }
 
     @Override
     public String addPart(@PathVariable("makeName") String makeName, Model model) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
-
         model.addAttribute("makeName", makeName);
 
         List<Category> allCategories = this.categoryService.getAllCategories();
@@ -84,14 +69,11 @@ public class PartControllerImpl implements PartController {
         Set<com.carParts.model.entity.Model> makeModels = this.modelService.findModelByMake(make);
         model.addAttribute("makeModels", makeModels);
 
-        return "AddPart";
+        return "Part/AddPart";
     }
 
     @Override
-    public String addPart(@Valid AddPartDTO addPartDTO, BindingResult result, RedirectAttributes redirectAttributes) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
+    public String addPart(@AuthenticationPrincipal UserDetails userDetails, @Valid AddPartDTO addPartDTO, BindingResult result, RedirectAttributes redirectAttributes) {
         String makeName = addPartDTO.getMakeName();
 
         if (addPartDTO.getPrice() < Double.parseDouble(DataConstants.Part.DecimalMinValue)) {
@@ -136,40 +118,22 @@ public class PartControllerImpl implements PartController {
             return resultString;
         }
 
-        User currentUser = this.userService.findUserById(this.loggedUser.getId()).orElse(null);
+        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
         this.partService.addPart(addPartDTO, currentUser);
 
         return "redirect:/";
     }
 
     @Override
-    public String removePartById(@PathVariable("id") Long id) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
-
-        Part part = this.partService.findPartById(id);
-
-        if (!(Objects.equals(this.loggedUser.getId(), part.getSeller().getId())) || !(this.adminUser.isAdmin())) {
-            return "redirect:/";
-        }
-
-        User currentUser = this.userService.findUserById(this.loggedUser.getId()).orElse(null);
-        this.partService.removePart(part, currentUser);
+    public String removePartById(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id") Long id) {
+        this.partService.removePart(id);
         return "redirect:/parts/myParts";
     }
 
     @Override
-    public String editPartById(@PathVariable("id") Long id, Model model) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
+    public String editPartById(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id") Long id, Model model) {
 
         Part partToEdit = this.partService.findPartById(id);
-
-        if (!(Objects.equals(this.loggedUser.getId(), partToEdit.getSeller().getId())) || !(this.adminUser.isAdmin())) {
-            return "redirect:/";
-        }
 
         Make partMake = partToEdit.getMake();
         String makeName = partMake.getName();
@@ -194,20 +158,13 @@ public class PartControllerImpl implements PartController {
         model.addAttribute("description", partToEdit.getDescription());
         model.addAttribute("partId", partToEdit.getId());
 
-        return "EditPart";
+        return "Part/EditPart";
     }
 
     @Override
-    public String editPartById(Model model, @Valid AddPartDTO addPartDTO, BindingResult result, RedirectAttributes redirectAttributes) {
-        if (!this.loggedUser.isLogged()) {
-            return "redirect:/";
-        }
-
+    public String editPartById(@AuthenticationPrincipal UserDetails userDetails, Model model, @Valid AddPartDTO addPartDTO, BindingResult result, RedirectAttributes redirectAttributes) {
         Long id = addPartDTO.getId();
         Part currentPart = this.partService.findPartById(id);
-        if (!(Objects.equals(this.loggedUser.getId(), currentPart.getSeller().getId())) || !(this.adminUser.isAdmin())) {
-            return "redirect:/";
-        }
 
         if (addPartDTO.getPrice() < Double.parseDouble(DataConstants.Part.DecimalMinValue)) {
             result.addError(
@@ -247,7 +204,7 @@ public class PartControllerImpl implements PartController {
                     .addFlashAttribute("addPartDTO", addPartDTO)
                     .addFlashAttribute("org.springframework.validation.BindingResult.addPartDTO", result);
 
-            String resultString = "redirect:/parts/edit-part-by-id/";
+            String resultString = "redirect:/parts/editPart/";
             resultString += id;
             return resultString;
         }

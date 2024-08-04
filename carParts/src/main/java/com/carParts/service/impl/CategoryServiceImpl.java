@@ -1,7 +1,7 @@
 package com.carParts.service.impl;
 
 import com.carParts.model.entity.Category;
-import com.carParts.model.entity.CategoryEnum;
+import com.carParts.model.enums.CategoryEnum;
 import com.carParts.repository.CategoryRepo;
 import com.carParts.service.CategoryService;
 import org.springframework.stereotype.Service;

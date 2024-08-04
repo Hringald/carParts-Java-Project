@@ -3,6 +3,8 @@ package com.carParts.model.entity;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -21,11 +23,10 @@ public class Part extends BaseEntity {
     @ManyToOne()
     @Fetch(FetchMode.JOIN)
     private Make make;
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @Fetch(FetchMode.JOIN)
+    @ManyToOne(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private Model model;
-
     @OneToOne
+
     private Offer offer;
 
     @Column(nullable = false, length = DataConstants.Part.DescriptionMaxLength)

@@ -1,4 +1,4 @@
-package com.carParts.model.entity;
+package com.carParts.model.enums;
 
 public enum CategoryEnum {
 

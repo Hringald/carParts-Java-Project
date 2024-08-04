@@ -1,7 +1,13 @@
 package com.carParts.model.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,14 +25,17 @@ public class User extends BaseEntity {
 
     @Column
     private String phone;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    private Admin admin;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seller")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seller", cascade = CascadeType.ALL)
     private Set<Part> parts;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seller")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "seller", cascade = CascadeType.ALL)
     private Set<Offer> offers;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+
+    private List<UserRoleEntity> roles = new ArrayList<>();
 
     public User() {
     }
@@ -79,11 +88,12 @@ public class User extends BaseEntity {
         this.phone = phone;
     }
 
-    public Admin getAdmin() {
-        return admin;
+
+    public List<UserRoleEntity> getRoles() {
+        return roles;
     }
 
-    public void setAdmin(Admin admin) {
-        this.admin = admin;
+    public void setRoles(List<UserRoleEntity> roles) {
+        this.roles = roles;
     }
 }

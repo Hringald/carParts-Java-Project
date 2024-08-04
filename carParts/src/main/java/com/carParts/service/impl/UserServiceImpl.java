@@ -2,10 +2,13 @@ package com.carParts.service.impl;
 
 import com.carParts.model.dto.*;
 import com.carParts.model.entity.User;
+import com.carParts.model.entity.UserRoleEntity;
+import com.carParts.model.enums.UserRoleEnum;
 import com.carParts.repository.UserRepo;
+import com.carParts.repository.UserRoleRepo;
 import com.carParts.service.UserService;
-import com.carParts.util.LoggedUser;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,24 +20,23 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
     private final PasswordEncoder encoder;
-    private final LoggedUser loggedUser;
-    private final HttpSession session;
+    private final UserRoleRepo userRoleRepo;
 
-    public UserServiceImpl(UserRepo userRepo, PasswordEncoder encoder, LoggedUser loggedUser, HttpSession session) {
+    public UserServiceImpl(UserRepo userRepo, PasswordEncoder encoder, UserRoleRepo userRoleRepo) {
         this.userRepo = userRepo;
         this.encoder = encoder;
-        this.loggedUser = loggedUser;
-        this.session = session;
+        this.userRoleRepo = userRoleRepo;
     }
 
     @Override
-    public UserDTO findUserByEmail(String email) {
+    public User findUserByEmail(String email) {
         User user = this.getUserByEmail(email);
         if (user == null) {
             return null;
         }
 
-        return this.mapUserDTO(user);
+        return this.userRepo.findByEmail(email).orElse(null);
+        // return this.mapUserDTO(user);
     }
 
     @Override
@@ -48,24 +50,10 @@ public class UserServiceImpl implements UserService {
         return encoder.matches(password, user.getPassword());
     }
 
-    @Override
-    public void login(String email) {
-        User user = this.getUserByEmail(email);
-        this.loggedUser.setId(user.getId());
-        this.loggedUser.setEmail(user.getEmail());
-    }
 
     @Override
     public void register(RegisterDTO registerDTO) {
         this.userRepo.save(this.mapUser(registerDTO));
-        this.login(registerDTO.getEmail());
-    }
-
-    @Override
-    public void logout() {
-        this.session.invalidate();
-        this.loggedUser.setId(null);
-        this.loggedUser.setEmail(null);
     }
 
     private User getUserByEmail(String email) {
@@ -93,6 +81,14 @@ public class UserServiceImpl implements UserService {
         admin.setPassword(encoder.encode("1234"));
         admin.setEmail("admin@abv.bg");
 
+        var adminRoleEntity = this.userRoleRepo.findByRole(UserRoleEnum.valueOf("ADMIN")).orElse(null);
+
+        var roles = admin.getRoles();
+        roles.add(adminRoleEntity);
+        admin.setRoles(roles);
+
+
+        userRoleRepo.save(adminRoleEntity);
         userRepo.save(admin);
     }
 
@@ -108,38 +104,79 @@ public class UserServiceImpl implements UserService {
         test.setPassword(encoder.encode("1234"));
         test.setEmail("test@abv.bg");
 
+        var userRoleEntity = this.userRoleRepo.findByRole(UserRoleEnum.valueOf("USER")).orElse(null);
+
+
+        var roles = test.getRoles();
+        roles.add(userRoleEntity);
+        test.setRoles(roles);
+
+
+        userRoleRepo.save(userRoleEntity);
         userRepo.save(test);
     }
 
     @Override
-    public void changePhone(Long UserId, PhoneChangeDTO phoneChangeDTO){
-     User currentUser = this.findUserById(UserId).orElse(null);
+    public void changePhone(Long UserId, PhoneChangeDTO phoneChangeDTO) {
+        User currentUser = this.findUserById(UserId).orElse(null);
         currentUser.setPhone(phoneChangeDTO.getPhone());
         userRepo.save(currentUser);
     }
 
     @Override
-    public void changeEmail(Long UserId, EmailChangeDTO emailChangeDTO){
+    public void changeEmail(UserDetails userDetails, Long UserId, EmailChangeDTO emailChangeDTO) {
         User currentUser = this.findUserById(UserId).orElse(null);
         currentUser.setEmail(emailChangeDTO.getEmailChange());
+        //userDetails.setUsername(emailChangeDTO.getEmailChange());
         userRepo.save(currentUser);
     }
 
     @Override
-    public void changePassword(Long UserId, PasswordChangeDTO passwordChangeDTO){
+    public void changePassword(Long UserId, PasswordChangeDTO passwordChangeDTO) {
         User currentUser = this.findUserById(UserId).orElse(null);
         currentUser.setPassword(encoder.encode(passwordChangeDTO.getNewPassword()));
         userRepo.save(currentUser);
     }
 
     @Override
-    public void deleteUser(Long UserId){
+    public void deleteUser(Long UserId) {
         User currentUser = this.findUserById(UserId).orElse(null);
         this.userRepo.delete(currentUser);
     }
 
     @Override
-    public List<User> findAllUsers(){
+    public List<User> findAllUsers() {
         return this.userRepo.findAll();
+    }
+
+    @Override
+    public void initRoles() {
+
+        UserRoleEntity roleUser = new UserRoleEntity();
+        roleUser.setRole(UserRoleEnum.valueOf("USER"));
+
+        UserRoleEntity roleAdmin = new UserRoleEntity();
+        roleAdmin.setRole(UserRoleEnum.valueOf("ADMIN"));
+
+        userRoleRepo.save(roleUser);
+        userRoleRepo.save(roleAdmin);
+    }
+
+    @Override
+    public void makeAdmin(UserDetails userDetails, User user) {
+
+        var adminRole = this.userRoleRepo.findByRole(UserRoleEnum.ADMIN);
+
+        var userRoles = user.getRoles();
+        userRoles.add(adminRole.orElse(null));
+
+        user.setRoles(userRoles);
+
+        this.userRepo.save(user);
+    }
+
+    @Override
+    public User findUserByUsername(String username) {
+        return this.userRepo.findByUsername(username).orElse(null);
     }
 }

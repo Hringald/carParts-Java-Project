@@ -1,4 +1,7 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org/extras/spring-security"
+>
 <head th:replace="fragments/header::head"></head>
 <body>
 <header th:replace="fragments/header::header"></header>
@@ -35,10 +38,10 @@
                         </ul>
                         <p style="margin:auto;margin-top:15px" th:text="|Quantity: ${part.quantity}|"></p>
                         <p style="margin:auto;margin-bottom:15px" th:text="|Price: ${part.price}$|"></p>
-                        <a th:if="${@adminUser.isAdmin()}"
+                        <a sec:authorize='hasRole("ADMIN")'
                            th:href="@{/parts/editPart/{id}(id = ${part.id})}"
                            class="btn btn-success">Edit</a>
-                        <a th:unless="${@adminUser.isAdmin()}"
+                        <a sec:authorize='!hasRole("ADMIN")'
                            th:href="@{/offers/createOffer/{id}(id = ${part.id})}"
                            class="btn btn-block btn-primary">Part Info</a>
                     </div>
@@ -77,3 +80,4 @@
 </div>
 <footer th:replace="fragments/footer::footer"></footer>
 </body>
+</html>

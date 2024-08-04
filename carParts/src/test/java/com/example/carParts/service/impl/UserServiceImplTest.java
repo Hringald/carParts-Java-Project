@@ -3,8 +3,8 @@ package com.example.carParts.service.impl;
 import com.carParts.model.dto.UserDTO;
 import com.carParts.model.entity.User;
 import com.carParts.repository.UserRepo;
+import com.carParts.repository.UserRoleRepo;
 import com.carParts.service.impl.UserServiceImpl;
-import com.carParts.util.LoggedUser;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,17 +25,15 @@ class UserServiceImplTest {
     private UserServiceImpl toTest;
     private UserRepo mockUserRepo;
     private PasswordEncoder mockEncoder;
-    private LoggedUser mockLoggedUser;
-    private HttpSession mockSession;
+    private UserRoleRepo mockUserRoleRepo;
 
     @BeforeEach
     void setUp() {
         mockUserRepo = Mockito.mock(UserRepo.class);
         mockEncoder = Mockito.mock();
-        mockLoggedUser = Mockito.mock();
-        mockSession = Mockito.mock();
+        mockUserRoleRepo = Mockito.mock();
 
-        toTest = new UserServiceImpl(mockUserRepo, mockEncoder, mockLoggedUser, mockSession);
+        toTest = new UserServiceImpl(mockUserRepo, mockEncoder, mockUserRoleRepo);
     }
 
     @Test
@@ -47,15 +45,15 @@ class UserServiceImplTest {
 
         when(mockUserRepo.findByEmail(TEST_EMAIL)).thenReturn(Optional.of(user));
 
-        UserDTO expectedUser = this.toTest.findUserByEmail(TEST_EMAIL);
-        
+        User expectedUser = this.toTest.findUserByEmail(TEST_EMAIL);
+
         Assertions.assertInstanceOf(UserDTO.class, expectedUser);
         Assertions.assertEquals(expectedUser.getEmail(), TEST_EMAIL);
     }
 
     @Test
     void testFindUserByEmail_UserNotFound() {
-        UserDTO expectedUser = this.toTest.findUserByEmail(TEST_INVALID_EMAIL);
+        User expectedUser = this.toTest.findUserByEmail(TEST_INVALID_EMAIL);
 
         Assertions.assertNull(expectedUser);
     }
