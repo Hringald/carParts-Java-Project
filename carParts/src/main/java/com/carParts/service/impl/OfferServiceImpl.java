@@ -8,7 +8,6 @@ import com.carParts.repository.OfferRepo;
 import com.carParts.repository.PartRepo;
 import com.carParts.repository.UserRepo;
 import com.carParts.service.OfferService;
-import com.carParts.service.PartService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

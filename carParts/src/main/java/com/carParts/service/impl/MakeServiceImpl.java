@@ -3,7 +3,6 @@ package com.carParts.service.impl;
 import com.carParts.model.dto.AddMakeDTO;
 import com.carParts.model.entity.Make;
 import com.carParts.repository.MakeRepo;
-import com.carParts.service.AdminService;
 import com.carParts.service.MakeService;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +17,11 @@ public class MakeServiceImpl implements MakeService {
 
     private final ModelServiceImpl modelService;
 
-    private final AdminService adminService;
 
 
-    public MakeServiceImpl(MakeRepo makeRepo, AdminService adminService, PartServiceImpl partService, ModelServiceImpl modelService) {
+    public MakeServiceImpl(MakeRepo makeRepo, PartServiceImpl partService, ModelServiceImpl modelService) {
 
         this.makeRepo = makeRepo;
-        this.adminService = adminService;
         this.partService = partService;
         this.modelService = modelService;
     }

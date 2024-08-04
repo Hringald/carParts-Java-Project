@@ -1,4 +1,4 @@
-package com.example.carParts.service.impl;
+package com.carParts.service.impl;
 
 import com.carParts.model.entity.Offer;
 import com.carParts.model.entity.User;

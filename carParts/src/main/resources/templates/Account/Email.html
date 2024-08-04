@@ -17,18 +17,26 @@
                     <h4>Profile</h4>
                     <div class="row">
                         <div class="col-md-6">
-                            <form id="email-form" method="post" action="/identity/account/manage/email" th:object="${emailChangeDTO}">
-                                <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
-                                </ul></div>
+                            <form id="email-form" method="post" action="/identity/account/manage/email"
+                                  th:object="${emailChangeDTO}">
+                                <div class="text-danger validation-summary-valid" data-valmsg-summary="true">
+                                    <ul>
+                                        <li style="display:none"></li>
+                                    </ul>
+                                </div>
                                 <div class="form-group">
                                     <label for="Email">Email</label>
-                                    <input class="form-control" disabled="" type="text" id="Email" name="Email" th:value="${userEmail}">
+                                    <input class="form-control" disabled="" type="text" id="Email" name="Email"
+                                           th:value="${userEmail}">
                                 </div>
                                 <div class="form-group">
-                                    <label >New email</label>
-                                    <input class="form-control" type="email" id="emailChange" name="emailChange" th:value="${userEmail}">
+                                    <label>New email</label>
+                                    <input class="form-control" type="email" id="emailChange" name="emailChange"
+                                           th:value="${userEmail}">
                                 </div>
-                                <button id="change-email-button" type="submit" class="btn btn-primary" formaction="/identity/account/manage/email">Change email</button>
+                                <button id="change-email-button" type="submit" class="btn btn-primary"
+                                        formaction="/identity/account/manage/email">Change email
+                                </button>
                             </form>
                         </div>
                     </div>

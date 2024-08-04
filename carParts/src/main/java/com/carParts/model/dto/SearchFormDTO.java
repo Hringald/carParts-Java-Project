@@ -1,8 +1,5 @@
 package com.carParts.model.dto;
 
-import com.carParts.model.entity.Part;
-
-import java.util.List;
 
 public class SearchFormDTO {
 

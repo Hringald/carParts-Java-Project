@@ -22,8 +22,6 @@ import java.util.Set;
 @Controller
 public class ShopControllerImpl implements ShopController {
 
-
-    private final UserServiceImpl userService;
     private final CategoryServiceImpl categoryService;
     private final MakeServiceImpl makeService;
     private final ModelServiceImpl modelService;
@@ -31,8 +29,7 @@ public class ShopControllerImpl implements ShopController {
     private final PartServiceImpl partService;
 
 
-    public ShopControllerImpl(UserServiceImpl userService, MakeServiceImpl makeService, ModelServiceImpl modelService, CategoryServiceImpl categoryService, PartServiceImpl partService) {
-        this.userService = userService;
+    public ShopControllerImpl(MakeServiceImpl makeService, ModelServiceImpl modelService, CategoryServiceImpl categoryService, PartServiceImpl partService) {
         this.makeService = makeService;
         this.modelService = modelService;
         this.categoryService = categoryService;
@@ -48,7 +45,7 @@ public class ShopControllerImpl implements ShopController {
         model.addAttribute("makeName", makeName);
         model.addAttribute("modelsByMake", modelsByMake);
 
-        return "Shop/ShopModels.html";
+        return "Shop/ShopModels";
     }
 
     @Override
@@ -60,7 +57,7 @@ public class ShopControllerImpl implements ShopController {
         model.addAttribute("makeName", makeName);
         model.addAttribute("modelName", modelName);
 
-        return "Shop/ShopCategories.html";
+        return "Shop/ShopCategories";
     }
 
     @Override

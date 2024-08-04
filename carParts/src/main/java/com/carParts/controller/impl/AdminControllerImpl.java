@@ -6,7 +6,6 @@ import com.carParts.model.entity.Make;
 import com.carParts.model.entity.Part;
 import com.carParts.model.entity.User;
 import com.carParts.service.MakeService;
-import com.carParts.service.impl.AdminServiceImpl;
 import com.carParts.service.impl.ModelServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -28,11 +27,9 @@ public class AdminControllerImpl implements AdminController {
     private final UserServiceImpl userService;
 
     private final MakeService makeService;
-    private final AdminServiceImpl adminService;
 
-    public AdminControllerImpl(UserServiceImpl userService, AdminServiceImpl adminService, ModelServiceImpl modelService, MakeService makeService) {
+    public AdminControllerImpl(UserServiceImpl userService, ModelServiceImpl modelService, MakeService makeService) {
         this.userService = userService;
-        this.adminService = adminService;
         this.modelService = modelService;
         this.makeService = makeService;
     }

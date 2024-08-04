@@ -5,7 +5,6 @@ import com.carParts.model.entity.Make;
 import com.carParts.model.entity.Model;
 import com.carParts.repository.MakeRepo;
 import com.carParts.repository.ModelRepo;
-import com.carParts.service.AdminService;
 import com.carParts.service.ModelService;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +17,11 @@ public class ModelServiceImpl implements ModelService {
     private final ModelRepo modelRepo;
     private final MakeRepo makeRepo;
 
-    private final AdminService adminService;
 
 
-    public ModelServiceImpl(ModelRepo modelRepo, MakeRepo makeRepo, AdminService adminService) {
+    public ModelServiceImpl(ModelRepo modelRepo, MakeRepo makeRepo) {
         this.modelRepo = modelRepo;
         this.makeRepo = makeRepo;
-        this.adminService = adminService;
     }
 
     @Override

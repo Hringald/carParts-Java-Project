@@ -4,10 +4,7 @@ import com.carParts.model.entity.DataConstants;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class AddModelDTO {
 

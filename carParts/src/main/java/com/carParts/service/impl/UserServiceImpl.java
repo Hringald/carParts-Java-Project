@@ -7,7 +7,6 @@ import com.carParts.model.enums.UserRoleEnum;
 import com.carParts.repository.UserRepo;
 import com.carParts.repository.UserRoleRepo;
 import com.carParts.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

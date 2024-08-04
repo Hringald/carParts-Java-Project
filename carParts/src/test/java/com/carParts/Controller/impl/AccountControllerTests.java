@@ -1,10 +1,8 @@
-package com.example.carParts.Controller.impl;
+package com.carParts.Controller.impl;
 
 import com.carParts.controller.impl.AccountControllerImpl;
-import com.carParts.model.CarPartsUserDetails;
 import com.carParts.model.entity.User;
 import com.carParts.repository.UserRepo;
-import com.carParts.service.impl.AdminServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,8 +21,6 @@ public class AccountControllerTests {
     private AccountControllerImpl toTest;
     private UserServiceImpl mockUserService;
 
-    private AdminServiceImpl mockAdminService;
-
     private UserDetails mockUserDetails;
 
     private UserRepo mockUserRepo;
@@ -32,11 +28,10 @@ public class AccountControllerTests {
     @BeforeEach
     void setUp() {
         mockUserService = Mockito.mock();
-        mockAdminService = Mockito.mock();
         mockUserDetails = Mockito.mock();
         mockUserRepo = Mockito.mock();
 
-        toTest = new AccountControllerImpl(mockUserService, mockAdminService);
+        toTest = new AccountControllerImpl(mockUserService);
     }
 
     @Test
@@ -98,6 +93,7 @@ public class AccountControllerTests {
 
         Assertions.assertEquals(result, "Account/PersonalData");
     }
+
     @Test
     void deleteUserReturnsCorrectViewWithModel() {
 

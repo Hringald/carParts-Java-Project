@@ -1,7 +1,6 @@
 package com.carParts.model.dto;
 
 import com.carParts.validation.annotation.UniqueUsername;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 import javax.validation.constraints.Size;

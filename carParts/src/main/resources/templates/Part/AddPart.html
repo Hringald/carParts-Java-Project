@@ -8,7 +8,7 @@
     <div class="row">
         <div class="offset-md-2 col-md-8 com-sm-12 mb-5">
             <h2 class="heading-margin" text-center="">Add Part</h2>
-            <form method="post" action="/parts/addPart"  th:object="${addPartDTO}">
+            <form method="post" action="/parts/addPart" th:object="${addPartDTO}">
                 <div class="form-group">
                     <label>Name</label>
                     <input placeholder="Add part name..." th:field="*{name}" th:errorclass="'is-invalid bg-danger'"
@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <label>Make</label>
                     <input class="form-control" th:value="${makeName}" readonly th:errorclass="'is-invalid bg-danger'"
-                           type="text"  id="makeName" name="makeName"></input>
+                           type="text" id="makeName" name="makeName"></input>
                     <small th:if="${#fields.hasErrors('makeName')}" th:errors="*{makeName}" class="text-danger">Make
                         name error message</small>
                 </div>

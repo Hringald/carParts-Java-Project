@@ -31,7 +31,7 @@ public class AddOfferDTO {
     private String city;
     @NotNull(message = "You must enter zip code!")
     @ZipValidator
-    @Length(min = DataConstants.Offer.ZipMinLength,max = DataConstants.Offer.ZipMaxLength ,message = "Zip code must be minimum 4 characters long!")
+    @Length(min = DataConstants.Offer.ZipMinLength, max = DataConstants.Offer.ZipMaxLength, message = "Zip code must be minimum 4 characters long!")
     @Column(nullable = false)
     private String zipCode;
 

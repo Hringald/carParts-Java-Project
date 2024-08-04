@@ -4,15 +4,11 @@ import com.carParts.model.CarPartsUserDetails;
 import com.carParts.model.entity.User;
 import com.carParts.model.enums.UserRoleEnum;
 import com.carParts.repository.UserRepo;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.List;
-import java.util.Optional;
 
 public class CarPartsUserDetailsService implements UserDetailsService {
 

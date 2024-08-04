@@ -1,4 +1,4 @@
-package com.example.carParts.Controller.impl;
+package com.carParts.Controller.impl;
 
 import com.carParts.controller.impl.HomeControllerImpl;
 import com.carParts.service.impl.MakeServiceImpl;
@@ -25,8 +25,6 @@ public class HomeControllerTests {
 
     @Test
     void indexReturnsCorrectViewWithModel() {
-
-        //when(mockLoggedUser.isLogged()).thenReturn(true);
 
         String result = toTest.index(Mockito.mock());
 

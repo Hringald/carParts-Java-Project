@@ -3,7 +3,6 @@ package com.carParts.controller.impl;
 import com.carParts.controller.PartController;
 import com.carParts.model.dto.AddPartDTO;
 import com.carParts.model.entity.*;
-import com.carParts.model.enums.UserRoleEnum;
 import com.carParts.service.impl.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Controller

@@ -1,8 +1,7 @@
-package com.example.carParts.service.impl;
+package com.carParts.service.impl;
 
 import com.carParts.model.entity.Make;
 import com.carParts.repository.MakeRepo;
-import com.carParts.service.impl.AdminServiceImpl;
 import com.carParts.service.impl.MakeServiceImpl;
 import com.carParts.service.impl.ModelServiceImpl;
 import com.carParts.service.impl.PartServiceImpl;
@@ -26,9 +25,6 @@ class MakeServiceImplTest {
 
     private MakeRepo mockMakeRepo;
 
-    private AdminServiceImpl mockAdminService;
-
-
     private PartServiceImpl mockPartService;
 
     private ModelServiceImpl mockModelService;
@@ -36,12 +32,11 @@ class MakeServiceImplTest {
     @BeforeEach
     void setUp() {
         mockMakeRepo = Mockito.mock();
-        mockAdminService = Mockito.mock();
         mockPartService = Mockito.mock();
         mockModelService = Mockito.mock();
 
 
-        toTest = new MakeServiceImpl(mockMakeRepo, mockAdminService, mockPartService, mockModelService);
+        toTest = new MakeServiceImpl(mockMakeRepo, mockPartService, mockModelService);
     }
 
     @Test

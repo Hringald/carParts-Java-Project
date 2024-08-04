@@ -3,10 +3,8 @@ package com.carParts.controller.impl;
 import com.carParts.controller.AccountController;
 import com.carParts.model.dto.*;
 import com.carParts.model.entity.User;
-import com.carParts.service.impl.AdminServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +19,9 @@ import javax.validation.Valid;
 public class AccountControllerImpl implements AccountController {
 
     private final UserServiceImpl userService;
-    private final AdminServiceImpl adminService;
 
-    public AccountControllerImpl(UserServiceImpl userService, AdminServiceImpl adminService) {
+    public AccountControllerImpl(UserServiceImpl userService) {
         this.userService = userService;
-        this.adminService = adminService;
     }
 
     @Override

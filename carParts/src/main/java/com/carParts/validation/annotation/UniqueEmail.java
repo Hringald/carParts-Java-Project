@@ -3,7 +3,6 @@ package com.carParts.validation.annotation;
 import com.carParts.validation.UniqueEmailValidator;
 import jakarta.validation.Constraint;
 
-
 import javax.validation.Payload;
 import java.lang.annotation.*;
 
