@@ -100,6 +100,10 @@ public class ShopControllerImpl implements ShopController {
             searchTerm = "%";
         }
 
+        if (searchTerm != null) {
+            searchTerm = "%" + searchTerm + "%";
+        }
+
         Page<Part> page = this.partService.findPaginated(pageNo, pageSize, makeName, modelName, categoryName, searchTerm);
 
         List<Part> partList = page.getContent();

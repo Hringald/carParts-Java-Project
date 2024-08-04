@@ -18,7 +18,7 @@
                              th:src="${make.imageUrl}"
                              class="card-img-top img-fluid card-image rounded" data-toggle="tooltip"
                              data-placement="bottom" th:title="${make.name}">
-                        <p style="text-align:right">BMW</p></a>
+                        <p style="text-align:right" th:text="${make.name}"></p></a>
                     <p><a th:href="@{/parts/addPart/{makeName}(makeName = ${make.name})}">
                     </a>
                     </p>

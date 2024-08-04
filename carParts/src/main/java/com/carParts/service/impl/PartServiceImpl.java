@@ -127,47 +127,127 @@ public class PartServiceImpl implements PartService {
         Category category = this.categoryRepo.findByName("Main Parts").orElse(null);
         User user = this.userRepo.findByEmail("test@abv.bg").orElse(null);
 
-        for (int i = 0; i < 7; i++) {
+        Part part1 = new Part();
+        part1.setName("Engine");
+        part1.setImageUrl("https://www.realoem.com/images/eng.jpg");
+        part1.setMake(make);
+        part1.setModel(model);
+        part1.setCategory(category);
+        part1.setPrice(2000);
+        part1.setQuantity(2);
+        part1.setDescription("BMW Engine");
+        part1.setSeller(user);
 
-            Part part = new Part();
-            part.setName("Engine");
-            part.setImageUrl("https://www.realoem.com/images/eng.jpg");
-            part.setMake(make);
-            part.setModel(model);
-            part.setCategory(category);
-            part.setPrice(200);
-            part.setQuantity(2);
-            part.setDescription("1234567890123412312321321");
-            part.setSeller(user);
+        Set<Part> userParts1 = user.getParts();
+        userParts1.add(part1);
+        user.setParts(userParts1);
 
-            Set<Part> userParts = user.getParts();
-            userParts.add(part);
-            user.setParts(userParts);
+        this.partRepo.save(part1);
 
-            this.partRepo.save(part);
-            this.userRepo.save(user);
-        }
+        Part part2 = new Part();
+        part2.setName("Crankshaft");
+        part2.setImageUrl("https://haynes.com/en-gb/sites/default/files/styles/unaltered_webp/public/What%20is%20it%20-%20Crank_0.jpg?itok=eD8z2ii8&timestamp=1482402192");
+        part2.setMake(make);
+        part2.setModel(model);
+        part2.setCategory(category);
+        part2.setPrice(1000);
+        part2.setQuantity(2);
+        part2.setDescription("BMW Crankshaft");
+        part2.setSeller(user);
 
-        for (int i = 0; i < 7; i++) {
+        Set<Part> userParts2 = user.getParts();
+        userParts2.add(part2);
+        user.setParts(userParts2);
 
-            Part part = new Part();
-            part.setName("test");
-            part.setImageUrl("https://www.realoem.com/images/eng.jpg");
-            part.setMake(make);
-            part.setModel(model);
-            part.setCategory(category);
-            part.setPrice(200);
-            part.setQuantity(2);
-            part.setDescription("1234567890123412312321321");
-            part.setSeller(user);
+        this.partRepo.save(part2);
 
-            Set<Part> userParts = user.getParts();
-            userParts.add(part);
-            user.setParts(userParts);
 
-            this.partRepo.save(part);
-            this.userRepo.save(user);
-        }
+        Part part3 = new Part();
+        part3.setName("Piston");
+        part3.setImageUrl("https://s.bashmaistora.bg/product/65/butalo-za-benzinov-dvigatel-honda-025-168471.jpg");
+        part3.setMake(make);
+        part3.setModel(model);
+        part3.setCategory(category);
+        part3.setPrice(200);
+        part3.setQuantity(2);
+        part3.setDescription("BMW Piston");
+        part3.setSeller(user);
+
+        Set<Part> userParts3 = user.getParts();
+        userParts3.add(part3);
+        user.setParts(userParts3);
+
+        this.partRepo.save(part3);
+
+
+        Part part4 = new Part();
+        part4.setName("Gear box");
+        part4.setImageUrl("https://media.torque.com.sg/public/2019/03/gearbox-guide.jpg");
+        part4.setMake(make);
+        part4.setModel(model);
+        part4.setCategory(category);
+        part4.setPrice(3000);
+        part4.setQuantity(1);
+        part4.setDescription("BMW Gear Box");
+        part4.setSeller(user);
+
+        Set<Part> userParts4 = user.getParts();
+        userParts4.add(part4);
+        user.setParts(userParts4);
+
+        this.partRepo.save(part4);
+
+        Part part5 = new Part();
+        part5.setName("Suspension");
+        part5.setImageUrl("https://mytyresite-images.s3.ap-southeast-2.amazonaws.com/news/suspension-components-2023-03-27.jpg");
+        part5.setMake(make);
+        part5.setModel(model);
+        part5.setCategory(category);
+        part5.setPrice(200);
+        part5.setQuantity(2);
+        part5.setDescription("BMW Suspension");
+        part5.setSeller(user);
+
+        Set<Part> userParts5 = user.getParts();
+        userParts5.add(part5);
+        user.setParts(userParts5);
+
+        this.partRepo.save(part5);
+
+        Part part6 = new Part();
+        part6.setName("Wheels");
+        part6.setImageUrl("https://hips.hearstapps.com/hmg-prod/images/pmx0908119a-1591389137.jpg?crop=0.501xw:1.00xh;0.212xw,0&resize=640:*");
+        part6.setMake(make);
+        part6.setModel(model);
+        part6.setCategory(category);
+        part6.setPrice(200);
+        part6.setQuantity(2);
+        part6.setDescription("BMW Wheels");
+        part6.setSeller(user);
+
+        Set<Part> userParts6 = user.getParts();
+        userParts6.add(part6);
+        user.setParts(userParts6);
+
+        this.partRepo.save(part6);
+
+        Part part7 = new Part();
+        part7.setName("Battery");
+        part7.setImageUrl("https://i5.walmartimages.com/asr/bac4b4f9-5d19-4e2c-b5f8-7533d420d63a.aaeab574a492d71d7f29f6621334eace.jpeg");
+        part7.setMake(make);
+        part7.setModel(model);
+        part7.setCategory(category);
+        part7.setPrice(200);
+        part7.setQuantity(2);
+        part7.setDescription("BMW Battery");
+        part7.setSeller(user);
+
+        Set<Part> userParts7 = user.getParts();
+        userParts7.add(part7);
+        user.setParts(userParts7);
+
+        this.partRepo.save(part7);
+        this.userRepo.save(user);
     }
 
     @Override

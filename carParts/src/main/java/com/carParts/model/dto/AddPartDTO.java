@@ -19,8 +19,9 @@ public class AddPartDTO {
 
     @NotBlank(message = "You must enter image URL")
     private String imageUrl;
+    @NotBlank(message = "You must enter make name!")
     private String makeName;
-
+    @NotBlank(message = "You must enter model name!")
     private String modelName;
 
     private String categoryName;

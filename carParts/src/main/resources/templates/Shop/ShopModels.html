@@ -10,7 +10,7 @@
 
         <div class="text-center">
             <h1 class="display-4" th:text="${makeName}"></h1>
-            <p th:text="${'This is are the models of ' + {makeName} + ' that we sale parts for:'}"></p>
+            <p th:text="${'This are the models of ' + {makeName} + ' that we sale parts for:'}"></p>
         </div>
         <th:block th:each="model : ${modelsByMake}">
             <div class="row mt-2 mb-4">
