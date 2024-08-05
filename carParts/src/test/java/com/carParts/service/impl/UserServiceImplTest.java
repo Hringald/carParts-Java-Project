@@ -4,8 +4,6 @@ import com.carParts.model.dto.UserDTO;
 import com.carParts.model.entity.User;
 import com.carParts.repository.UserRepo;
 import com.carParts.repository.UserRoleRepo;
-import com.carParts.service.impl.UserServiceImpl;
-import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

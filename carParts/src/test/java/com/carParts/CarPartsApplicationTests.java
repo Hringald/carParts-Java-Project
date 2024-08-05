@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class CarPartsApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void main() {
+       CarPartsApplication.main(new String[] {});
     }
-
 }

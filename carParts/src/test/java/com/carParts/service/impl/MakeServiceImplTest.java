@@ -2,9 +2,6 @@ package com.carParts.service.impl;
 
 import com.carParts.model.entity.Make;
 import com.carParts.repository.MakeRepo;
-import com.carParts.service.impl.MakeServiceImpl;
-import com.carParts.service.impl.ModelServiceImpl;
-import com.carParts.service.impl.PartServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

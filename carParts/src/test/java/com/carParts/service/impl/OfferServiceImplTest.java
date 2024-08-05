@@ -5,8 +5,6 @@ import com.carParts.model.entity.User;
 import com.carParts.repository.OfferRepo;
 import com.carParts.repository.PartRepo;
 import com.carParts.repository.UserRepo;
-import com.carParts.service.impl.OfferServiceImpl;
-import com.carParts.service.impl.PartServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
