@@ -1,5 +1,6 @@
 package com.carParts.service.impl;
 
+import com.carParts.model.entity.Category;
 import com.carParts.model.entity.Make;
 import com.carParts.repository.MakeRepo;
 import org.junit.jupiter.api.Assertions;
@@ -7,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -76,5 +79,25 @@ class MakeServiceImplTest {
         Make expectedMake = this.toTest.findMakeById(TEST_INVALID_MAKE_ID);
 
         Assertions.assertNull(expectedMake);
+    }
+
+    @Test
+    void getAllMakesReturnAList_HasMakes() {
+        Make make = new Make();
+        make.setName(TEST_MAKE_NAME);
+
+        List<Make> makes = new ArrayList<>();
+        makes.add(make);
+
+        when(mockMakeRepo.findAll()).thenReturn(makes);
+
+        Assertions.assertEquals(makes.size(), 1);
+    }
+
+    @Test
+    void getAllMakesReturnAList_HasNoMakes() {
+        var makes = toTest.getAllMakes();
+
+        Assertions.assertEquals(makes.size(), 0);
     }
 }
