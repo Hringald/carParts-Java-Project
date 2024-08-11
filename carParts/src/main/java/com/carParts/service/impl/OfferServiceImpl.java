@@ -8,6 +8,7 @@ import com.carParts.repository.OfferRepo;
 import com.carParts.repository.PartRepo;
 import com.carParts.repository.UserRepo;
 import com.carParts.service.OfferService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,14 +44,9 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void addOffer(AddOfferDTO addOfferDTO, Part part, User seller) {
-        Offer newOffer = new Offer();
+        ModelMapper modelMapper = new ModelMapper();
 
-        newOffer.setName(addOfferDTO.getName());
-        newOffer.setAddress(addOfferDTO.getAddress());
-        newOffer.setCity(addOfferDTO.getCity());
-        newOffer.setEmail(addOfferDTO.getEmail());
-        newOffer.setPhone(addOfferDTO.getPhone());
-        newOffer.setZipCode(addOfferDTO.getZipCode());
+        Offer newOffer = modelMapper.map(addOfferDTO, Offer.class);
 
         part.setOffer(newOffer);
 

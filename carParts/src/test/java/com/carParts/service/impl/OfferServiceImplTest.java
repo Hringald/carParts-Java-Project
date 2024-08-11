@@ -15,7 +15,6 @@ import java.util.*;
 import static org.mockito.Mockito.when;
 
 class OfferServiceImplTest {
-
     private OfferServiceImpl toTest;
     private UserRepo mockUserRepo;
     private OfferRepo mockOfferRepo;
@@ -60,7 +59,7 @@ class OfferServiceImplTest {
     void testFindOwnedOffers_OffersNotFound() {
         List<Offer> expectedOffers = this.toTest.findOwnedOffers(null);
 
-        Assertions.assertNull(expectedOffers);
+        Assertions.assertEquals(expectedOffers, new ArrayList<>());
     }
 
     @Test
@@ -68,7 +67,7 @@ class OfferServiceImplTest {
 
         Offer offer = new Offer();
 
-        when(toTest.findById(offer.getId())).thenReturn(offer);
+        when(mockOfferRepo.findById(offer.getId())).thenReturn(Optional.of(offer));
 
         Offer expectedOffer = this.toTest.findById(offer.getId());
 

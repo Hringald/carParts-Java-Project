@@ -4,6 +4,7 @@ import com.carParts.model.dto.AddPartDTO;
 import com.carParts.model.entity.*;
 import com.carParts.repository.*;
 import com.carParts.service.PartService;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -43,19 +44,16 @@ public class PartServiceImpl implements PartService {
 
     @Override
     public void addPart(AddPartDTO addPartDTO, User currentUser) {
-        Part part = new Part();
+        ModelMapper modelMapper = new ModelMapper();
 
-        part.setName(addPartDTO.getName());
-        part.setImageUrl(addPartDTO.getImageUrl());
+        Part part = modelMapper.map(addPartDTO, Part.class);
+
         Category category = this.categoryRepo.findByName(addPartDTO.getCategoryName()).orElse(null);
         part.setCategory(category);
         Make make = this.makeRepo.findByName(addPartDTO.getMakeName()).orElse(null);
         part.setMake(make);
         Model model = this.modelRepo.findByName(addPartDTO.getModelName()).orElse(null);
         part.setModel(model);
-        part.setDescription(addPartDTO.getDescription());
-        part.setQuantity(addPartDTO.getQuantity());
-        part.setPrice(addPartDTO.getPrice());
         part.setSeller(currentUser);
 
         this.partRepo.save(part);
@@ -106,16 +104,15 @@ public class PartServiceImpl implements PartService {
     public void editPart(Part currentPart, AddPartDTO addPartDTO) {
         currentPart.setName(addPartDTO.getName());
         currentPart.setImageUrl(addPartDTO.getImageUrl());
+        currentPart.setPrice(addPartDTO.getPrice());
+        currentPart.setQuantity(addPartDTO.getQuantity());
+        currentPart.setDescription(addPartDTO.getDescription());
 
         Model model = this.modelRepo.findByName(addPartDTO.getModelName()).orElse(null);
         currentPart.setModel(model);
 
         Category category = this.categoryRepo.findByName(addPartDTO.getCategoryName()).orElse(null);
         currentPart.setCategory(category);
-
-        currentPart.setPrice(addPartDTO.getPrice());
-        currentPart.setQuantity(addPartDTO.getQuantity());
-        currentPart.setDescription(addPartDTO.getDescription());
 
         this.partRepo.save(currentPart);
     }

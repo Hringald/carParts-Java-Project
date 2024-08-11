@@ -7,6 +7,7 @@ import com.carParts.model.enums.UserRoleEnum;
 import com.carParts.repository.UserRepo;
 import com.carParts.repository.UserRoleRepo;
 import com.carParts.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,6 @@ public class UserServiceImpl implements UserService {
         }
 
         return this.userRepo.findByEmail(email).orElse(null);
-        // return this.mapUserDTO(user);
     }
 
     @Override
@@ -65,13 +65,6 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encoder.encode(registerDTO.getPassword()));
 
         return user;
-    }
-
-    private UserDTO mapUserDTO(User user) {
-        return new UserDTO()
-                .setId(user.getId())
-                .setEmail(user.getEmail())
-                .setUsername(user.getUsername());
     }
 
     public void initAdmin() {
@@ -126,7 +119,6 @@ public class UserServiceImpl implements UserService {
     public void changeEmail(UserDetails userDetails, Long UserId, EmailChangeDTO emailChangeDTO) {
         User currentUser = this.findUserById(UserId).orElse(null);
         currentUser.setEmail(emailChangeDTO.getEmailChange());
-        //userDetails.setUsername(emailChangeDTO.getEmailChange());
         userRepo.save(currentUser);
     }
 

@@ -68,7 +68,9 @@ public class ShopControllerTests {
         List<Part> parts = new ArrayList<>();
         parts.add(part);
 
-        when(mockPartService.findPaginated(1, 6, TEST_NAME, TEST_NAME, TEST_NAME, TEST_NAME)).thenReturn(page);
+        String mockSearchTerm = "%" + TEST_NAME + "%";
+
+        when(mockPartService.findPaginated(1, 6, TEST_NAME, TEST_NAME, TEST_NAME, mockSearchTerm)).thenReturn(page);
         when(page.getContent()).thenReturn(parts);
 
         String result = toTest.findPaginated(TEST_NAME, TEST_NAME, TEST_NAME, 1, TEST_NAME, Mockito.mock());

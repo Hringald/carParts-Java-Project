@@ -2,8 +2,10 @@ package com.carParts.service.impl;
 
 import com.carParts.model.dto.AddMakeDTO;
 import com.carParts.model.entity.Make;
+import com.carParts.model.entity.Model;
 import com.carParts.repository.MakeRepo;
 import com.carParts.service.MakeService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +18,6 @@ public class MakeServiceImpl implements MakeService {
     private final PartServiceImpl partService;
 
     private final ModelServiceImpl modelService;
-
 
 
     public MakeServiceImpl(MakeRepo makeRepo, PartServiceImpl partService, ModelServiceImpl modelService) {
@@ -64,15 +65,9 @@ public class MakeServiceImpl implements MakeService {
 
     @Override
     public void createMake(AddMakeDTO addMakeDTO) {
-        Make make = new Make();
+        ModelMapper modelMapper = new ModelMapper();
 
-        make.setName(addMakeDTO.getName());
-
-        make.setImageUrl(addMakeDTO.getImageUrl());
-
-        //Admin admin = adminService.findAdminByUsername(adminUser.getUsername());
-
-        //make.setAdmin(admin);
+        Make make = modelMapper.map(addMakeDTO, Make.class);
 
         this.makeRepo.save(make);
     }
