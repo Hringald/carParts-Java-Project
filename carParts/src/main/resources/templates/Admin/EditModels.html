@@ -4,14 +4,14 @@
 <div class="container">
     <main role="main" class="pb-3">
 
-        <h1 th:if="${models.size() <= 0}">There aren't any available models!</h1>
+        <h1 th:if="${models.size() <= 0}" th:text="#{edit_models_page_label}"></h1>
         <table th:if="${models.size() > 0}" class="table">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Make Name</th>
-                <th scope="col">Model Name</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                <th scope="col" th:text="#{edit_makes_make_name}"></th>
+                <th scope="col" th:text="#{edit_makes_model_name}"></th>
+                <th scope="col" th:text="#{edit_button_label}"></th>
+                <th scope="col" th:text="#{delete_button_label}"></th>
             </tr>
             </thead>
             <tbody>
@@ -21,11 +21,11 @@
                     <td th:text="${model.name}"></td>
                     <td>
                         <a type="button" class="btn btn-success" a=""
-                           th:href="@{/admin/editModel/{id}(id = ${model.id})}">Edit</a>
+                           th:href="@{/admin/editModel/{id}(id = ${model.id})}" th:text="#{edit_button_label}"></a>
                     </td>
                     <td>
                         <a type="button" class="btn btn-danger" a=""
-                           th:href="@{/admin/deleteModel/{id}(id = ${model.id})}">Delete</a>
+                           th:href="@{/admin/deleteModel/{id}(id = ${model.id})}" th:text="#{delete_button_label}"></a>
                     </td>
                 </tr>
             </th:block>

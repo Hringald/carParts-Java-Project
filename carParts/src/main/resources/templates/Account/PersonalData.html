@@ -5,26 +5,25 @@
 <div class="container">
     <main role="main" class="pb-3">
 
-        <h2>Manage your account</h2>
+        <h2 th:text="#{account_manage_header2}"></h2>
 
         <div>
-            <h4>Change your account settings</h4>
+            <h4 th:text="#{account_manage_header4}"></h4>
             <hr>
             <div class="row">
                 <div th:replace="fragments/manageAccountNav::div"></div>
                 <div class="col-md-9">
-                    <h4>Personal Data</h4>
+                    <h4 th:text="#{account_header_personal_data}"></h4>
                     <div class="row">
                         <div class="col-md-6">
-                            <p>Your account contains personal data that you have given us. This page allows you to
-                                delete that data.</p>
+                            <p th:text="#{account_personal_data_label1}"></p>
                             <p>
-                                <strong>Deleting this data will permanently remove your account, and this cannot be
-                                    recovered.</strong>
+                                <strong th:text="#{account_personal_data_label2}"></strong>
                             </p>
                             <p>
                                 <a id="delete" class="btn btn-secondary"
-                                   href="/identity/account/manage/deletePersonalData">Delete</a>
+                                   href="/identity/account/manage/deletePersonalData"
+                                   th:text="#{delete_button_label}"></a>
                             </p>
                         </div>
                     </div>

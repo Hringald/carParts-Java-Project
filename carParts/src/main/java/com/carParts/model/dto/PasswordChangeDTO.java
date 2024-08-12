@@ -1,5 +1,6 @@
 package com.carParts.model.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -7,12 +8,12 @@ public class PasswordChangeDTO {
 
     private Long id;
 
-    @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
-    @NotNull(message = "Password must not be empty!")
+    @Size(min = 3, max = 20, message = "{register_valid_password}")
+    @NotBlank(message = "{register_valid_not_blank_password}")
     private String newPassword;
 
-    @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
-    @NotNull(message = "Confirm Password must not be empty!")
+    @Size(min = 3, max = 20, message = "{register_valid_password}")
+    @NotBlank(message = "{register_valid_not_blank_password}")
     private String confirmNewPassword;
 
     public PasswordChangeDTO() {

@@ -74,38 +74,6 @@ public class PartControllerImpl implements PartController {
     public String addPart(@AuthenticationPrincipal UserDetails userDetails, @Valid AddPartDTO addPartDTO, BindingResult result, RedirectAttributes redirectAttributes) {
         String makeName = addPartDTO.getMakeName();
 
-        if (addPartDTO.getPrice() < Double.parseDouble(DataConstants.Part.DecimalMinValue)) {
-            result.addError(
-                    new FieldError(
-                            "lowePrice",
-                            "price",
-                            "Price must be bigger than 0.01"));
-        }
-
-        if (addPartDTO.getPrice() > Double.parseDouble(DataConstants.Part.DecimalMaxValue)) {
-            result.addError(
-                    new FieldError(
-                            "highPrice",
-                            "price",
-                            "Price is too high!"));
-        }
-
-        if (addPartDTO.getQuantity() < DataConstants.Part.QuantityMinValue) {
-            result.addError(
-                    new FieldError(
-                            "lowQuantity",
-                            "quantity",
-                            "Quantity must be bigger than 0"));
-        }
-
-        if (addPartDTO.getQuantity() > DataConstants.Part.QuantityMaxValue) {
-            result.addError(
-                    new FieldError(
-                            "highQuantity",
-                            "quantity",
-                            "Quantity must be less than 100"));
-        }
-
         if (result.hasErrors()) {
             redirectAttributes
                     .addFlashAttribute("addPartDTO", addPartDTO)

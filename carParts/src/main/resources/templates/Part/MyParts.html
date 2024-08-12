@@ -7,17 +7,17 @@
 <header th:replace="fragments/header::header"></header>
 <div class="container">
     <main role="main" class="pb-3">
-        <h1 th:if="${myParts.size() <= 0}">You don't have available parts.</h1>
+        <h1 th:if="${myParts.size() <= 0}" th:text="#{my_parts_page_label}"></h1>
         <table th:if="${myParts.size() > 0}" class="table">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Make</th>
-                <th scope="col">Name</th>
-                <th scope="col">Category</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Info</th>
-                <th scope="col">Delete</th>
+                <th scope="col" th:text="#{make_label}"></th>
+                <th scope="col" th:text="#{add_make_page_name}"></th>
+                <th scope="col" th:text="#{category_label}"></th>
+                <th scope="col" th:text="#{price_label}"></th>
+                <th scope="col" th:text="#{quantity_label}">Q</th>
+                <th scope="col" th:text="#{info_label}"></th>
+                <th scope="col" th:text="#{delete_button_label}"></th>
             </tr>
             </thead>
             <tbody>
@@ -30,11 +30,11 @@
                     <td th:text="${part.quantity}"></td>
                     <td>
                         <a type="button" class="btn btn-success"
-                           th:href="@{/parts/editPart/{id}(id = ${part.id})}">Edit</a>
+                           th:href="@{/parts/editPart/{id}(id = ${part.id})}" th:text="#{edit_button_label}"></a>
                     </td>
                     <td>
                         <a type="button" class="btn btn-danger"
-                           th:href="@{/parts/deletePart/{id}(id = ${part.id})}">Delete</a>
+                           th:href="@{/parts/deletePart/{id}(id = ${part.id})}" th:text="#{delete_button_label}"></a>
                     </td>
                 </tr>
             </th:block>

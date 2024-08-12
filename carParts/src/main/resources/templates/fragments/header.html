@@ -1,4 +1,4 @@
-<head>
+<head xmlns:th="http://www.w3.org/1999/xhtml">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -10,7 +10,7 @@
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
 
-            <a class="navbar-brand" href="/"><i class="fas fa-hands-helping"></i>Car Parts</a>
+            <a class="navbar-brand" href="/"><i class="fas fa-hands-helping" th:text="#{header_project_name}"></i></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -18,7 +18,7 @@
             <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul sec:authorize="isAuthenticated()" class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/parts/chooseMake">Add Part</a>
+                        <a class="nav-link text-dark" href="/parts/chooseMake" th:text="#{header_add_part_label}"></a>
                     </li>
                 </ul>
                 <link rel="stylesheet" href="/css/adminPanel.css">
@@ -26,40 +26,53 @@
                 <ul class="navbar-nav">
                     <li sec:authorize='hasRole("ADMIN")' class="nav-item">
                         <div class="dropdown nav-link text-dark">
-                            <a class="dropbtn">Admin Panel</a>
+                            <a class="dropbtn" th:text="#{header_admin_panel_label}"></a>
                             <div class="dropdown-content">
-                                <a href="/admin/addMake">Add Make</a>
-                                <a href="/admin/editMakes">Edit Makes</a>
-                                <a href="/admin/addModel">Add Model</a>
-                                <a href="/admin/editModels">Edit Models</a>
-                                <a href="/admin/usersParts">Edit Parts</a>
+                                <a href="/admin/addMake" th:text="#{header_admin_panel_add_make_label}"></a>
+                                <a href="/admin/editMakes" th:text="#{header_admin_panel_edit_makes_label}"></a>
+                                <a href="/admin/addModel" th:text="#{header_admin_panel_add_model_label}"></a>
+                                <a href="/admin/editModels" th:text="#{header_admin_panel_edit_models_label}"></a>
+                                <a href="/admin/usersParts" th:text="#{header_admin_panel_edit_parts_label}"></a>
                             </div>
                         </div>
                     </li>
                     <li class="nav-item">
                         <a sec:authorize="isAuthenticated()" class="nav-link text-dark" title="Manage"
-                           href="/identity/account/manage">Account</a>
+                           href="/identity/account/manage" th:text="#{header_account_label}"></a>
                     </li>
                     <li class="nav-item">
                         <a sec:authorize="isAuthenticated()" class="nav-link text-dark" title="Manage"
-                           href="/parts/myParts">My Parts</a>
+                           href="/parts/myParts" th:text="#{header_my_parts_label}"></a>
                     </li>
                     <li class="nav-item">
                         <a sec:authorize="isAuthenticated()" class="nav-link text-dark" title="Manage"
-                           href="/offers/myOffers">My Offers</a>
+                           href="/offers/myOffers" th:text="#{header_my_offers_label}"></a>
                     </li>
                     <li sec:authorize="isAuthenticated()" class="nav-item">
                         <form class="form-inline" action="/identity/account/logout" method="post">
-                            <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                            <button type="submit" class="nav-link btn btn-link text-dark"
+                                    th:text="#{header_logout_label}"></button>
                         </form>
                     </li>
                 </ul>
                 <ul sec:authorize="!isAuthenticated()" class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/identity/account/register">Register</a>
+                        <a th:text="#{header_register_label}" class="nav-link text-dark"
+                           href="/identity/account/register"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/identity/account/login">Login</a>
+                        <a th:text="#{header_login_label}" class="nav-link text-dark"
+                           href="/identity/account/login"></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <form th:method="get">
+                            <label class="text-black" for="lang" th:text="#{nav_bar_language}">Language</label>
+                            <select id="lang" name="lang" onchange="this.form.submit()">
+                                <option value="en_US" th:selected="${#locale.toString()} == 'en_US'">English</option>
+                                <option value="bg_BG" th:selected="${#locale.toString()} == 'bg_BG'">Български</option>
+                            </select>
+                        </form>
                     </li>
                 </ul>
             </div>

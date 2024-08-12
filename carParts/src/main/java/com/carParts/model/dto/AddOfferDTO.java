@@ -12,26 +12,26 @@ public class AddOfferDTO {
 
     private Long id;
 
-    @NotNull(message = "You must enter your first name!")
-    @Length(min = DataConstants.Offer.NameMinLength, max = DataConstants.Offer.NameMaxLength, message = "First name bust be between 2 and 100 characters long!")
+    @NotNull(message = "{offer_name_empty_validation}")
+    @Length(min = DataConstants.Offer.NameMinLength, max = DataConstants.Offer.NameMaxLength, message = "{offer_name_length_validation}")
     public String name;
 
-    @Email(message = "Email must be in valid format!")
-    @NotBlank(message = "You must enter your email!")
+    @Email(message = "{login_email_error_message}")
+    @NotBlank(message = "{login_email_error_not_empty_message}")
     private String email;
 
-    @NotNull(message = "You must enter your phone number!")
-    @PhoneValidator(message = "Phone number must be in valid format!")
+    @NotNull(message = "{account_phone_number_empty}")
+    @PhoneValidator(message = "{account_phone_number_valid}")
     private String phone;
-    @NotNull(message = "You must enter your address!")
-    @Length(min = DataConstants.Offer.AddressMinLength, max = DataConstants.Offer.AddressMaxLength, message = "Address mut be between 8 and 189 characters long!")
+    @NotNull(message = "{offer_address_empty_validation}")
+    @Length(min = DataConstants.Offer.AddressMinLength, max = DataConstants.Offer.AddressMaxLength, message = "{offer_address_length_validation}")
     private String address;
-    @NotNull(message = "You must enter your city!")
-    @Length(min = DataConstants.Offer.CityMinLength, max = DataConstants.Offer.CityMaxLength, message = "City mut be between 8 and 189 characters long!")
+    @NotNull(message = "{offer_city_empty_validation}")
+    @Length(min = DataConstants.Offer.CityMinLength, max = DataConstants.Offer.CityMaxLength, message = "{offer_city_length_validation}")
     private String city;
-    @NotNull(message = "You must enter zip code!")
+    @NotNull(message = "{offer_zip_empty_validation}")
     @ZipValidator
-    @Length(min = DataConstants.Offer.ZipMinLength, max = DataConstants.Offer.ZipMaxLength, message = "Zip code must be minimum 4 characters long!")
+    @Length(min = DataConstants.Offer.ZipMinLength, max = DataConstants.Offer.ZipMaxLength, message = "{offer_zip_length_validation}")
     @Column(nullable = false)
     private String zipCode;
 

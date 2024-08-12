@@ -6,9 +6,9 @@
         <table class="table">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Username</th>
-                <th scope="col">Parts count</th>
-                <th scope="col">Edit parts</th>
+                <th scope="col" th:text="#{username_label}"></th>
+                <th scope="col" th:text="#{parts_count_label}"></th>
+                <th scope="col" th:text="#{header_admin_panel_edit_parts_label}"></th>
             </tr>
             </thead>
             <tbody>
@@ -18,7 +18,8 @@
                     <td th:text="*{user.getParts().size()}"></td>
                     <td>
                         <a type="button" class="btn btn-success" a=""
-                           th:href="@{/admin/editUserParts/{id}(id = ${user.id})}">Edit parts</a>
+                           th:href="@{/admin/editUserParts/{id}(id = ${user.id})}"
+                           th:text="#{header_admin_panel_edit_parts_label}"></a>
                     </td>
                 </tr>
             </th:block>

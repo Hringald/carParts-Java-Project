@@ -6,32 +6,33 @@
 <header th:replace="fragments/header::header"></header>
 <div class="container">
     <main role="main" class="pb-3">
-        <h1>Log in</h1>
+        <h1 th:text="#{header_login_label}"></h1>
         <div class="row">
             <div class="col-md-4">
                 <section>
                     <form method="post" action="/identity/account/login" th:object="${loginDTO}">
-                        <h4>Use a local account to log in.</h4>
+                        <h4 th:text="#{login_page_header}"></h4>
                         <hr>
-                        <small th:if="${#fields.hasErrors()}" th:text="|Invalid login credentials|"
+                        <small th:if="${#fields.hasErrors()}" th:text="#{login_valid_credentials}"
                                class="text-danger">Login error
                             message</small>
                         <div class="form-group">
-                            <label>Email</label>
+                            <label th:text="#{login_page_enter_email}"></label>
                             <input th:field="*{email}" type="text" class="form-control"
                                    id="email" name="email"/>
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
+                            <label th:text="#{login_page_enter_password}"></label>
                             <input type="password" class="form-control" id="password"
                                    name="password"/>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Log in</button>
+                            <button type="submit" class="btn btn-primary" th:text="#{header_login_label}">Log in
+                            </button>
                         </div>
                         <div class="form-group">
                             <p>
-                                <a href="/identity/account/register">Register as a new user</a>
+                                <a href="/identity/account/register" th:text="#{login_page_register_redirect}"></a>
                             </p>
                         </div>
                     </form>

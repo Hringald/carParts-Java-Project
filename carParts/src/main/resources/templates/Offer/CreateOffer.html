@@ -10,7 +10,7 @@
 
 
         <div class="text-center">
-            <h1 class="display-4">Info for part:</h1>
+            <h1 class="display-4" th:text="#{create_offer_page_label}"></h1>
         </div>
 
 
@@ -23,8 +23,8 @@
                     <p class="card-text" th:text="${partDescription}"></p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item" th:text="|Quantity: ${partQuantity}|"></li>
-                    <li class="list-group-item" th:text="|Price: ${partPrice}$|"></li>
+                    <li class="list-group-item" th:text="|#{quantity_label}: ${partQuantity}|"></li>
+                    <li class="list-group-item" th:text="|#{price_label}:   ${partPrice}$|"></li>
                 </ul>
             </div>
 
@@ -33,8 +33,8 @@
                     <input th:value="${partId}" id="id" name="id" hidden readonly>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label>Name</label>
-                            <input placeholder="Enter your name..." th:field="*{name}"
+                            <label th:text="#{add_make_page_name}"></label>
+                            <input th:field="*{name}"
                                    th:errorclass="'is-invalid bg-danger'"
                                    type="text" class="form-control" id="name" name="name">
                             <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Name
@@ -42,8 +42,8 @@
                                 message</small>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Email</label>
-                            <input placeholder="Enter your email..." th:field="*{email}"
+                            <label th:text="#{login_page_enter_email}"></label>
+                            <input th:field="*{email}"
                                    th:errorclass="'is-invalid bg-danger'"
                                    type="text" class="form-control" id="email" name="email">
                             <small th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger">Email
@@ -51,8 +51,8 @@
                                 message</small>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Phone</label>
-                            <input placeholder="Enter your phone number..." th:field="*{phone}"
+                            <label th:text="#{create_offer_page_phone}"></label>
+                            <input th:field="*{phone}"
                                    th:errorclass="'is-invalid bg-danger'"
                                    type="text" class="form-control" id="phone" name="phone">
                             <small th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" class="text-danger">Phone
@@ -61,8 +61,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Address</label>
-                        <input placeholder="Enter your address..." th:field="*{address}"
+                        <label th:text="#{create_offer_page_address}"></label>
+                        <input th:field="*{address}"
                                th:errorclass="'is-invalid bg-danger'"
                                type="text" class="form-control" id="address" name="address">
                         <small th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger">Address
@@ -71,8 +71,8 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
-                            <label>City</label>
-                            <input placeholder="Enter your city..." th:field="*{city}"
+                            <label th:text="#{create_offer_page_city}"></label>
+                            <input th:field="*{city}"
                                    th:errorclass="'is-invalid bg-danger'"
                                    type="text" class="form-control" id="city" name="city">
                             <small th:if="${#fields.hasErrors('city')}" th:errors="*{city}" class="text-danger">City
@@ -80,8 +80,8 @@
                                 message</small>
                         </div>
                         <div class="form-group col-md-2">
-                            <label>Zip</label>
-                            <input placeholder="Add your zip..." th:field="*{zipCode}"
+                            <label th:text="#{create_offer_page_zip}"></label>
+                            <input th:field="*{zipCode}"
                                    th:errorclass="'is-invalid bg-danger'"
                                    type="text" class="form-control" id="zipCode" name="zipCode">
                             <small th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}" class="text-danger">Zip
@@ -89,7 +89,7 @@
                                 message</small>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Order</button>
+                    <button type="submit" class="btn btn-primary" th:text="#{Order_button_label}"></button>
                 </form>
             </div>
         </div>

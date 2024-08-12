@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="/css/slideShow.css">
         <div th:replace="fragments/slideShow::div"></div>
         <link rel="stylesheet" href="/css/carMenu.css">
-        <h1 th:if="${allMakes.size() > 0}" style="text-align:center">Choose car make: </h1>
+        <h1 th:if="${allMakes.size() > 0}" style="text-align:center" th:text="#{home_page_choose_make_label}"></h1>
         <div class="row mt-2 mb-4">
             <th:block th:each="make : ${allMakes}">
                 <div class="col-6 col-xl-1 mb-5  mt-5 ml-4 mr-4">

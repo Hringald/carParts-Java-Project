@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ZipValidator {
-    String message() default "Invalid Zip code!";
+    String message() default "{account_manage_valid_zip}";
 
     Class<?>[] groups() default {};
 

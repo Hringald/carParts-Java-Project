@@ -7,15 +7,15 @@
 <header th:replace="fragments/header::header"></header>
 <div class="container">
     <main role="main" class="pb-3">
-        <h1 th:if="${myOffers.size() <= 0}">You don't have available offers.</h1>
+        <h1 th:if="${myOffers.size() <= 0}" th:text="#{my_offers_page_label}"></h1>
         <table th:if="${myOffers.size() > 0}" class="table">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Part name</th>
-                <th scope="col">Buyer name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
-                <th scope="col">Info</th>
+                <th scope="col" th:text="#{my_offers_part_name}"></th>
+                <th scope="col" th:text="#{my_offers_buyer_name}"></th>
+                <th scope="col" th:text="#{price_label}"></th>
+                <th scope="col" th:text="#{quantity_label}"></th>
+                <th scope="col" th:text="#{info_label}"></th>
             </tr>
             </thead>
             <tbody>
@@ -27,7 +27,7 @@
                     <td th:text="${offer.part.quantity}"></td>
                     <td>
                         <a type="button" class="btn btn-primary"
-                           th:href="@{/offers/info/{id}(id = ${offer.id})}">Info</a>
+                           th:href="@{/offers/info/{id}(id = ${offer.id})}" th:text="#{info_label}"></a>
                     </td>
                 </tr>
             </th:block>

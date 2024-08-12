@@ -14,10 +14,10 @@ public class AddModelDTO {
     @Length(min = DataConstants.Model.NameMinLength, max = DataConstants.Model.NameMaxLength)
     private String name;
 
-    @NotBlank(message = "You must enter image URL!")
+    @NotBlank(message = "{part_url_empty_validation}")
     private String imageUrl;
 
-    @NotBlank(message = "You must enter make name!")
+    @NotBlank(message = "{part_make_name_empty_validation}")
     private String makeName;
 
     public AddModelDTO() {

@@ -10,11 +10,11 @@ public class AddMakeDTO {
 
     private Long id;
 
-    @NotNull(message = "You must enter model name!")
+    @NotNull(message = "{part_model_name_empty_validation}")
     @Length(min = DataConstants.Model.NameMinLength, max = DataConstants.Model.NameMaxLength)
     private String name;
 
-    @NotBlank(message = "You must enter image URL!")
+    @NotBlank(message = "{part_url_empty_validation}")
     private String imageUrl;
 
 

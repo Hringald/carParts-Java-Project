@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueEmail {
-    String message() default "Email already exist";
+    String message() default "{register_email_exists}";
 
     Class<?>[] groups() default {};
 

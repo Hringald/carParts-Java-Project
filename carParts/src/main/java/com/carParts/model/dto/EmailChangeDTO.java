@@ -1,14 +1,16 @@
 package com.carParts.model.dto;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public class EmailChangeDTO {
 
     private Long id;
 
-    @Email(message = "Email is not valid!")
-    @NotNull(message = "Please enter an email address!")
+    @Email(message = "{login_email_error_message}")
+    @NotEmpty(message = "{login_email_error_not_empty_message}")
     private String emailChange;
 
     public EmailChangeDTO() {

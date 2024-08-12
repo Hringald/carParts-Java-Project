@@ -8,7 +8,7 @@
 <div class="container">
     <main role="main" class="pb-3">
         <div class="text-center">
-            <h1 class="display-4">Parts</h1>
+            <h1 class="display-4" th:text="#{parts_label}"></h1>
         </div>
         <div class="container">
             <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,13 +19,13 @@
         <form class="example" method="get"
               th:action="@{'/shop/shopPage' + '/' + ${makeName} + '/' + ${modelName} + '/' + ${categoryName}}"
               th:object="${searchFormDTO}">
-            <input th:field="*{searchTerm}" type="text" placeholder="Search...">
+            <input th:field="*{searchTerm}" type="text" th:placeholder="#{search_placeholder}">
             <button type="submit"><i class="fa fa-search"></i></button>
         </form>
 
 
         <div class="row col-12 mt-5 mn-4">
-            <h3 th:if="${totalParts <= 0}">There are no parts for the given model and category.</h3>
+            <h3 th:if="${totalParts <= 0}" th:text="#{categories_no_parts}"></h3>
 
             <th:block th:each="part : ${partList}">
                 <div class="card col-9 col-lg-3 ml-5 mr-4 mb-2">
@@ -36,14 +36,14 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item text-center" th:text="${part.name}|"></li>
                         </ul>
-                        <p style="margin:auto;margin-top:15px" th:text="|Quantity: ${part.quantity}|"></p>
-                        <p style="margin:auto;margin-bottom:15px" th:text="|Price: ${part.price}$|"></p>
+                        <p style="margin:auto;margin-top:15px" th:text="|#{quantity_label}: ${part.quantity}|"></p>
+                        <p style="margin:auto;margin-bottom:15px" th:text="|#{price_label}: ${part.price}$|"></p>
                         <a sec:authorize='hasRole("ADMIN")'
                            th:href="@{/parts/editPart/{id}(id = ${part.id})}"
-                           class="btn btn-success">Edit</a>
+                           class="btn btn-success" th:text="#{edit_button_label}"></a>
                         <a sec:authorize='!hasRole("ADMIN")'
                            th:href="@{/offers/createOffer/{id}(id = ${part.id})}"
-                           class="btn btn-block btn-primary">Part Info</a>
+                           class="btn btn-block btn-primary" th:text="#{part_info_label}"></a>
                     </div>
                 </div>
             </th:block>

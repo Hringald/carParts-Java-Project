@@ -7,8 +7,8 @@ import javax.validation.constraints.Size;
 
 public class MakeAdminDTO {
 
-    @Size(min = 3, max = 20, message = "Username length must be between 3 and 20 characters!")
-    @NotBlank(message = "Username cannot be empty!")
+    @Size(min = 3, max = 20, message = "{account_admin_username_size_validation}")
+    @NotBlank(message = "{account_admin_username_size_empty}")
     @UniqueUsername
     private String username;
 

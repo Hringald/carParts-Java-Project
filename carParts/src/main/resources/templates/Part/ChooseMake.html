@@ -9,7 +9,7 @@
     <main role="main" class="pb-3">
 
         <link rel="stylesheet" href="/css/carMenu.css">
-        <h1 style="text-align:center">Choose from the available makes:</h1>
+        <h1 style="text-align:center" th:text="#{home_page_choose_make_label}"></h1>
         <div class="row mt-2 mb-4">
             <th:block th:each="make : ${allMakes}">
                 <div class="col-6 col-xl-1 mb-5  mt-5 ml-4 mr-4">

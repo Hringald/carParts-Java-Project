@@ -5,11 +5,11 @@
     <div class="row">
 
         <div class=" col-md-8 com-sm-12">
-            <h2 class="heading-margin" text-center="">Add Model</h2>
+            <h2 class="heading-margin" text-center="" th:text="#{add_model_page_title}">Add Model</h2>
             <form method="post" action="/admin/addModel" th:object="${addModelDTO}">
                 <input th:value="${modelId}" id="id" name="id" hidden readonly>
                 <div class="form-group">
-                    <label for="Name">Name</label>
+                    <label for="Name" th:text="#{add_make_page_name}"></label>
                     <input placeholder="Add model name..."
                            th:errorclass="'is-invalid bg-danger'"
                            type="text" class="form-control" id="name" name="name"></input>
@@ -17,7 +17,7 @@
                         message</small>
                 </div>
                 <div class="form-group">
-                    <label>Make</label>
+                    <label th:text="#{add_model_page_make}"></label>
                     <select th:field="*{makeName}" th:errorclass="'is-invalid bg-danger'" class="form-control"
                             id="makeName" name="makeName">
                         <th:block th:each="make : ${allMakes}">
@@ -26,7 +26,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Image Url</label>
+                    <label th:text="#{add_make_page_imageURL}"></label>
                     <input placeholder="Add image Url..."
                            th:errorclass="'is-invalid bg-danger'"
                            type="text" class="form-control" id="imageUrl" name="imageUrl"></input>
@@ -34,7 +34,7 @@
                         Url error
                         message</small>
                 </div>
-                <button type="submit" class="btn btn-primary" value="Add">Add</button>
+                <button type="submit" class="btn btn-primary" value="Add" th:text="#{add_button_label}"></button>
             </form>
         </div>
     </div>

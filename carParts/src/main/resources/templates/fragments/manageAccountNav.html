@@ -1,13 +1,12 @@
 <div class="col-md-3">
     <ul class="nav nav-pills flex-column">
-        <li class="nav-item"><a class="nav-link" id="profile" href="/identity/account/manage">Profile</a></li>
-        <li class="nav-item"><a class="nav-link" id="email" href="/identity/account/manage/email">Email</a></li>
+        <li class="nav-item"><a class="nav-link" id="profile" href="/identity/account/manage" th:text="#{account_manage_profile_header4}"></a></li>
+        <li class="nav-item"><a class="nav-link" id="email" href="/identity/account/manage/email" th:text="#{login_page_enter_email}"></a></li>
         <li class="nav-item"><a class="nav-link" id="change-password"
-                                href="/identity/account/manage/password">Password</a></li>
-        <li class="nav-item"><a class="nav-link" id="personal-data" href="/identity/account/manage/personalData">Personal
-            data</a></li>
+                                href="/identity/account/manage/password" th:text="#{login_page_enter_password}"></a></li>
+        <li class="nav-item"><a class="nav-link" id="personal-data" href="/identity/account/manage/personalData" th:text="#{account_header_personal_data}"></a></li>
     </ul>
     <a sec:authorize='!hasRole("ADMIN")' type="button" class="btn btn-success"
-       href="/identity/account/manage/becomeAdmin">Become Admin</a>
+       href="/identity/account/manage/becomeAdmin" th:text="#{account_header_become_admin}"></a>
 
 </div>

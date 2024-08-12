@@ -8,32 +8,32 @@
 <div class="container">
     <div class="row">
         <div class="offset-md-2 col-md-8 com-sm-12 mb-5">
-            <h2 class="heading-margin" text-center="">Edit Part</h2>
+            <h2 class="heading-margin" text-center="" th:text="#{edit_part_label}"></h2>
             <form method="post" action="/parts/editPart" th:object="${addPartDTO}">
                 <input th:value="${partId}" id="id" name="id" hidden readonly>
                 <div class="form-group">
-                    <label>Name</label>
+                    <label th:text="#{account_admin_name}"></label>
                     <input placeholder="Add part name..." th:value="${name}" th:errorclass="'is-invalid bg-danger'"
                            type="text" class="form-control" id="name" name="name"></input>
                     <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Name error
                         message</small>
                 </div>
                 <div class="form-group">
-                    <label>Image Url</label>
+                    <label th:text="#{add_make_page_imageURL}"></label>
                     <input placeholder="Add image Url..." th:value="${imageUrl}" th:errorclass="'is-invalid bg-danger'"
                            type="text" class="form-control" id="imageUrl" name="imageUrl"></input>
                     <small th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" class="text-danger">Image
                         Url error message</small>
                 </div>
                 <div class="form-group">
-                    <label>Make</label>
+                    <label th:text="#{add_model_page_make}"></label>
                     <input class="form-control" th:value="${makeName}" readonly th:errorclass="'is-invalid bg-danger'"
                            type="text" id="makeName" name="makeName"></input>
                     <small th:if="${#fields.hasErrors('makeName')}" th:errors="*{makeName}" class="text-danger">Make
                         name error message</small>
                 </div>
                 <div class="form-group">
-                    <label>Model</label>
+                    <label th:text="#{model_label}"></label>
                     <select th:value="${modelName}" th:errorclass="'is-invalid bg-danger'" class="form-control"
                             id="modelName" name="modelName">
                         <th:block th:each="model : ${makeModels}">
@@ -44,7 +44,7 @@
                         name error message</small>
                 </div>
                 <div class="form-group">
-                    <label>Category</label>
+                    <label th:text="#{category_label}">Category</label>
                     <select th:value="${categoryName}" th:errorclass="'is-invalid bg-danger'" class="form-control"
                             id="categoryName" name="categoryName">
                         <th:block th:each="category : ${allCategories}">
@@ -55,28 +55,28 @@
                         name error message</small>
                 </div>
                 <div class="form-group">
-                    <label>Price</label>
+                    <label th:text="#{price_label}"></label>
                     <input placeholder="Add part price..." th:value="${price}" th:errorclass="'is-invalid bg-danger'"
                            type="text" value="0,01" class="form-control" id="price" name="price"></input>
                     <small th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger">Price error
                         message</small>
                 </div>
                 <div class="form-group">
-                    <label>Quantity</label>
+                    <label th:text="#{quantity_label}"></label>
                     <input value="1" th:value="${quantity}" th:errorclass="'is-invalid bg-danger'"
                            type="number" class="form-control" id="quantity" name="quantity"></input>
                     <small th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" class="text-danger">Quantity
                         error message</small>
                 </div>
                 <div class="form-group">
-                    <label>Description</label>
+                    <label th:text="#{description_label}"></label>
                     <textarea th:text="${description}" th:errorclass="'is-invalid bg-danger'" rows="3"
                               placeholder="Add description..." class="form-control" id="description"
                               name="description"></textarea>
                     <small th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger">Description
                         error message</small>
                 </div>
-                <button type="submit" class="btn btn-success" value="Edit">Edit</button>
+                <button type="submit" class="btn btn-success" value="Edit" th:text="#{edit_button_label}"></button>
             </form>
         </div>
     </div>

@@ -4,38 +4,40 @@ import com.carParts.model.entity.DataConstants;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 public class AddPartDTO {
 
     private Long id;
 
-    @NotNull(message = "You must enter part name!")
-    @Length(min = DataConstants.Part.NameMinLength, max = DataConstants.Part.NameMaxLength)
+    @NotNull(message = "{part_name_empty_validation}")
+    @Length(min = DataConstants.Part.NameMinLength, max = DataConstants.Part.NameMaxLength, message = "{part_name_length_validation}")
     private String name;
 
-    @NotBlank(message = "You must enter image URL")
+    @NotBlank(message = "{part_url_empty_validation}")
     private String imageUrl;
-    @NotBlank(message = "You must enter make name!")
+    @NotBlank(message = "{part_make_name_empty_validation}")
     private String makeName;
-    @NotBlank(message = "You must enter model name!")
+    @NotBlank(message = "{part_model_name_empty_validation}")
     private String modelName;
 
     private String categoryName;
-    @NotNull(message = "You must enter part price!")
-    @DecimalMin(DataConstants.Part.DecimalMinValue)
-    @DecimalMax(DataConstants.Part.DecimalMaxValue)
+    @NotNull(message = "{part_price_empty_validation}")
+    @DecimalMin(value = DataConstants.Part.DecimalMinValue, message = "{part_price_minimum_error}")
+    @DecimalMax(value = DataConstants.Part.DecimalMaxValue, message = "{part_price_maximum_error}")
     private double price;
 
-    @NotNull(message = "You must enter part quantity!")
-    @Size(min = DataConstants.Part.QuantityMinValue, max = DataConstants.Part.QuantityMaxValue)
+    @NotNull(message = "{part_quantity_empty_validation}")
+    @Min(value = DataConstants.Part.QuantityMinValue,message = "{part_quantity_min_error}")
+    @Max(value = DataConstants.Part.QuantityMaxValue,message = "{part_quantity_max_error}")
     private int quantity;
 
-    @NotBlank(message = "You must enter part description!")
-    @Length(min = DataConstants.Part.DescriptionMinLength, max = DataConstants.Part.DescriptionMaxLength)
+    @NotBlank(message = "{part_description_empty_validation}")
+    @Length(min = DataConstants.Part.DescriptionMinLength, max = DataConstants.Part.DescriptionMaxLength, message = "{part_description_error}")
     private String description;
 
     public AddPartDTO() {

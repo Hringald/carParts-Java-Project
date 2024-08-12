@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueUsername {
-    String message() default "Username already exist";
+    String message() default "{account_admin_username_validation}";
 
     Class<?>[] groups() default {};
 

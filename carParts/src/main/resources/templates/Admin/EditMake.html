@@ -15,12 +15,12 @@
                 </div>
 
                 <div class="offset-md-2 col-md-8 com-sm-12">
-                    <h2 class="heading-margin" text-center="">Edit Make</h2>
+                    <h2 class="heading-margin" text-center="" th:text="#{edit_make_page_label}"></h2>
                     <form method="get" action="/admin/editMake" th:object="${addMakeDTO}">
                         <input th:value="${makeId}" id="id" name="id" hidden readonly>
                         <div class="form-group">
-                            <label for="Name">Name</label>
-                            <input placeholder="Add model name..." th:value="${makeName}"
+                            <label for="Name" th:text="#{add_make_page_name}"></label>
+                            <input th:value="${makeName}"
                                    th:errorclass="'is-invalid bg-danger'"
                                    type="text" class="form-control" id="name" name="name"></input>
                             <small th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger">Name
@@ -28,15 +28,16 @@
                                 message</small>
                         </div>
                         <div class="form-group">
-                            <label for="ImageUrl">ImageUrl</label>
-                            <input placeholder="Add image Url..." th:value="${makeUrl}"
+                            <label for="ImageUrl" th:text="#{add_make_page_imageURL}"></label>
+                            <input th:value="${makeUrl}"
                                    th:errorclass="'is-invalid bg-danger'"
                                    type="text" class="form-control" id="imageUrl" name="imageUrl"></input>
                             <small th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" class="text-danger">Image
                                 Url error
                                 message</small>
                         </div>
-                        <button type="submit" class="btn btn-success" value="Add">Edit</button>
+                        <button type="submit" class="btn btn-success" value="Add"
+                                th:text="#{edit_button_label}"></button>
                     </form>
                 </div>
             </div>

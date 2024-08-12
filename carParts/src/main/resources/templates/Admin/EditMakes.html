@@ -4,13 +4,13 @@
 <div class="container">
     <main role="main" class="pb-3">
 
-        <h1 th:if="${makes.size() <= 0}">There aren't any available makes!</h1>
+        <h1 th:if="${makes.size() <= 0}" th:text="#{edit_makes_page_label}"></h1>
         <table th:if="${makes.size() > 0}" class="table">
             <thead class="thead-dark">
             <tr>
-                <th scope="col">Make Name</th>
-                <th scope="col">Edit</th>
-                <th scope="col">Delete</th>
+                <th scope="col" th:text="#{edit_makes_make_name}"></th>
+                <th scope="col" th:text="#{edit_button_label}"></th>
+                <th scope="col" th:text="#{delete_button_label}"></th>
             </tr>
             </thead>
             <tbody>
@@ -19,11 +19,11 @@
                     <td th:text="${make.name}"></td>
                     <td>
                         <a type="button" class="btn btn-success" a=""
-                           th:href="@{/admin/editMake/{id}(id = ${make.id})}">Edit</a>
+                           th:href="@{/admin/editMake/{id}(id = ${make.id})}" th:text="#{edit_button_label}"></a>
                     </td>
                     <td>
                         <a type="button" class="btn btn-danger" a=""
-                           th:href="@{/admin/deleteMake/{id}(id = ${make.id})}">Delete</a>
+                           th:href="@{/admin/deleteMake/{id}(id = ${make.id})}" th:text="#{delete_button_label}"></a>
                     </td>
                 </tr>
             </th:block>

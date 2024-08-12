@@ -9,11 +9,11 @@ public class LoginDTO {
 
     private Long id;
 
-    @Email(message = "Enter valid email!")
-    @NotBlank(message = "Email cannot be empty!")
+    @Email(message = "{login_email_error_message}")
+    @NotBlank(message = "{login_email_error_not_empty_message}")
     private String email;
-    @Size(min = 3, max = 20, message = "Password length must be between 3 and 20 characters!")
-    @NotBlank(message = "Password cannot be empty!")
+    @Size(min = 3, max = 20, message = "{register_valid_password}")
+    @NotBlank(message = "{register_valid_not_blank_password}")
     private String password;
 
     public LoginDTO() {

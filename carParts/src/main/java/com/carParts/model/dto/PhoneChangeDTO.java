@@ -7,8 +7,8 @@ public class PhoneChangeDTO {
 
     private Long id;
 
-    @PhoneValidator(message = "Phone number is invalid")
-    @NotNull(message = "Please enter a phone number!")
+    @PhoneValidator(message = "{account_phone_number_valid}")
+    @NotNull(message = "{account_phone_number_empty}")
     private String phone;
 
     public PhoneChangeDTO() {
