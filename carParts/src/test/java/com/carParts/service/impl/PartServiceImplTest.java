@@ -1,19 +1,21 @@
 package com.carParts.service.impl;
 
-import com.carParts.model.entity.Offer;
-import com.carParts.model.entity.Part;
-import com.carParts.model.entity.User;
+import com.carParts.model.dto.AddPartDTO;
+import com.carParts.model.entity.*;
 import com.carParts.repository.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.security.core.parameters.P;
 
 import java.util.*;
 
 import static org.mockito.Mockito.when;
 
 class PartServiceImplTest {
+    private final String TEST_PART_NAME = "test";
+    private final String TEST_NEW_PART_NAME = "test123";
     private PartServiceImpl toTest;
     private UserRepo mockUserRepo;
 
@@ -105,5 +107,58 @@ class PartServiceImplTest {
         Part expectedPart = this.toTest.findPartById(null);
 
         Assertions.assertNull(expectedPart);
+    }
+
+    @Test
+    void testEditPart() {
+        AddPartDTO addPartDTO = new AddPartDTO();
+        addPartDTO.setName(TEST_NEW_PART_NAME);
+
+        Part part = new Part();
+        part.setName(TEST_PART_NAME);
+
+        when(mockPartRepo.findById(null)).thenReturn(Optional.of(part));
+
+        toTest.editPart(part, addPartDTO);
+
+        Assertions.assertEquals(part.getName(), TEST_NEW_PART_NAME);
+    }
+
+    @Test
+    void testAddPart() {
+        AddPartDTO addPartDTO = new AddPartDTO();
+        addPartDTO.setName(TEST_NEW_PART_NAME);
+
+        Assertions.assertDoesNotThrow(() -> toTest.addPart(addPartDTO, Mockito.mock()));
+    }
+
+    @Test
+    void testRemovePart() {
+        Part part = new Part();
+        part.setName(TEST_PART_NAME);
+
+        User seller = new User();
+        Set<Part> parts = new HashSet<>();
+        parts.add(part);
+        seller.setParts(parts);
+
+        part.setSeller(seller);
+
+        Category category = new Category();
+        category.setParts(parts);
+
+        Model model = new Model();
+        model.setParts(parts);
+
+        Make make = new Make();
+        make.setParts(parts);
+
+        part.setCategory(category);
+        part.setModel(model);
+        part.setMake(make);
+
+        when(mockPartRepo.findById(null)).thenReturn(Optional.of(part));
+
+        Assertions.assertDoesNotThrow(() -> toTest.removePart(part.getId()));
     }
 }

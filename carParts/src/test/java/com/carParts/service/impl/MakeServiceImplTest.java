@@ -1,5 +1,6 @@
 package com.carParts.service.impl;
 
+import com.carParts.model.dto.AddMakeDTO;
 import com.carParts.model.entity.Category;
 import com.carParts.model.entity.Make;
 import com.carParts.repository.MakeRepo;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.when;
 class MakeServiceImplTest {
 
     private final String TEST_MAKE_NAME = "test";
+    private final String TEST_NEW_MAKE_NAME = "test123";
     private final String TEST_INVALID_MAKE_NAME = "1234";
 
     private final Long TEST_INVALID_MAKE_ID = null;
@@ -100,4 +102,42 @@ class MakeServiceImplTest {
 
         Assertions.assertEquals(makes.size(), 0);
     }
+
+    @Test
+    void testEditMakeById() {
+        AddMakeDTO addMakeDTO = new AddMakeDTO();
+        addMakeDTO.setName(TEST_NEW_MAKE_NAME);
+
+        Make make = new Make();
+        make.setName(TEST_MAKE_NAME);
+
+        when(mockMakeRepo.findById(null)).thenReturn(Optional.of(make));
+
+        toTest.editMakeById(addMakeDTO, make.getId());
+
+        Assertions.assertEquals(make.getName(), TEST_NEW_MAKE_NAME);
+    }
+
+    @Test
+    void testCreateMake(){
+        AddMakeDTO addMakeDTO = new AddMakeDTO();
+        addMakeDTO.setName(TEST_NEW_MAKE_NAME);
+
+        Make make = new Make();
+        make.setName(TEST_MAKE_NAME);
+
+        when(mockMakeRepo.findById(null)).thenReturn(Optional.of(make));
+
+        Assertions.assertDoesNotThrow(() -> toTest.createMake(addMakeDTO));
+    }
+    @Test
+    void testDeleteMakeById(){
+        Make make = new Make();
+        make.setName(TEST_MAKE_NAME);
+
+        when(mockMakeRepo.findById(null)).thenReturn(Optional.of(make));
+
+        Assertions.assertDoesNotThrow(() -> toTest.deleteMakeById(null));
+    }
+
 }
