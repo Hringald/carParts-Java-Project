@@ -8,10 +8,12 @@ import com.carParts.model.entity.Model;
 import com.carParts.model.entity.Offer;
 import com.carParts.repository.MakeRepo;
 import com.carParts.repository.ModelRepo;
+import com.carParts.repository.PartRepo;
 import com.carParts.service.ModelService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -21,13 +23,14 @@ public class ModelServiceImpl implements ModelService {
 
     private final ModelRepo modelRepo;
     private final MakeRepo makeRepo;
-
+    private final PartRepo partRepo;
     private final ModelMapper modelMapper;
 
-    public ModelServiceImpl(ModelRepo modelRepo, MakeRepo makeRepo) {
+    public ModelServiceImpl(ModelRepo modelRepo, MakeRepo makeRepo, PartRepo partRepo) {
         this.modelRepo = modelRepo;
         this.makeRepo = makeRepo;
         this.modelMapper = new ModelMapper();
+        this.partRepo = partRepo;
     }
 
     @Override
@@ -55,6 +58,25 @@ public class ModelServiceImpl implements ModelService {
     @Override
     public void deleteModelById(Long id) {
         Model currentModel = this.modelRepo.findById(id).orElse(null);
+
+        for (var part : currentModel.getParts()
+        ) {
+            part.setModel(null);
+            part.setSeller(null);
+            part.setOffer(null);
+
+            Make make = part.getMake();
+            var parts = make.getParts();
+            parts.remove(part);
+            make.setParts(parts);
+
+            part.setMake(null);
+
+            partRepo.save(part);
+            partRepo.delete(part);
+        }
+        currentModel.setParts(new HashSet<>());
+
         this.modelRepo.delete(currentModel);
     }
 

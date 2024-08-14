@@ -2,6 +2,7 @@ package com.carParts.service.impl;
 
 import com.carParts.model.dto.AddOfferDTO;
 import com.carParts.model.dto.AddPartDTO;
+import com.carParts.model.dto.OfferViewDTO;
 import com.carParts.model.entity.Offer;
 import com.carParts.model.entity.Part;
 import com.carParts.model.entity.User;
@@ -95,8 +96,10 @@ public class OfferServiceImpl implements OfferService {
 
         if (currentPart.getQuantity() - 1 <= 0) {
             this.partService.removePart(currentPart.getId());
+            declineOffer(currentOffer.getId());
         } else {
             currentPart.setQuantity(currentPart.getQuantity() - 1);
+            this.partRepo.save(currentPart);
             declineOffer(currentOffer.getId());
         }
     }
@@ -106,9 +109,9 @@ public class OfferServiceImpl implements OfferService {
         User currentUser = this.userRepo.findByEmail(userDetails.getUsername()).orElse(null);
         List<Offer> myOffers = findOwnedOffers(currentUser);
 
-        List<AddOfferDTO> myOffersDTOs = myOffers
+        List<OfferViewDTO> myOffersDTOs = myOffers
                 .stream()
-                .map(offer -> modelMapper.map(offer, AddOfferDTO.class))
+                .map(offer -> modelMapper.map(offer, OfferViewDTO.class))
                 .collect(Collectors.toList());
 
         model.addAttribute("myOffers", myOffersDTOs);

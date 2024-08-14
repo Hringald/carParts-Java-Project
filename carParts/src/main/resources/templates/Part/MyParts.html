@@ -23,9 +23,9 @@
             <tbody>
             <th:block th:each="part : ${myParts}">
                 <tr>
-                    <td th:text="${part.make.name}"></td>
+                    <td th:text="${part.makeName}"></td>
                     <td th:text="${part.name}"></td>
-                    <td th:text="${part.category.name}"></td>
+                    <td th:text="${part.categoryName}"></td>
                     <td th:text="${part.price}"></td>
                     <td th:text="${part.quantity}"></td>
                     <td>

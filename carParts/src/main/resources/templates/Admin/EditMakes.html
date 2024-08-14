@@ -10,7 +10,6 @@
             <tr>
                 <th scope="col" th:text="#{edit_makes_make_name}"></th>
                 <th scope="col" th:text="#{edit_button_label}"></th>
-                <th scope="col" th:text="#{delete_button_label}"></th>
             </tr>
             </thead>
             <tbody>
@@ -20,10 +19,6 @@
                     <td>
                         <a type="button" class="btn btn-success" a=""
                            th:href="@{/admin/editMake/{id}(id = ${make.id})}" th:text="#{edit_button_label}"></a>
-                    </td>
-                    <td>
-                        <a type="button" class="btn btn-danger" a=""
-                           th:href="@{/admin/deleteMake/{id}(id = ${make.id})}" th:text="#{delete_button_label}"></a>
                     </td>
                 </tr>
             </th:block>

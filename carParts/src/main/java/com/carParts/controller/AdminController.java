@@ -30,10 +30,6 @@ public interface AdminController {
     @GetMapping("/editModel")
     String editModel(Model model, @Valid AddModelDTO addModelDTO, BindingResult result, RedirectAttributes redirectAttributes);
 
-    @GetMapping("/deleteModel/{id}")
-    String deleteModel(@PathVariable("id") Long id, Model model);
-
-
     @GetMapping("/addModel")
     String addModel(Model model);
 
@@ -48,9 +44,6 @@ public interface AdminController {
 
     @GetMapping("/editMake")
     String editMake(Model model, @Valid AddMakeDTO addMakeDTO, BindingResult result, RedirectAttributes redirectAttributes);
-
-    @GetMapping("/deleteMake/{id}")
-    String deleteMake(@PathVariable("id") Long id, Model model);
 
     @GetMapping("/addMake")
     public String addMake();

@@ -86,14 +86,6 @@ public class AdminControllerImpl implements AdminController {
     }
 
     @Override
-    public String deleteModel(@PathVariable("id") Long id, Model model) {
-
-        this.modelService.deleteModelById(id);
-
-        return "redirect:/admin/editModels";
-    }
-
-    @Override
     public String addModel(Model model) {
 
         this.makeService.addModelView(model);

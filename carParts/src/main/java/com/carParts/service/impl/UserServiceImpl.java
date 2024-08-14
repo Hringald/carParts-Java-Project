@@ -5,6 +5,7 @@ import com.carParts.model.entity.Part;
 import com.carParts.model.entity.User;
 import com.carParts.model.entity.UserRoleEntity;
 import com.carParts.model.enums.UserRoleEnum;
+import com.carParts.repository.PartRepo;
 import com.carParts.repository.UserRepo;
 import com.carParts.repository.UserRoleRepo;
 import com.carParts.service.UserService;
@@ -14,26 +15,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
+
+    private final PartRepo partRepo;
     private final PasswordEncoder encoder;
     private final UserRoleRepo userRoleRepo;
 
     private final ModelMapper modelMapper;
 
-    public UserServiceImpl(UserRepo userRepo, PasswordEncoder encoder, UserRoleRepo userRoleRepo) {
+    public UserServiceImpl(UserRepo userRepo, PasswordEncoder encoder, UserRoleRepo userRoleRepo, PartRepo partRepo) {
         this.userRepo = userRepo;
         this.encoder = encoder;
         this.userRoleRepo = userRoleRepo;
         this.modelMapper = new ModelMapper();
+        this.partRepo = partRepo;
     }
 
     @Override
@@ -151,6 +152,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(UserDetails userDetails) {
         User currentUser = findUserByEmail(userDetails.getUsername());
+
+        for (var part : currentUser.getParts()
+        ) {
+            part.setSeller(null);
+            partRepo.save(part);
+            partRepo.delete(part);
+        }
+
+        currentUser.setParts(new HashSet<>());
+
         this.userRepo.delete(currentUser);
     }
 

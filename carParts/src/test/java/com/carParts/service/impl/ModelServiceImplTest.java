@@ -21,13 +21,15 @@ class ModelServiceImplTest {
 
     private ModelRepo mockModelRepo;
 
+    private PartRepo mockPartRepo;
 
     @BeforeEach
     void setUp() {
         mockMakeRepo = Mockito.mock();
         mockModelRepo = Mockito.mock();
+        mockPartRepo = Mockito.mock();
 
-        toTest = new ModelServiceImpl(mockModelRepo, mockMakeRepo);
+        toTest = new ModelServiceImpl(mockModelRepo, mockMakeRepo, mockPartRepo);
     }
 
     @Test
