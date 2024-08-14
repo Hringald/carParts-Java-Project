@@ -42,6 +42,10 @@
                     </li>
                     <li class="nav-item">
                         <a sec:authorize="isAuthenticated()" class="nav-link text-dark" title="Manage"
+                           href="/comments" th:text="#{comments_label}"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a sec:authorize="isAuthenticated()" class="nav-link text-dark" title="Manage"
                            href="/parts/myParts" th:text="#{header_my_parts_label}"></a>
                     </li>
                     <li class="nav-item">

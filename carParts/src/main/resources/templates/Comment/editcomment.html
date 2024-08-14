@@ -1,0 +1,23 @@
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <main role="main" class="pb-3">
+        <form method="post" action="/comments/edit" th:object="${commentDTO}">
+            <div class="form-group">
+                <input th:value="${commentId}" id="id" name="id" hidden readonly>
+                <label text="Comment"></label>
+                <input th:value="${content}" type="text" id="content" name="content"
+                       th:errorclass="'is-invalid bg-danger'"
+                       th:placeholder="#{comment_placeholder}">
+                <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-danger">Content
+                    error
+                    message</small>
+                <button type="submit" class="btn btn-success" value="Add" th:text="#{edit_button_label}">Edit</button>
+            </div>
+        </form>
+    </main>
+</div>
+
+<footer th:replace="fragments/footer::footer"></footer>
+</body>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:replace="fragments/header::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <main role="main" class="pb-3">
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col" th:text="#{comment_label}"></th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <th:block th:each="comment : ${comments}">
+                <tr>
+                    <td th:text="*{comment.content}"></td>
+                    <td>
+                        <a type="button" class="btn btn-success" a="" onclick="form.submit" th:href="@{/comments/edit/{id}(id = *{comment.id})}">Edit</a>
+                        <a type="button" class="btn btn-danger" a="" th:href="@{/comments/delete/{id}(id = *{comment.id})}">Delete</a>
+                    </td>
+                </tr>
+            </th:block>
+            </tbody>
+        </table>
+
+        <form method="post" action="/comments/create" th:object="${commentDTO}">
+            <div class="form-group">
+                <label text="Comment"></label>
+                <input type="text" id="content" name="content" th:errorclass="'is-invalid bg-danger'"
+                       th:placeholder="#{comment_placeholder}">
+                <small th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="text-danger">Content
+                    error
+                    message</small>
+                <button type="submit" class="btn btn-primary" value="Add" th:text="#{add_button_label}"></button>
+            </div>
+        </form>
+    </main>
+</div>
+
+<footer th:replace="fragments/footer::footer"></footer>
+</body>
