@@ -1,6 +1,8 @@
 package com.carParts.service.impl;
 
+import com.carParts.model.dto.AddMakeDTO;
 import com.carParts.model.dto.AddPartDTO;
+import com.carParts.model.dto.UserDTO;
 import com.carParts.model.entity.*;
 import com.carParts.repository.*;
 import com.carParts.service.PartService;
@@ -8,10 +10,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class PartServiceImpl implements PartService {
@@ -23,6 +27,7 @@ public class PartServiceImpl implements PartService {
     private final ModelRepo modelRepo;
 
     private final CategoryRepo categoryRepo;
+    private final ModelMapper modelMapper;
 
     public PartServiceImpl(UserRepo userRepo, PartRepo partRepo, CategoryRepo categoryRepo, MakeRepo makeRepo, ModelRepo modelRepo) {
         this.userRepo = userRepo;
@@ -30,6 +35,7 @@ public class PartServiceImpl implements PartService {
         this.categoryRepo = categoryRepo;
         this.makeRepo = makeRepo;
         this.modelRepo = modelRepo;
+        this.modelMapper = new ModelMapper();
     }
 
     @Override
@@ -43,7 +49,9 @@ public class PartServiceImpl implements PartService {
     }
 
     @Override
-    public void addPart(AddPartDTO addPartDTO, User currentUser) {
+    public void addPart(AddPartDTO addPartDTO, UserDetails userDetails) {
+        User currentUser = this.userRepo.findByEmail(userDetails.getUsername()).orElse(null);
+
         ModelMapper modelMapper = new ModelMapper();
 
         Part part = modelMapper.map(addPartDTO, Part.class);
@@ -267,5 +275,65 @@ public class PartServiceImpl implements PartService {
         for (Part part : parts) {
             this.partRepo.delete(part);
         }
+    }
+
+    @Override
+    public void myPartsView(UserDetails userDetails, org.springframework.ui.Model model) {
+        User currentUser = this.userRepo.findByEmail(userDetails.getUsername()).orElse(null);
+        List<Part> myParts = findOwnedParts(currentUser);
+
+        List<AddPartDTO> myPartsDTOs = myParts
+                .stream()
+                .map(part -> modelMapper.map(part, AddPartDTO.class))
+                .collect(Collectors.toList());
+
+        model.addAttribute("myParts", myPartsDTOs);
+    }
+
+    @Override
+    public void addPartView(String makeName, org.springframework.ui.Model model) {
+        model.addAttribute("makeName", makeName);
+
+        List<Category> allCategories = this.categoryRepo.findAll();
+        model.addAttribute("allCategories", allCategories);
+
+        Make make = this.makeRepo.findByName(makeName).orElse(null);
+
+        Set<com.carParts.model.entity.Model> makeModels = this.modelRepo.findByMake(make);
+        model.addAttribute("makeModels", makeModels);
+    }
+
+    @Override
+    public void editPartByIdView(UserDetails userDetails, long partId, org.springframework.ui.Model model) {
+        Part partToEdit = findPartById(partId);
+
+        AddPartDTO partDTO = modelMapper.map(partToEdit, AddPartDTO.class);
+
+        model.addAttribute("makeName", partDTO.getMakeName());
+
+        model.addAttribute("modelName", partDTO.getModelName());
+
+        model.addAttribute("categoryName", partDTO.getCategoryName());
+
+        List<Category> allCategories = this.categoryRepo.findAll();
+
+        model.addAttribute("allCategories", allCategories);
+
+        Make partMake = partToEdit.getMake();
+        Set<com.carParts.model.entity.Model> makeModels = this.modelRepo.findByMake(partMake);
+
+        List<AddMakeDTO> makeModelsDTOs = makeModels
+                .stream()
+                .map(make -> modelMapper.map(make, AddMakeDTO.class))
+                .collect(Collectors.toList());
+
+        model.addAttribute("makeModels", makeModelsDTOs);
+
+        model.addAttribute("name", partDTO.getName());
+        model.addAttribute("imageUrl", partDTO.getImageUrl());
+        model.addAttribute("price", partDTO.getPrice());
+        model.addAttribute("quantity", partDTO.getQuantity());
+        model.addAttribute("description", partDTO.getDescription());
+        model.addAttribute("partId", partDTO.getId());
     }
 }

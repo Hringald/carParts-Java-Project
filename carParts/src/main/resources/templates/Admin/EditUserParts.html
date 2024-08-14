@@ -3,13 +3,13 @@
 <header th:replace="fragments/header::header"></header>
 <div class="container">
     <main role="main" class="pb-3">
-        <h1 th:if="${userParts.size() <= 0}" th:text="|${user.email}$ #{edit_user_parts_label}|"></h1>
+        <h1 th:if="${userParts.size() <= 0}" th:text="|${user.email} #{edit_user_parts_label}|"></h1>
         <table th:if="${userParts.size() > 0}" class="table">
             <thead class="thead-dark">
             <tr>
                 <th scope="col" th:text="#{add_model_page_make}"></th>
                 <th scope="col" th:text="#{add_make_page_name}"></th>
-                <th scope="col" th:text="#{category_label=}"></th>
+                <th scope="col" th:text="#{category_label}"></th>
                 <th scope="col" th:text="#{price_label}"></th>
                 <th scope="col" th:text="#{quantity_label}"></th>
                 <th scope="col" th:text="#{info_label}"></th>
@@ -19,9 +19,9 @@
             <tbody>
             <th:block th:each="part : ${userParts}">
                 <tr>
-                    <td th:text="${part.make.name}"></td>
+                    <td th:text="${part.makeName}"></td>
                     <td th:text="${part.name}"></td>
-                    <td th:text="${part.category.name}"></td>
+                    <td th:text="${part.categoryName}"></td>
                     <td th:text="${part.price}"></td>
                     <td th:text="${part.quantity}"></td>
                     <td>

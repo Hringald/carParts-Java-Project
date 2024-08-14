@@ -36,10 +36,7 @@ public class OfferControllerImpl implements OfferController {
     @Override
     public String myOffers(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
-        List<Offer> myOffers = this.offerService.findOwnedOffers(currentUser);
-
-        model.addAttribute("myOffers", myOffers);
+        this.offerService.myOffersView(userDetails, model);
 
         return "Offer/MyOffers";
     }
@@ -47,14 +44,7 @@ public class OfferControllerImpl implements OfferController {
     @Override
     public String createOffer(@PathVariable("id") Long id, Model model) {
 
-        Part partToBuy = this.partService.findPartById(id);
-
-        model.addAttribute("partId", partToBuy.getId());
-        model.addAttribute("partUrl", partToBuy.getImageUrl());
-        model.addAttribute("partName", partToBuy.getName());
-        model.addAttribute("partDescription", partToBuy.getDescription());
-        model.addAttribute("partQuantity", partToBuy.getQuantity());
-        model.addAttribute("partPrice", partToBuy.getPrice());
+        this.offerService.createOfferView(id, model);
 
         return "Offer/CreateOffer";
     }
@@ -74,11 +64,7 @@ public class OfferControllerImpl implements OfferController {
             return resultString;
         }
 
-
-        Part currentPart = this.partService.findPartById(id);
-        User partSeller = currentPart.getSeller();
-
-        this.offerService.addOffer(addOfferDTO, currentPart, partSeller);
+        this.offerService.addOffer(addOfferDTO, id);
 
         return "redirect:/";
     }
@@ -86,29 +72,11 @@ public class OfferControllerImpl implements OfferController {
     @Override
     public String viewOffer(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id") Long id, Model model) {
 
-        Offer currentOffer = this.offerService.findById(id);
-        Part currentPart = currentOffer.getPart();
-        User partSeller = currentPart.getSeller();
-
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
-
-        if (!Objects.equals(currentUser.getId(), partSeller.getId())) {
+        if (this.offerService.isUserSeller(userDetails, id)) {
             return "redirect:/";
         }
 
-        model.addAttribute("partUrl", currentPart.getImageUrl());
-        model.addAttribute("partName", currentPart.getName());
-        model.addAttribute("partDescription", currentPart.getDescription());
-        model.addAttribute("partQuantity", currentPart.getQuantity());
-        model.addAttribute("partPrice", currentPart.getPrice());
-
-        model.addAttribute("offerId", currentOffer.getId());
-        model.addAttribute("offerName", currentOffer.getName());
-        model.addAttribute("offerEmail", currentOffer.getEmail());
-        model.addAttribute("offerPhone", currentOffer.getPhone());
-        model.addAttribute("offerAddress", currentOffer.getAddress());
-        model.addAttribute("offerCity", currentOffer.getCity());
-        model.addAttribute("offerZip", currentOffer.getZipCode());
+        this.offerService.viewOfferView(userDetails, model, id);
 
         return "Offer/OfferInfo";
     }
@@ -116,9 +84,7 @@ public class OfferControllerImpl implements OfferController {
     @Override
     public String declineOffer(@PathVariable("id") Long id, Model model) {
 
-        Offer currentOffer = this.offerService.findById(id);
-
-        this.offerService.declineOffer(currentOffer);
+        this.offerService.declineOffer(id);
 
         return "redirect:/";
     }
@@ -126,10 +92,7 @@ public class OfferControllerImpl implements OfferController {
     @Override
     public String sellOffer(@PathVariable("id") Long id, Model model) {
 
-        Offer currentOffer = this.offerService.findById(id);
-        Part currentPart = currentOffer.getPart();
-
-        this.offerService.sellOffer(currentOffer, currentPart);
+        this.offerService.sellOffer(id);
 
         return "redirect:/";
     }

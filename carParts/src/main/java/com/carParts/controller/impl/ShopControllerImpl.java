@@ -39,11 +39,7 @@ public class ShopControllerImpl implements ShopController {
     @Override
     public String shopModels(@PathVariable("makeName") String makeName, Model model) {
 
-        Make make = this.makeService.findMakeByName(makeName);
-        Set<com.carParts.model.entity.Model> modelsByMake = this.modelService.findModelByMake(make);
-
-        model.addAttribute("makeName", makeName);
-        model.addAttribute("modelsByMake", modelsByMake);
+        this.makeService.shopModelsView(makeName, model);
 
         return "Shop/ShopModels";
     }
@@ -51,11 +47,7 @@ public class ShopControllerImpl implements ShopController {
     @Override
     public String shopCategories(@PathVariable("makeName") String makeName, @PathVariable("modelName") String modelName, Model model) {
 
-        List<Category> allCategories = this.categoryService.getAllCategories();
-        model.addAttribute("allCategories", allCategories);
-
-        model.addAttribute("makeName", makeName);
-        model.addAttribute("modelName", modelName);
+        this.categoryService.shopCategoriesView(makeName, modelName, model);
 
         return "Shop/ShopCategories";
     }

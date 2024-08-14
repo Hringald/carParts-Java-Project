@@ -1,6 +1,8 @@
 package com.carParts.service.impl;
 
+import com.carParts.model.dto.AddMakeDTO;
 import com.carParts.model.dto.AddModelDTO;
+import com.carParts.model.dto.AddPartDTO;
 import com.carParts.model.entity.Make;
 import com.carParts.model.entity.Model;
 import com.carParts.model.entity.Offer;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ModelServiceImpl implements ModelService {
@@ -19,10 +22,12 @@ public class ModelServiceImpl implements ModelService {
     private final ModelRepo modelRepo;
     private final MakeRepo makeRepo;
 
+    private final ModelMapper modelMapper;
 
     public ModelServiceImpl(ModelRepo modelRepo, MakeRepo makeRepo) {
         this.modelRepo = modelRepo;
         this.makeRepo = makeRepo;
+        this.modelMapper = new ModelMapper();
     }
 
     @Override
@@ -99,5 +104,38 @@ public class ModelServiceImpl implements ModelService {
         for (Model model : models) {
             this.modelRepo.delete(model);
         }
+    }
+
+    @Override
+    public void editModelsView(org.springframework.ui.Model model) {
+        List<com.carParts.model.entity.Model> models = getAllModels();
+
+        List<AddModelDTO> modelsDTOs = models
+                .stream()
+                .map(carModel -> modelMapper.map(carModel, AddModelDTO.class))
+                .collect(Collectors.toList());
+
+        model.addAttribute("models", modelsDTOs);
+    }
+
+    @Override
+    public void editModelView(Long modelId, org.springframework.ui.Model model) {
+
+        List<Make> allMakes = this.makeRepo.findAll();
+
+        List<AddMakeDTO> allMakesDTOs = allMakes
+                .stream()
+                .map(make -> modelMapper.map(make, AddMakeDTO.class))
+                .collect(Collectors.toList());
+
+        com.carParts.model.entity.Model carModel = findModelById(modelId);
+
+        AddModelDTO modelDTO = modelMapper.map(carModel, AddModelDTO.class);
+
+        model.addAttribute("makeName", modelDTO.getMakeName());
+        model.addAttribute("modelId", modelDTO.getId());
+        model.addAttribute("modelName", modelDTO.getName());
+        model.addAttribute("modelUrl", modelDTO.getImageUrl());
+        model.addAttribute("allMakes", allMakesDTOs);
     }
 }

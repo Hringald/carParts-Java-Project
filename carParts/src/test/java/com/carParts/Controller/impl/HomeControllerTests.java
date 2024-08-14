@@ -1,6 +1,7 @@
 package com.carParts.Controller.impl;
 
 import com.carParts.controller.impl.HomeControllerImpl;
+import com.carParts.service.impl.HomeServiceImpl;
 import com.carParts.service.impl.MakeServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Assertions;
@@ -11,16 +12,13 @@ import org.mockito.Mockito;
 public class HomeControllerTests {
 
     private HomeControllerImpl toTest;
-    private UserServiceImpl mockUserService;
 
-    private MakeServiceImpl mockMakeService;
+    private HomeServiceImpl mockHomeService;
 
     @BeforeEach
     void setUp() {
-        mockUserService = Mockito.mock();
-        mockMakeService = Mockito.mock();
-
-        toTest = new HomeControllerImpl(mockUserService, mockMakeService);
+        mockHomeService = Mockito.mock();
+        toTest = new HomeControllerImpl(mockHomeService);
     }
 
     @Test

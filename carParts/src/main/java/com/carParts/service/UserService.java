@@ -4,6 +4,7 @@ package com.carParts.service;
 import com.carParts.model.dto.*;
 import com.carParts.model.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,18 +26,25 @@ public interface UserService {
 
     void initTest();
 
-    void changePhone(Long UserId, PhoneChangeDTO phoneChangeDTO);
+    void changePhone(UserDetails userDetails, PhoneChangeDTO phoneChangeDTO);
 
-    void changeEmail(UserDetails userDetails, Long UserId, EmailChangeDTO emailChangeDTO);
+    void changePhoneView(UserDetails userDetails, Model model);
 
-    void changePassword(Long UserId, PasswordChangeDTO passwordChangeDTO);
+    void changeEmail(UserDetails userDetails, EmailChangeDTO emailChangeDTO);
 
-    void deleteUser(Long UserId);
+    void changePassword(UserDetails userDetails, PasswordChangeDTO passwordChangeDTO);
+
+    void deleteUser(UserDetails userDetails);
 
     List<User> findAllUsers();
 
     void initRoles();
 
-    void makeAdmin(UserDetails userDetails, User user);
+    void makeAdmin(UserDetails userDetails, MakeAdminDTO makeAdminDTO);
 
+    void usersPartsView(Model model);
+
+    void editUserPartsView(Long userId, Model model);
+
+    void emailChangeView(UserDetails userDetails, Model model);
 }

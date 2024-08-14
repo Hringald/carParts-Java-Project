@@ -4,6 +4,7 @@ import com.carParts.controller.HomeController;
 import com.carParts.model.dto.CommentDTO;
 import com.carParts.model.dto.RegisterDTO;
 import com.carParts.model.entity.Make;
+import com.carParts.service.impl.HomeServiceImpl;
 import com.carParts.service.impl.MakeServiceImpl;
 import com.carParts.service.impl.UserServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,21 +34,17 @@ import java.util.List;
 @Controller
 public class HomeControllerImpl implements HomeController {
 
-
-    private final UserServiceImpl userService;
-    private final MakeServiceImpl makeService;
+    private final HomeServiceImpl homeService;
 
 
-    public HomeControllerImpl(UserServiceImpl userService, MakeServiceImpl makeService) {
-        this.userService = userService;
-        this.makeService = makeService;
+    public HomeControllerImpl(HomeServiceImpl homeService) {
+        this.homeService = homeService;
     }
 
     @Override
     public String index(Model model) {
 
-        List<Make> allMakes = this.makeService.getAllMakes();
-        model.addAttribute("allMakes", allMakes);
+        this.homeService.indexView(model);
 
         return "Index.html";
     }

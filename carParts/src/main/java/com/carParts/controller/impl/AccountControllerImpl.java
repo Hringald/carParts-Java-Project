@@ -82,14 +82,8 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     public String changePhone(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
 
-        String CurrentUserEmail = currentUser.getEmail();
-        String CurrentUserPhone = currentUser.getPhone();
-
-        model.addAttribute("userEmail", CurrentUserEmail);
-        model.addAttribute("userPhone", CurrentUserPhone);
-
+        this.userService.changePhoneView(userDetails, model);
 
         return "Account/Manage";
     }
@@ -102,8 +96,7 @@ public class AccountControllerImpl implements AccountController {
             return "redirect:/identity/account/manage";
         }
 
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
-        this.userService.changePhone(currentUser.getId(), phoneChangeDTO);
+        this.userService.changePhone(userDetails, phoneChangeDTO);
 
         return "redirect:/identity/account/manage";
     }
@@ -111,10 +104,7 @@ public class AccountControllerImpl implements AccountController {
     @Override
     public String emailChange(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
-        String CurrentUserEmail = currentUser.getEmail();
-
-        model.addAttribute("userEmail", CurrentUserEmail);
+        this.userService.emailChangeView(userDetails, model);
 
         return "Account/Email";
     }
@@ -126,8 +116,7 @@ public class AccountControllerImpl implements AccountController {
             return "redirect:/identity/account/manage/email";
         }
 
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
-        this.userService.changeEmail(userDetails, currentUser.getId(), emailChangeDTO);
+        this.userService.changeEmail(userDetails, emailChangeDTO);
 
         return "redirect:/identity/account/logout";
     }
@@ -150,8 +139,7 @@ public class AccountControllerImpl implements AccountController {
             return "redirect:/identity/account/manage/password";
         }
 
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
-        this.userService.changePassword(currentUser.getId(), passwordChangeDTO);
+        this.userService.changePassword(userDetails, passwordChangeDTO);
 
         return "redirect:/identity/account/logout";
     }
@@ -164,15 +152,12 @@ public class AccountControllerImpl implements AccountController {
 
     @Override
     public String becomeAdmin(@AuthenticationPrincipal UserDetails userDetails, @Valid MakeAdminDTO makeAdminDTO, BindingResult result, RedirectAttributes redirectAttributes) {
-
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("makeAdminDTO", makeAdminDTO).addFlashAttribute("org.springframework.validation.BindingResult.makeAdminDTO", result);
             return "redirect:/identity/account/manage/becomeAdmin";
         }
 
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
-        currentUser.setUsername(makeAdminDTO.getUsername());
-        this.userService.makeAdmin(userDetails, currentUser);
+        this.userService.makeAdmin(userDetails, makeAdminDTO);
 
         return "redirect:/identity/account/logout";
     }
@@ -186,8 +171,7 @@ public class AccountControllerImpl implements AccountController {
     @Override
     public String deleteUser(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
-        this.userService.deleteUser(currentUser.getId());
+        this.userService.deleteUser(userDetails);
 
         return "redirect:/identity/account/logout";
     }

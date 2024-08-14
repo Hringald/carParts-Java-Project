@@ -38,10 +38,7 @@ public class PartControllerImpl implements PartController {
     @Override
     public String myParts(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
-        List<Part> myParts = this.partService.findOwnedParts(currentUser);
-
-        model.addAttribute("myParts", myParts);
+        this.partService.myPartsView(userDetails, model);
 
         return "Part/MyParts";
     }
@@ -49,23 +46,15 @@ public class PartControllerImpl implements PartController {
     @Override
     public String chooseMake(Model model) {
 
-        List<Make> allMakes = this.makeService.getAllMakes();
-        model.addAttribute("allMakes", allMakes);
+        this.makeService.chooseMakeView(model);
 
         return "Part/ChooseMake";
     }
 
     @Override
     public String addPart(@PathVariable("makeName") String makeName, Model model) {
-        model.addAttribute("makeName", makeName);
 
-        List<Category> allCategories = this.categoryService.getAllCategories();
-        model.addAttribute("allCategories", allCategories);
-
-        Make make = this.makeService.findMakeByName(makeName);
-
-        Set<com.carParts.model.entity.Model> makeModels = this.modelService.findModelByMake(make);
-        model.addAttribute("makeModels", makeModels);
+        this.partService.addPartView(makeName, model);
 
         return "Part/AddPart";
     }
@@ -84,8 +73,7 @@ public class PartControllerImpl implements PartController {
             return resultString;
         }
 
-        User currentUser = this.userService.findUserByEmail(userDetails.getUsername());
-        this.partService.addPart(addPartDTO, currentUser);
+        this.partService.addPart(addPartDTO, userDetails);
 
         return "redirect:/";
     }
@@ -99,30 +87,7 @@ public class PartControllerImpl implements PartController {
     @Override
     public String editPartById(@AuthenticationPrincipal UserDetails userDetails, @PathVariable("id") Long id, Model model) {
 
-        Part partToEdit = this.partService.findPartById(id);
-
-        Make partMake = partToEdit.getMake();
-        String makeName = partMake.getName();
-        model.addAttribute("makeName", makeName);
-
-        String modelName = partToEdit.getModel().getName();
-        model.addAttribute("modelName", modelName);
-
-        String categoryName = partToEdit.getCategory().getName();
-        model.addAttribute("categoryName", categoryName);
-
-        List<Category> allCategories = this.categoryService.getAllCategories();
-        model.addAttribute("allCategories", allCategories);
-
-        Set<com.carParts.model.entity.Model> makeModels = this.modelService.findModelByMake(partMake);
-        model.addAttribute("makeModels", makeModels);
-
-        model.addAttribute("name", partToEdit.getName());
-        model.addAttribute("imageUrl", partToEdit.getImageUrl());
-        model.addAttribute("price", partToEdit.getPrice());
-        model.addAttribute("quantity", partToEdit.getQuantity());
-        model.addAttribute("description", partToEdit.getDescription());
-        model.addAttribute("partId", partToEdit.getId());
+        this.partService.editPartByIdView(userDetails, id, model);
 
         return "Part/EditPart";
     }
@@ -131,39 +96,6 @@ public class PartControllerImpl implements PartController {
     public String editPartById(@AuthenticationPrincipal UserDetails userDetails, Model model, @Valid AddPartDTO addPartDTO, BindingResult result, RedirectAttributes redirectAttributes) {
         Long id = addPartDTO.getId();
         Part currentPart = this.partService.findPartById(id);
-
-        if (addPartDTO.getPrice() < Double.parseDouble(DataConstants.Part.DecimalMinValue)) {
-            result.addError(
-                    new FieldError(
-                            "lowePrice",
-                            "price",
-                            "Price must be bigger than 0.01"));
-        }
-
-        if (addPartDTO.getPrice() > Double.parseDouble(DataConstants.Part.DecimalMaxValue)) {
-            result.addError(
-                    new FieldError(
-                            "highPrice",
-                            "price",
-                            "Price is too high!"));
-        }
-
-        if (addPartDTO.getQuantity() < DataConstants.Part.QuantityMinValue) {
-            result.addError(
-                    new FieldError(
-                            "lowQuantity",
-                            "quantity",
-                            "Quantity must be bigger than 0"));
-        }
-
-        if (addPartDTO.getQuantity() > DataConstants.Part.QuantityMaxValue) {
-            result.addError(
-                    new FieldError(
-                            "highQuantity",
-                            "quantity",
-                            "Quantity must be less than 100"));
-        }
-
 
         if (result.hasErrors()) {
             redirectAttributes

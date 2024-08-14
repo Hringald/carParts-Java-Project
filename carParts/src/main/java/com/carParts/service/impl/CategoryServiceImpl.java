@@ -5,6 +5,7 @@ import com.carParts.model.enums.CategoryEnum;
 import com.carParts.repository.CategoryRepo;
 import com.carParts.service.CategoryService;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.Arrays;
 import java.util.List;
@@ -59,5 +60,15 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<Category> getAllCategories() {
         return this.categoryRepo.findAll();
+    }
+
+    @Override
+    public void shopCategoriesView(String makeName, String modelName, Model model) {
+        List<Category> allCategories = getAllCategories();
+
+        model.addAttribute("allCategories", allCategories);
+
+        model.addAttribute("makeName", makeName);
+        model.addAttribute("modelName", modelName);
     }
 }

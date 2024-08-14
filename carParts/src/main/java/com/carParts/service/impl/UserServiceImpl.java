@@ -1,6 +1,7 @@
 package com.carParts.service.impl;
 
 import com.carParts.model.dto.*;
+import com.carParts.model.entity.Part;
 import com.carParts.model.entity.User;
 import com.carParts.model.entity.UserRoleEntity;
 import com.carParts.model.enums.UserRoleEnum;
@@ -11,9 +12,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -22,10 +27,13 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder encoder;
     private final UserRoleRepo userRoleRepo;
 
+    private final ModelMapper modelMapper;
+
     public UserServiceImpl(UserRepo userRepo, PasswordEncoder encoder, UserRoleRepo userRoleRepo) {
         this.userRepo = userRepo;
         this.encoder = encoder;
         this.userRoleRepo = userRoleRepo;
+        this.modelMapper = new ModelMapper();
     }
 
     @Override
@@ -109,29 +117,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePhone(Long UserId, PhoneChangeDTO phoneChangeDTO) {
-        User currentUser = this.findUserById(UserId).orElse(null);
+    public void changePhone(UserDetails userDetails, PhoneChangeDTO phoneChangeDTO) {
+        User currentUser = findUserByEmail(userDetails.getUsername());
         currentUser.setPhone(phoneChangeDTO.getPhone());
         userRepo.save(currentUser);
     }
 
     @Override
-    public void changeEmail(UserDetails userDetails, Long UserId, EmailChangeDTO emailChangeDTO) {
-        User currentUser = this.findUserById(UserId).orElse(null);
+    public void changePhoneView(UserDetails userDetails, Model model) {
+        User currentUser = findUserByEmail(userDetails.getUsername());
+
+        String CurrentUserEmail = currentUser.getEmail();
+        String CurrentUserPhone = currentUser.getPhone();
+
+        model.addAttribute("userEmail", CurrentUserEmail);
+        model.addAttribute("userPhone", CurrentUserPhone);
+    }
+
+    @Override
+    public void changeEmail(UserDetails userDetails, EmailChangeDTO emailChangeDTO) {
+        User currentUser = findUserByEmail(userDetails.getUsername());
         currentUser.setEmail(emailChangeDTO.getEmailChange());
         userRepo.save(currentUser);
     }
 
     @Override
-    public void changePassword(Long UserId, PasswordChangeDTO passwordChangeDTO) {
-        User currentUser = this.findUserById(UserId).orElse(null);
+    public void changePassword(UserDetails userDetails, PasswordChangeDTO passwordChangeDTO) {
+        User currentUser = findUserByEmail(userDetails.getUsername());
         currentUser.setPassword(encoder.encode(passwordChangeDTO.getNewPassword()));
         userRepo.save(currentUser);
     }
 
     @Override
-    public void deleteUser(Long UserId) {
-        User currentUser = this.findUserById(UserId).orElse(null);
+    public void deleteUser(UserDetails userDetails) {
+        User currentUser = findUserByEmail(userDetails.getUsername());
         this.userRepo.delete(currentUser);
     }
 
@@ -154,7 +173,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void makeAdmin(UserDetails userDetails, User user) {
+    public void makeAdmin(UserDetails userDetails, MakeAdminDTO makeAdminDTO) {
+        User user = findUserByEmail(userDetails.getUsername());
+        user.setUsername(makeAdminDTO.getUsername());
 
         var adminRole = this.userRoleRepo.findByRole(UserRoleEnum.ADMIN);
 
@@ -164,6 +185,43 @@ public class UserServiceImpl implements UserService {
         user.setRoles(userRoles);
 
         this.userRepo.save(user);
+    }
+
+    @Override
+    public void usersPartsView(Model model) {
+        List<User> users = findAllUsers();
+
+        List<UserDTO> usersDTOs = users
+                .stream()
+                .map(user -> modelMapper.map(user, UserDTO.class))
+                .collect(Collectors.toList());
+
+        model.addAttribute("users", usersDTOs);
+    }
+
+    @Override
+    public void editUserPartsView(Long userId, Model model) {
+        User user = findUserById(userId).orElse(null);
+
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+
+        Set<Part> userParts = user.getParts();
+
+        List<AddPartDTO> userPartsDTOs = userParts
+                .stream()
+                .map(userPart -> modelMapper.map(userPart, AddPartDTO.class))
+                .collect(Collectors.toList());
+
+        model.addAttribute("user", userDTO);
+        model.addAttribute("userParts", userPartsDTOs);
+    }
+
+    @Override
+    public void emailChangeView(UserDetails userDetails, Model model) {
+        User currentUser = findUserByEmail(userDetails.getUsername());
+        String CurrentUserEmail = currentUser.getEmail();
+
+        model.addAttribute("userEmail", CurrentUserEmail);
     }
 
     @Override

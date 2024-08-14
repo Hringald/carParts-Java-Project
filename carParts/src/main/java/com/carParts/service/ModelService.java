@@ -24,4 +24,8 @@ public interface ModelService {
     void createModel(AddModelDTO addModelDTO);
 
     void deleteAllModelsByMake(Make make);
+
+    void editModelsView(org.springframework.ui.Model model);
+
+    void editModelView(Long modelId, org.springframework.ui.Model model);
 }

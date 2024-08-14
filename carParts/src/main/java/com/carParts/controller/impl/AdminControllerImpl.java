@@ -38,9 +38,7 @@ public class AdminControllerImpl implements AdminController {
     @Override
     public String usersParts(Model model) {
 
-        List<User> users = this.userService.findAllUsers();
-
-        model.addAttribute("users", users);
+        this.userService.usersPartsView(model);
 
         return "Admin/UsersParts";
     }
@@ -48,20 +46,15 @@ public class AdminControllerImpl implements AdminController {
     @Override
     public String editUserParts(@PathVariable("id") Long id, Model model) {
 
-        User user = this.userService.findUserById(id).orElse(null);
-        Set<Part> userParts = user.getParts();
-
-        model.addAttribute("user", user);
-        model.addAttribute("userParts", userParts);
+        this.userService.editUserPartsView(id, model);
 
         return "Admin/EditUserParts";
     }
 
     @Override
     public String editModels(Model model) {
-        List<com.carParts.model.entity.Model> models = this.modelService.getAllModels();
 
-        model.addAttribute("models", models);
+        this.modelService.editModelsView(model);
 
         return "Admin/EditModels";
     }
@@ -69,15 +62,7 @@ public class AdminControllerImpl implements AdminController {
     @Override
     public String editModel(@PathVariable("id") Long id, Model model) {
 
-        List<Make> allMakes = this.makeService.getAllMakes();
-        com.carParts.model.entity.Model carModel = this.modelService.findModelById(id);
-
-        model.addAttribute("makeName", carModel.getMake().getName());
-        model.addAttribute("modelId", id);
-        model.addAttribute("modelName", carModel.getName());
-        model.addAttribute("modelUrl", carModel.getImageUrl());
-        model.addAttribute("allMakes", allMakes);
-
+        this.modelService.editModelView(id, model);
 
         return "Admin/EditModel";
     }
@@ -111,8 +96,7 @@ public class AdminControllerImpl implements AdminController {
     @Override
     public String addModel(Model model) {
 
-        List<Make> allMakes = this.makeService.getAllMakes();
-        model.addAttribute("allMakes", allMakes);
+        this.makeService.addModelView(model);
 
         return "Admin/AddModel";
     }
@@ -136,9 +120,7 @@ public class AdminControllerImpl implements AdminController {
     @Override
     public String editMakes(Model model) {
 
-        List<Make> makes = this.makeService.getAllMakes();
-
-        model.addAttribute("makes", makes);
+        this.makeService.editMakesView(model);
 
         return "Admin/EditMakes";
     }
@@ -146,12 +128,7 @@ public class AdminControllerImpl implements AdminController {
     @Override
     public String editMake(@PathVariable("id") Long id, Model model) {
 
-        Make make = this.makeService.findMakeById(id);
-
-        model.addAttribute("makeName", make.getName());
-        model.addAttribute("makeId", id);
-        model.addAttribute("makeName", make.getName());
-        model.addAttribute("makeUrl", make.getImageUrl());
+        this.makeService.editMakeView(id, model);
 
         return "Admin/EditMake";
     }

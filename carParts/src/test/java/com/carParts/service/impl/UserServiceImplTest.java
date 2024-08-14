@@ -101,7 +101,7 @@ class UserServiceImplTest {
 
         when(toTest.findUserById(user.getId())).thenReturn(Optional.of(user));
 
-        toTest.changePhone(user.getId(), phoneChangeDTO);
+        toTest.changePhone(Mockito.mock(), phoneChangeDTO);
 
         Assertions.assertEquals(user.getPhone(), TEST_CHANGED_PHONE);
     }
@@ -116,7 +116,7 @@ class UserServiceImplTest {
 
         when(toTest.findUserById(user.getId())).thenReturn(Optional.of(user));
 
-        toTest.changeEmail(Mockito.mock(), user.getId(), emailChangeDTO);
+        toTest.changeEmail(Mockito.mock(), emailChangeDTO);
 
         Assertions.assertEquals(user.getEmail(), TEST_CHANGED_EMAIL);
     }
@@ -133,7 +133,7 @@ class UserServiceImplTest {
         when(mockUserRepo.findById(user.getId())).thenReturn(Optional.of(user));
         when(this.mockEncoder.encode(TEST_CHANGED_PASSWORD)).thenReturn(TEST_CHANGED_PASSWORD);
 
-        toTest.changePassword(user.getId(), passwordChangeDTO);
+        toTest.changePassword(Mockito.mock(), passwordChangeDTO);
 
         Assertions.assertEquals(user.getPassword(), TEST_CHANGED_PASSWORD);
     }

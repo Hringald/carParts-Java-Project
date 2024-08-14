@@ -1,6 +1,7 @@
 package com.carParts.service.impl;
 
 import com.carParts.model.dto.AddOfferDTO;
+import com.carParts.model.dto.AddPartDTO;
 import com.carParts.model.entity.Offer;
 import com.carParts.model.entity.Part;
 import com.carParts.model.entity.User;
@@ -9,10 +10,14 @@ import com.carParts.repository.PartRepo;
 import com.carParts.repository.UserRepo;
 import com.carParts.service.OfferService;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class OfferServiceImpl implements OfferService {
@@ -24,12 +29,14 @@ public class OfferServiceImpl implements OfferService {
     private final PartRepo partRepo;
 
     private final PartServiceImpl partService;
+    private final ModelMapper modelMapper;
 
     public OfferServiceImpl(UserRepo userRepo, OfferRepo offerRepo, PartRepo partRepo, PartServiceImpl partService) {
         this.userRepo = userRepo;
         this.offerRepo = offerRepo;
         this.partRepo = partRepo;
         this.partService = partService;
+        this.modelMapper = new ModelMapper();
     }
 
     @Override
@@ -43,7 +50,11 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void addOffer(AddOfferDTO addOfferDTO, Part part, User seller) {
+    public void addOffer(AddOfferDTO addOfferDTO, Long partId) {
+
+        Part part = this.partService.findPartById(partId);
+        User seller = part.getSeller();
+
         ModelMapper modelMapper = new ModelMapper();
 
         Offer newOffer = modelMapper.map(addOfferDTO, Offer.class);
@@ -58,7 +69,9 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void declineOffer(Offer currentOffer) {
+    public void declineOffer(Long offerId) {
+        Offer currentOffer = findById(offerId);
+
         User seller = currentOffer.getSeller();
         Set<Offer> sellerOffers = seller.getOffers();
         sellerOffers.remove(currentOffer);
@@ -76,15 +89,77 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public void sellOffer(Offer currentOffer, Part currentPart) {
+    public void sellOffer(Long offerId) {
+        Offer currentOffer = findById(offerId);
+        Part currentPart = currentOffer.getPart();
+
         if (currentPart.getQuantity() - 1 <= 0) {
             this.partService.removePart(currentPart.getId());
         } else {
             currentPart.setQuantity(currentPart.getQuantity() - 1);
-            declineOffer(currentOffer);
+            declineOffer(currentOffer.getId());
         }
+    }
 
+    @Override
+    public void myOffersView(UserDetails userDetails, Model model) {
+        User currentUser = this.userRepo.findByEmail(userDetails.getUsername()).orElse(null);
+        List<Offer> myOffers = findOwnedOffers(currentUser);
 
+        List<AddOfferDTO> myOffersDTOs = myOffers
+                .stream()
+                .map(offer -> modelMapper.map(offer, AddOfferDTO.class))
+                .collect(Collectors.toList());
+
+        model.addAttribute("myOffers", myOffersDTOs);
+    }
+
+    @Override
+    public void createOfferView(Long offerId, Model model) {
+        Part partToBuy = this.partService.findPartById(offerId);
+
+        AddPartDTO partDTO = modelMapper.map(partToBuy, AddPartDTO.class);
+
+        model.addAttribute("partId", partDTO.getId());
+        model.addAttribute("partUrl", partDTO.getImageUrl());
+        model.addAttribute("partName", partDTO.getName());
+        model.addAttribute("partDescription", partDTO.getDescription());
+        model.addAttribute("partQuantity", partDTO.getQuantity());
+        model.addAttribute("partPrice", partDTO.getPrice());
+    }
+
+    @Override
+    public boolean isUserSeller(UserDetails userDetails, Long partId) {
+        Offer currentOffer = findById(partId);
+        Part currentPart = currentOffer.getPart();
+        User partSeller = currentPart.getSeller();
+
+        User currentUser = this.userRepo.findByEmail(userDetails.getUsername()).orElse(null);
+
+        return !Objects.equals(currentUser.getId(), partSeller.getId());
+    }
+
+    @Override
+    public void viewOfferView(UserDetails userDetails, Model model, Long partId) {
+        Offer currentOffer = findById(partId);
+        Part currentPart = currentOffer.getPart();
+
+        AddPartDTO partDTO = modelMapper.map(currentPart, AddPartDTO.class);
+        AddOfferDTO offerDTO = modelMapper.map(currentOffer, AddOfferDTO.class);
+
+        model.addAttribute("partUrl", partDTO.getImageUrl());
+        model.addAttribute("partName", partDTO.getName());
+        model.addAttribute("partDescription", partDTO.getDescription());
+        model.addAttribute("partQuantity", partDTO.getQuantity());
+        model.addAttribute("partPrice", partDTO.getPrice());
+
+        model.addAttribute("offerId", offerDTO.getId());
+        model.addAttribute("offerName", offerDTO.getName());
+        model.addAttribute("offerEmail", offerDTO.getEmail());
+        model.addAttribute("offerPhone", offerDTO.getPhone());
+        model.addAttribute("offerAddress", offerDTO.getAddress());
+        model.addAttribute("offerCity", offerDTO.getCity());
+        model.addAttribute("offerZip", offerDTO.getZipCode());
     }
 
 }
