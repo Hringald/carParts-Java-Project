@@ -22,7 +22,7 @@ public class HomeControllerTests {
     }
 
     @Test
-    void indexReturnsCorrectViewWithModel() {
+    void indexViewReturnsCorrectViewWithModel() {
 
         String result = toTest.index(Mockito.mock());
 

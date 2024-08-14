@@ -1,5 +1,6 @@
 package com.carParts.service.impl;
 
+import com.carParts.model.dto.AddModelDTO;
 import com.carParts.model.entity.Make;
 import com.carParts.model.entity.Model;
 import com.carParts.model.entity.Part;
@@ -15,6 +16,7 @@ import java.util.*;
 import static org.mockito.Mockito.when;
 
 class ModelServiceImplTest {
+    private final String TEST_NAME = "test";
     private ModelServiceImpl toTest;
 
     private MakeRepo mockMakeRepo;
@@ -97,5 +99,89 @@ class ModelServiceImplTest {
 
         List<Model> allModels = toTest.getAllModels();
         Assertions.assertEquals(allModels.stream().count(), 1);
+    }
+
+    @Test
+    void deleteModelByIdWorks() {
+
+        Model model = new Model();
+
+        Set<Part> parts = new HashSet<>();
+        Part part = new Part();
+
+        Make make = new Make();
+        List<Part> makeParts = new ArrayList<>();
+        makeParts.add(part);
+        make.setParts(parts);
+
+        part.setMake(make);
+        parts.add(part);
+
+        model.setParts(parts);
+
+        when(mockModelRepo.findById(null)).thenReturn(Optional.of(model));
+
+        Assertions.assertDoesNotThrow(() -> toTest.deleteModelById(null));
+    }
+
+    @Test
+    void editModelByIdWorks() {
+
+        AddModelDTO addModelDTO = new AddModelDTO();
+
+        addModelDTO.setName(TEST_NAME);
+
+        Model model = new Model();
+
+        Set<Part> parts = new HashSet<>();
+        Part part = new Part();
+
+        Make make = new Make();
+        List<Part> makeParts = new ArrayList<>();
+        makeParts.add(part);
+        make.setParts(parts);
+
+        part.setMake(make);
+        parts.add(part);
+
+        model.setParts(parts);
+
+        when(mockModelRepo.findById(null)).thenReturn(Optional.of(model));
+
+        Assertions.assertDoesNotThrow(() -> toTest.editModelById(addModelDTO, null));
+    }
+
+    @Test
+    void createModelWorks() {
+
+        AddModelDTO addModelDTO = new AddModelDTO();
+
+        addModelDTO.setName(TEST_NAME);
+
+        Model model = new Model();
+
+        Set<Part> parts = new HashSet<>();
+        Part part = new Part();
+
+        Make make = new Make();
+        List<Part> makeParts = new ArrayList<>();
+        makeParts.add(part);
+        make.setParts(parts);
+
+        part.setMake(make);
+        parts.add(part);
+
+        model.setParts(parts);
+
+        when(mockModelRepo.findById(null)).thenReturn(Optional.of(model));
+
+        Assertions.assertDoesNotThrow(() -> toTest.createModel(addModelDTO));
+    }
+
+    @Test
+    void deleteAllModelsByMakeWorks() {
+        Make make = new Make();
+        make.setName(TEST_NAME);
+        Assertions.assertDoesNotThrow(() -> toTest.deleteAllModelsByMake(make));
     }
 }

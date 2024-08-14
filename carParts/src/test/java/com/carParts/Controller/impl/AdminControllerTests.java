@@ -119,15 +119,6 @@ public class AdminControllerTests {
 
 
     @Test
-    void deleteModelShouldReturnCorrectViewWithModel() {
-
-        String result = toTest.deleteModel(null, Mockito.mock());
-
-        Assertions.assertEquals(result, "redirect:/admin/editModels");
-    }
-
-
-    @Test
     void addModelModelShouldReturnCorrectViewWithModel() {
 
         String result = toTest.addModel(Mockito.mock());

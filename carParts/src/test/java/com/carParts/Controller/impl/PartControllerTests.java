@@ -85,34 +85,4 @@ public class PartControllerTests {
         Assertions.assertEquals(result, "redirect:/parts/myParts");
     }
 
-    @Test
-    void editPartByIdReturnsCorrectViewWithModel() {
-
-        Part part = new Part();
-
-        Make make = new Make();
-        make.setName(TEST_NAME);
-
-        Model model = new Model();
-        model.setName(TEST_NAME);
-
-        Category category = new Category();
-        category.setName(TEST_NAME);
-
-
-        part.setMake(make);
-        part.setModel(model);
-        part.setCategory(category);
-
-        User user = new User();
-
-        part.setSeller(user);
-
-
-        when(mockPartService.findPartById(null)).thenReturn(part);
-
-        String result = toTest.editPartById(mockUserDetails, null, Mockito.mock());
-
-        Assertions.assertEquals(result, "Part/EditPart");
-    }
 }

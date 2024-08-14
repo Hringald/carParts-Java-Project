@@ -8,6 +8,7 @@ import com.carParts.model.dto.UserDTO;
 import com.carParts.model.entity.Model;
 import com.carParts.model.entity.Part;
 import com.carParts.model.entity.User;
+import com.carParts.repository.PartRepo;
 import com.carParts.repository.UserRepo;
 import com.carParts.repository.UserRoleRepo;
 import org.junit.jupiter.api.Assertions;
@@ -39,13 +40,16 @@ class UserServiceImplTest {
     private PasswordEncoder mockEncoder;
     private UserRoleRepo mockUserRoleRepo;
 
+    private PartRepo mockPartRepo;
+
     @BeforeEach
     void setUp() {
         mockUserRepo = Mockito.mock(UserRepo.class);
         mockEncoder = Mockito.mock();
         mockUserRoleRepo = Mockito.mock();
+        mockPartRepo = Mockito.mock();
 
-        toTest = new UserServiceImpl(mockUserRepo, mockEncoder, mockUserRoleRepo);
+        toTest = new UserServiceImpl(mockUserRepo, mockEncoder, mockUserRoleRepo, mockPartRepo);
     }
 
     @Test
@@ -99,7 +103,7 @@ class UserServiceImplTest {
         PhoneChangeDTO phoneChangeDTO = new PhoneChangeDTO();
         phoneChangeDTO.setPhone(TEST_CHANGED_PHONE);
 
-        when(toTest.findUserById(user.getId())).thenReturn(Optional.of(user));
+        when(mockUserRepo.findByEmail(null)).thenReturn(Optional.of(user));
 
         toTest.changePhone(Mockito.mock(), phoneChangeDTO);
 
@@ -114,7 +118,7 @@ class UserServiceImplTest {
         EmailChangeDTO emailChangeDTO = new EmailChangeDTO();
         emailChangeDTO.setEmailChange(TEST_CHANGED_EMAIL);
 
-        when(toTest.findUserById(user.getId())).thenReturn(Optional.of(user));
+        when(mockUserRepo.findByEmail(null)).thenReturn(Optional.of(user));
 
         toTest.changeEmail(Mockito.mock(), emailChangeDTO);
 
@@ -130,7 +134,7 @@ class UserServiceImplTest {
         passwordChangeDTO.setNewPassword(TEST_CHANGED_PASSWORD);
 
         when(toTest.findUserById(user.getId())).thenReturn(Optional.of(user));
-        when(mockUserRepo.findById(user.getId())).thenReturn(Optional.of(user));
+        when(mockUserRepo.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
         when(this.mockEncoder.encode(TEST_CHANGED_PASSWORD)).thenReturn(TEST_CHANGED_PASSWORD);
 
         toTest.changePassword(Mockito.mock(), passwordChangeDTO);

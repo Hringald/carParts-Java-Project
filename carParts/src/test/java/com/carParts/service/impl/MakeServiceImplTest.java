@@ -140,4 +140,47 @@ class MakeServiceImplTest {
         Assertions.assertDoesNotThrow(() -> toTest.deleteMakeById(null));
     }
 
+    @Test
+    void addModelViewThrowsErrorWHenModelIsEmpty(){
+
+        Assertions.assertThrows(
+                Exception.class,
+                () -> this.toTest.addModelView(null),
+                "Expected doThing() to throw, but it didn't"
+        );
+    }
+
+    @Test
+    void editMakesViewThrowsErrorWHenModelIsEmpty(){
+
+        Assertions.assertThrows(
+                Exception.class,
+                () -> this.toTest.editMakesView(null),
+                "Expected doThing() to throw, but it didn't"
+        );
+    }
+
+    @Test
+    void editMakeViewThrowsErrorWHenModelIsEmpty(){
+
+        Assertions.assertThrows(
+                Exception.class,
+                () -> this.toTest.editMakeView(null, Mockito.mock()),
+                "Expected doThing() to throw, but it didn't"
+        );
+    }
+
+    @Test
+    void chooseMakeViewWorks(){
+        Assertions.assertDoesNotThrow(()->this.toTest.chooseMakeView(Mockito.mock()));
+    }
+
+    @Test
+    void shopModelsViewThrowsWithInvalidMakeName(){
+        Assertions.assertThrows(
+                Exception.class,
+                () -> this.toTest.shopModelsView(Mockito.mock(),Mockito.mock()),
+                "Expected doThing() to throw, but it didn't"
+        );
+    }
 }
